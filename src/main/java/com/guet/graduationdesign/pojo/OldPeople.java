@@ -6,7 +6,6 @@ import java.util.Collection;
 import java.util.Objects;
 
 @Entity
-@Table(name = "old_people", schema = "IntelligentNursingHomeManagementSystem", catalog = "")
 public class OldPeople {
     private int oldPeopleId;
     private String idCard;

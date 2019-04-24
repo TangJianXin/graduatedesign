@@ -5,17 +5,17 @@ import java.util.Objects;
 
 @Entity
 public class Bed {
-    private int bedId;
+    private String bedId;
     private Employer employerByEmployerId;
     private OldPeople oldPeopleByOldPeopleId;
 
     @Id
     @Column(name = "bed_id")
-    public int getBedId() {
+    public String getBedId() {
         return bedId;
     }
 
-    public void setBedId(int bedId) {
+    public void setBedId(String bedId) {
         this.bedId = bedId;
     }
 
@@ -24,7 +24,7 @@ public class Bed {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Bed bed = (Bed) o;
-        return bedId == bed.bedId;
+        return Objects.equals(bedId, bed.bedId);
     }
 
     @Override
