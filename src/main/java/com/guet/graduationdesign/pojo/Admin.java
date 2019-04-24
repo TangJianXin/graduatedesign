@@ -5,18 +5,18 @@ import java.util.Objects;
 
 @Entity
 public class Admin {
-    private String adminname;
+    private String username;
     private String password;
     private Employer employerByEmployerId;
 
     @Id
-    @Column(name = "adminname")
-    public String getAdminname() {
-        return adminname;
+    @Column(name = "username")
+    public String getUsername() {
+        return username;
     }
 
-    public void setAdminname(String adminname) {
-        this.adminname = adminname;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     @Basic
@@ -34,13 +34,13 @@ public class Admin {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Admin admin = (Admin) o;
-        return Objects.equals(adminname, admin.adminname) &&
+        return Objects.equals(username, admin.username) &&
                 Objects.equals(password, admin.password);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(adminname, password);
+        return Objects.hash(username, password);
     }
 
     @ManyToOne

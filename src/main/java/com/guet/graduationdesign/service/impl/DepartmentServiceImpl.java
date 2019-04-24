@@ -1,33 +1,110 @@
 package com.guet.graduationdesign.service.impl;
 
 import com.guet.graduationdesign.pojo.Department;
+import com.guet.graduationdesign.repository.DepartmentRepository;
 import com.guet.graduationdesign.service.DepartmentService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
+import java.util.List;
 
+/**
+* @Description:    部门管理service
+* @Author:         TJX
+* @CreateDate:     2019-04-24 19:28
+* @UpdateUser:
+* @UpdateDate:     2019-04-24 19:28
+* @UpdateRemark:
+* @Version:        1.0
+*/
+@Service
 public class DepartmentServiceImpl implements DepartmentService {
+
+    @Autowired
+    private DepartmentRepository departmentRepository;
+
     @Override
     public Department findById(String departmentId) {
-        return null;
+        /**
+        * @Description: 根据Id查询部门
+        * @Author:      TJX
+         * @param departmentId
+        * @Return      com.guet.graduationdesign.pojo.Department
+        * @Exception
+        * @Date        2019-04-24 19:37
+        */
+        return departmentRepository.getOne(departmentId);
     }
 
     @Override
-    public ArrayList<Department> findAll() {
-        return null;
+    public List<Department> findAll() {
+        /**
+        * @Description: 查询所有部门
+        * @Author:      TJX
+         * @param
+        * @Return      java.util.List<com.guet.graduationdesign.pojo.Department>
+        * @Exception
+        * @Date        2019-04-24 19:37
+        */
+        return departmentRepository.findAll();
     }
 
     @Override
     public void deleteById(String departmentId) {
-
+        /**
+        * @Description: 根据Id删除部门
+        * @Author:      TJX
+         * @param departmentId
+        * @Return      void
+        * @Exception
+        * @Date        2019-04-24 19:37
+        */
+        departmentRepository.deleteById(departmentId);
     }
 
     @Override
-    public Department update(Department department) {
-        return null;
+    public Department update(String departmentId, String departmentName) {
+        /**
+        * @Description: 更新部门信息
+        * @Author:      TJX
+         * @param departmentId
+         * @param departmentName
+        * @Return      com.guet.graduationdesign.pojo.Department
+        * @Exception
+        * @Date        2019-04-24 21:16
+        */
+        return add(departmentId,departmentName);
     }
 
     @Override
-    public Department add(Department department) {
-        return null;
+    public Department add(String departmentId, String departmentName) {
+        /**
+        * @Description: 添加部门
+        * @Author:      TJX
+         * @param departmentId
+         * @param departmentName
+        * @Return      com.guet.graduationdesign.pojo.Department
+        * @Exception
+        * @Date        2019-04-24 21:16
+        */
+        Department department = getDepartment(departmentId,departmentName);
+        return departmentRepository.save(department);
+    }
+
+    private Department getDepartment(String departmentId,String departmentName)
+    {
+        /**
+        * @Description: 构造部门对象
+        * @Author:      TJX
+         * @param departmentId
+         * @param departmentName
+        * @Return      com.guet.graduationdesign.pojo.Department
+        * @Exception
+        * @Date        2019-04-24 21:14
+        */
+        Department department = new Department();
+        department.setDepartmentId(departmentId);
+        department.setDepartmentName(departmentName);
+        return department;
     }
 }

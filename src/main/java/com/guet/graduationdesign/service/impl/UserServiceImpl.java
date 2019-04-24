@@ -7,8 +7,7 @@ import com.guet.graduationdesign.repository.UserRepository;
 import com.guet.graduationdesign.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -17,44 +16,95 @@ public class UserServiceImpl implements UserService {
     private UserRepository userRepository;
     @Autowired
     private EmployerRepository employerRepository;
+
     @Override
-    public User register(String username, String password, Integer employerId) {
+    public List<User> findAll() {
+        /**
+        * @Description: 查询所有普通员工账号信息
+        * @Author:      TJX
+         * @param
+        * @Return      java.util.List<com.guet.graduationdesign.pojo.User>
+        * @Exception
+        * @Date        2019-04-24 20:54
+        */
+         return userRepository.findAll();
+    }
+
+    @Override
+    public User findByUsername(String username) {
+        /**
+        * @Description: 根据用户名查询普通员工账号
+        * @Author:      TJX
+         * @param username
+        * @Return      com.guet.graduationdesign.pojo.User
+        * @Exception
+        * @Date        2019-04-24 20:53
+        */
+        return userRepository.getOne(username);
+    }
+
+    @Override
+    public void deleteByUsername(String username) {
+        /**
+        * @Description: 根据用户名删除普通员工账号
+        * @Author:      TJX
+         * @param username
+        * @Return      void
+        * @Exception
+        * @Date        2019-04-24 20:52
+        */
+        userRepository.deleteById(username);
+    }
+
+    @Override
+    public User update(String username, String password, Integer employerId) {
+        /**
+        * @Description: 修改密码
+        * @Author:      TJX
+         * @param username
+         * @param password
+         * @param employerId
+        * @Return      com.guet.graduationdesign.pojo.User
+        * @Exception
+        * @Date        2019-04-24 20:50
+        */
+        return add(username,password,employerId);
+    }
+
+    @Override
+    public User add(String username, String password, Integer employerId)
+    {
+        /**
+        * @Description: 普通员工账号
+        * @Author:      TJX
+         * @param username
+         * @param password
+         * @param employerId
+        * @Return      com.guet.graduationdesign.pojo.User
+        * @Exception   
+        * @Date        2019-04-24 20:48
+        */
+        User user = getUser(username,password,employerId);
+        return userRepository.save(user);
+    }
+    
+    private User getUser(String username,String password,Integer employerId)
+    {
+        /**
+        * @Description: 构造普通员工账号对象
+        * @Author:      TJX
+         * @param username
+         * @param password
+         * @param employerId
+        * @Return      com.guet.graduationdesign.pojo.User
+        * @Exception
+        * @Date        2019-04-24 20:50
+        */
         User user = new User();
         user.setUsername(username);
         user.setPassword(password);
         Employer employer = employerRepository.getOne(employerId);
         user.setEmployerByEmployerId(employer);
-        userRepository.save(user);
         return user;
-    }
-
-    @Override
-    public String login(String username, String password) {
-        User user;
-        if(userRepository.existsById(username))
-        {
-           user = userRepository.getOne(username);
-           if(user.getPassword().equals(password))
-           {
-               return "登录成功";
-           }
-           else{
-               return "密码错误";
-           }
-        }
-        else{
-            return "账号错误";
-        }
-    }
-
-    @Override
-    public ArrayList<User> findAll() {
-         return (ArrayList<User>) userRepository.findAll();
-    }
-
-    @Override
-    public Employer getEmployerByUsername(String username) {
-        User user = userRepository.getOne(username);
-        return user.getEmployerByEmployerId();
     }
 }

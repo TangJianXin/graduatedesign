@@ -2,7 +2,9 @@ package com.guet.graduationdesign.service;
 
 import com.guet.graduationdesign.pojo.Equipment;
 
-import java.util.ArrayList;
+import java.sql.Date;
+import java.util.List;
+
 
 public interface EquipmentService {
 
@@ -10,14 +12,16 @@ public interface EquipmentService {
     public Equipment findById(String equipmentId);
 
     //查询所有设备
-    public ArrayList<Equipment> findAll();
+    public List<Equipment> findAll();
 
     //根据Id删除设备
     public void deleteById(String equipmentId);
 
     //更新设备
-    public Equipment update(Equipment equipment);
+    public Equipment update(String equipmentId, String equipmentName,
+                            Date purchaseDate,Date productionDate,String departmentId);
 
     //添加设备
-    public Equipment add(Equipment equipment);
+    public Equipment add(String equipmentId, String equipmentName,
+                         Date purchaseDate,Date productionDate,String departmentId);
 }

@@ -1,14 +1,24 @@
 package com.guet.graduationdesign.service;
 
-import com.guet.graduationdesign.pojo.Employer;
+
 import com.guet.graduationdesign.pojo.User;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public interface UserService {
 
-    public User register(String username, String password, Integer employerId);
-    public String login(String username,String password);
-    public ArrayList<User> findAll();
-    public Employer getEmployerByUsername(String username);
+    //查询所有普通员工账号信息
+    public List<User> findAll();
+
+    //根据用户名查询普通员工账号信息
+    public User findByUsername(String username);
+
+    //根据用户名删除普通员工账号
+    public void deleteByUsername(String username);
+
+    //修改密码
+    public User update(String username,String password,Integer employerId);
+
+    //注册
+    public User add(String username,String password,Integer employerId);
 }
