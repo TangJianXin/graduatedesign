@@ -1,15 +1,16 @@
 package com.guet.graduationdesign.pojo;
 
+import org.hibernate.annotations.Proxy;
+
 import javax.persistence.*;
 import java.util.Collection;
 import java.util.Objects;
 
+@Proxy(lazy = false)
 @Entity
 public class Department {
     private String departmentId;
     private String departmentName;
-    private Collection<Employer> employersByDepartmentId;
-    private Collection<Equipment> equipmentByDepartmentId;
 
     @Id
     @Column(name = "department_id")
@@ -45,21 +46,11 @@ public class Department {
         return Objects.hash(departmentId, departmentName);
     }
 
-    @OneToMany(mappedBy = "departmentByDepartmentId")
-    public Collection<Employer> getEmployersByDepartmentId() {
-        return employersByDepartmentId;
-    }
-
-    public void setEmployersByDepartmentId(Collection<Employer> employersByDepartmentId) {
-        this.employersByDepartmentId = employersByDepartmentId;
-    }
-
-    @OneToMany(mappedBy = "departmentByDepartmentId")
-    public Collection<Equipment> getEquipmentByDepartmentId() {
-        return equipmentByDepartmentId;
-    }
-
-    public void setEquipmentByDepartmentId(Collection<Equipment> equipmentByDepartmentId) {
-        this.equipmentByDepartmentId = equipmentByDepartmentId;
+    @Override
+    public String toString() {
+        return "Department{" +
+                "departmentId='" + departmentId + '\'' +
+                ", departmentName='" + departmentName + '\'' +
+                '}';
     }
 }

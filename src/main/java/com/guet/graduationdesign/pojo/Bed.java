@@ -1,8 +1,11 @@
 package com.guet.graduationdesign.pojo;
 
+import org.hibernate.annotations.Proxy;
+
 import javax.persistence.*;
 import java.util.Objects;
 
+@Proxy(lazy = false)
 @Entity
 public class Bed {
     private String bedId;
@@ -50,5 +53,14 @@ public class Bed {
 
     public void setOldPeopleByOldPeopleId(OldPeople oldPeopleByOldPeopleId) {
         this.oldPeopleByOldPeopleId = oldPeopleByOldPeopleId;
+    }
+
+    @Override
+    public String toString() {
+        return "Bed{" +
+                "bedId='" + bedId + '\'' +
+                ", employerByEmployerId=" + employerByEmployerId +
+                ", oldPeopleByOldPeopleId=" + oldPeopleByOldPeopleId +
+                '}';
     }
 }

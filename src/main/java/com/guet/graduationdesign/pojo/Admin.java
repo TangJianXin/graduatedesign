@@ -1,8 +1,11 @@
 package com.guet.graduationdesign.pojo;
 
+import org.hibernate.annotations.Proxy;
+
 import javax.persistence.*;
 import java.util.Objects;
 
+@Proxy(lazy = false)
 @Entity
 public class Admin {
     private String username;
@@ -51,5 +54,14 @@ public class Admin {
 
     public void setEmployerByEmployerId(Employer employerByEmployerId) {
         this.employerByEmployerId = employerByEmployerId;
+    }
+
+    @Override
+    public String toString() {
+        return "Admin{" +
+                "username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", employerByEmployerId=" + employerByEmployerId +
+                '}';
     }
 }

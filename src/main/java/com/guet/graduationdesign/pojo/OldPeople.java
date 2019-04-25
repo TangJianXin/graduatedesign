@@ -1,10 +1,12 @@
 package com.guet.graduationdesign.pojo;
 
+import org.hibernate.annotations.Proxy;
+
 import javax.persistence.*;
 import java.sql.Date;
-import java.util.Collection;
 import java.util.Objects;
 
+@Proxy(lazy = false)
 @Entity
 @Table(name = "old_people", schema = "IntelligentNursingHomeManagementSystem", catalog = "")
 public class OldPeople {
@@ -17,7 +19,6 @@ public class OldPeople {
     private String sex;
     private Date birthday;
     private String familyPhone;
-    private Collection<Bed> bedsByOldPeopleId;
 
     @Id
     @Column(name = "old_people_id")
@@ -130,12 +131,18 @@ public class OldPeople {
         return Objects.hash(oldPeopleId, idCard, photo, name, telephone, address, sex, birthday, familyPhone);
     }
 
-    @OneToMany(mappedBy = "oldPeopleByOldPeopleId")
-    public Collection<Bed> getBedsByOldPeopleId() {
-        return bedsByOldPeopleId;
-    }
-
-    public void setBedsByOldPeopleId(Collection<Bed> bedsByOldPeopleId) {
-        this.bedsByOldPeopleId = bedsByOldPeopleId;
+    @Override
+    public String toString() {
+        return "OldPeople{" +
+                "oldPeopleId=" + oldPeopleId +
+                ", idCard='" + idCard + '\'' +
+                ", photo='" + photo + '\'' +
+                ", name='" + name + '\'' +
+                ", telephone='" + telephone + '\'' +
+                ", address='" + address + '\'' +
+                ", sex='" + sex + '\'' +
+                ", birthday=" + birthday +
+                ", familyPhone='" + familyPhone + '\'' +
+                '}';
     }
 }

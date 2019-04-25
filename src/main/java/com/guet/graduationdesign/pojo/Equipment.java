@@ -1,9 +1,12 @@
 package com.guet.graduationdesign.pojo;
 
+import org.hibernate.annotations.Proxy;
+
 import javax.persistence.*;
 import java.sql.Date;
 import java.util.Objects;
 
+@Proxy(lazy = false)
 @Entity
 public class Equipment {
     private String equipmentId;
@@ -76,5 +79,16 @@ public class Equipment {
 
     public void setDepartmentByDepartmentId(Department departmentByDepartmentId) {
         this.departmentByDepartmentId = departmentByDepartmentId;
+    }
+
+    @Override
+    public String toString() {
+        return "Equipment{" +
+                "equipmentId='" + equipmentId + '\'' +
+                ", equipmentName='" + equipmentName + '\'' +
+                ", purchaseDate=" + purchaseDate +
+                ", productionDate=" + productionDate +
+                ", departmentByDepartmentId=" + departmentByDepartmentId +
+                '}';
     }
 }

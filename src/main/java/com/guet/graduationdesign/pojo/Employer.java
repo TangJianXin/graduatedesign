@@ -1,10 +1,13 @@
 package com.guet.graduationdesign.pojo;
 
+import org.hibernate.annotations.Proxy;
+
 import javax.persistence.*;
 import java.sql.Date;
 import java.util.Collection;
 import java.util.Objects;
 
+@Proxy(lazy = false)
 @Entity
 public class Employer {
     private int employerId;
@@ -16,10 +19,7 @@ public class Employer {
     private Date birthday;
     private String photo;
     private String sex;
-    private Collection<Admin> adminsByEmployerId;
-    private Collection<Bed> bedsByEmployerId;
     private Department departmentByDepartmentId;
-    private Collection<User> usersByEmployerId;
 
     @Id
     @Column(name = "employer_Id")
@@ -132,24 +132,6 @@ public class Employer {
         return Objects.hash(employerId, position, name, telephone, address, idCard, birthday, photo, sex);
     }
 
-    @OneToMany(mappedBy = "employerByEmployerId")
-    public Collection<Admin> getAdminsByEmployerId() {
-        return adminsByEmployerId;
-    }
-
-    public void setAdminsByEmployerId(Collection<Admin> adminsByEmployerId) {
-        this.adminsByEmployerId = adminsByEmployerId;
-    }
-
-    @OneToMany(mappedBy = "employerByEmployerId")
-    public Collection<Bed> getBedsByEmployerId() {
-        return bedsByEmployerId;
-    }
-
-    public void setBedsByEmployerId(Collection<Bed> bedsByEmployerId) {
-        this.bedsByEmployerId = bedsByEmployerId;
-    }
-
     @ManyToOne
     @JoinColumn(name = "department_id", referencedColumnName = "department_id", nullable = false)
     public Department getDepartmentByDepartmentId() {
@@ -160,12 +142,19 @@ public class Employer {
         this.departmentByDepartmentId = departmentByDepartmentId;
     }
 
-    @OneToMany(mappedBy = "employerByEmployerId")
-    public Collection<User> getUsersByEmployerId() {
-        return usersByEmployerId;
-    }
-
-    public void setUsersByEmployerId(Collection<User> usersByEmployerId) {
-        this.usersByEmployerId = usersByEmployerId;
+    @Override
+    public String toString() {
+        return "Employer{" +
+                "employerId=" + employerId +
+                ", position='" + position + '\'' +
+                ", name='" + name + '\'' +
+                ", telephone='" + telephone + '\'' +
+                ", address='" + address + '\'' +
+                ", idCard='" + idCard + '\'' +
+                ", birthday=" + birthday +
+                ", photo='" + photo + '\'' +
+                ", sex='" + sex + '\'' +
+                ", departmentByDepartmentId=" + departmentByDepartmentId +
+                '}';
     }
 }
