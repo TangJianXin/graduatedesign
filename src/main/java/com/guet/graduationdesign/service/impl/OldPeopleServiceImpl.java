@@ -81,11 +81,12 @@ public class OldPeopleServiceImpl implements OldPeopleService {
         * @Exception
         * @Date        2019-04-24 21:56
         */
-        return add(oldPeopleId,idCard,photo,name,telephone,address,sex,birthday,familyPhone);
+        OldPeople oldPeople = getOldPeople(oldPeopleId,idCard,photo,name,telephone,address,sex,birthday,familyPhone);
+        return oldPeopleRepository.save(oldPeople);
     }
 
     @Override
-    public OldPeople add(Integer oldPeopleId, String idCard, String photo, String name, String telephone, String address, String sex, Date birthday, String familyPhone) {
+    public OldPeople add(String idCard, String photo, String name, String telephone, String address, String sex, Date birthday, String familyPhone) {
         /**
         * @Description: 添加老人
         * @Author:      TJX
@@ -102,8 +103,10 @@ public class OldPeopleServiceImpl implements OldPeopleService {
         * @Exception
         * @Date        2019-04-24 21:55
         */
-        OldPeople oldPeople = getOldPeople(oldPeopleId,idCard,photo,name,telephone,address,sex,birthday,familyPhone);
-        return oldPeopleRepository.save(oldPeople);
+        OldPeople oldPeople = getOldPeople(idCard,photo,name,telephone,address,sex,birthday,familyPhone);
+        oldPeopleRepository.save(oldPeople);
+        List<OldPeople> list = findAll();
+        return list.get(list.size()-1);
     }
 
     private OldPeople getOldPeople(Integer oldPeopleId, String idCard, String photo,
@@ -128,6 +131,37 @@ public class OldPeopleServiceImpl implements OldPeopleService {
         */
         OldPeople oldPeople = new OldPeople();
         oldPeople.setOldPeopleId(oldPeopleId);
+        oldPeople.setIdCard(idCard);
+        oldPeople.setPhoto(photo);
+        oldPeople.setName(name);
+        oldPeople.setTelephone(telephone);
+        oldPeople.setAddress(address);
+        oldPeople.setSex(sex);
+        oldPeople.setBirthday(birthday);
+        oldPeople.setFamilyPhone(familyPhone);
+        return oldPeople;
+    }
+
+    private OldPeople getOldPeople(String idCard, String photo,
+                                   String name, String telephone, String address,
+                                   String sex, Date birthday,String familyPhone)
+    {
+        /**
+        * @Description: 构造老人对象
+        * @Author:      TJX
+         * @param idCard
+         * @param photo
+         * @param name
+         * @param telephone
+         * @param address
+         * @param sex
+         * @param birthday
+         * @param familyPhone
+        * @Return      com.guet.graduationdesign.pojo.OldPeople
+        * @Exception
+        * @Date        2019-04-26 16:55
+        */
+        OldPeople oldPeople = new OldPeople();
         oldPeople.setIdCard(idCard);
         oldPeople.setPhoto(photo);
         oldPeople.setName(name);

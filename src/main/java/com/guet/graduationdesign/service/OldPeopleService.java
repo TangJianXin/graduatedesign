@@ -23,7 +23,7 @@ public interface OldPeopleService {
                             String sex, Date birthday,String familyPhone);
 
     //添加老人
-    public OldPeople add(Integer oldPeopleId, String idCard, String photo,
+    public OldPeople add(String idCard, String photo,
                          String name, String telephone, String address,
                          String sex, Date birthday,String familyPhone);
 

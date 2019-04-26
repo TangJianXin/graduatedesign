@@ -26,7 +26,7 @@ public class LoginServiceImpl implements LoginService {
     private UserRepository userRepository;
 
     @Override
-    public Admin loginByAdmin(String username, String password, Integer employerId) {
+    public Admin loginByAdmin(String username, String password) {
        /**
        * @Description: 管理员登录
        * @Author:      TJX
@@ -56,7 +56,7 @@ public class LoginServiceImpl implements LoginService {
     }
 
     @Override
-    public User loginByUser(String username, String password, Integer employerId) {
+    public User loginByUser(String username, String password) {
         /**
         * @Description: 普通员工登录
         * @Author:      TJX

@@ -1,9 +1,11 @@
 package com.guet.graduationdesign.controller;
 
+import com.guet.graduationdesign.pojo.Bed;
 import com.guet.graduationdesign.service.BedService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 
 /**
@@ -21,4 +23,83 @@ public class BedController {
 
     @Autowired
     private BedService bedService;
+
+    @GetMapping(value = "/findAll")
+    public List<Bed> findAll()
+    {
+        /**
+        * @Description: 查询所有床位信息
+        * @Author:      TJX
+         * @param
+        * @Return      java.util.List<com.guet.graduationdesign.pojo.Bed>
+        * @Exception
+        * @Date        2019-04-26 16:08
+        */
+        return bedService.findAll();
+    }
+
+    @PostMapping(value = "/findById")
+    public Bed findBedById(@RequestParam("bedId") String bedId)
+    {
+        /**
+        * @Description: 根据床位Id查询床位信息
+        * @Author:      TJX
+         * @param bedId
+        * @Return      com.guet.graduationdesign.pojo.Bed
+        * @Exception
+        * @Date        2019-04-26 16:11
+        */
+        return bedService.findById(bedId);
+    }
+
+    @DeleteMapping(value = "/deleteById")
+    public String deleteBedById(@RequestParam("bedId") String bedId)
+    {
+        /**
+        * @Description: 根据床位Id删除床位
+        * @Author:      TJX
+         * @param bedId
+        * @Return      java.lang.String
+        * @Exception
+        * @Date        2019-04-26 16:14
+        */
+        bedService.deleteById(bedId);
+        return "删除成功";
+    }
+
+    @PostMapping(value = "/modifyInformation")
+    public Bed modifyBedInformation(@RequestParam("bedId") String bedId,
+                                    @RequestParam("oldPeopleId") Integer oldPeopleId,
+                                    @RequestParam("employerId") Integer employerId)
+    {
+        /**
+        * @Description: 修改床位信息
+        * @Author:      TJX
+         * @param bedId
+         * @param employerId
+         * @param oldPeopleId
+        * @Return      com.guet.graduationdesign.pojo.Bed
+        * @Exception
+        * @Date        2019-04-26 16:16
+        */
+        return bedService.update(bedId,oldPeopleId,employerId);
+    }
+
+    @PostMapping(value = "/add")
+    public Bed add(@RequestParam("bedId") String bedId,
+                   @RequestParam("oldPeopleId") Integer oldPeopleId,
+                   @RequestParam("employerId") Integer employerId)
+    {
+        /**
+        * @Description: 添加床位
+        * @Author:      TJX
+         * @param bedId
+         * @param employerId
+         * @param oldPeopleId
+        * @Return      com.guet.graduationdesign.pojo.Bed
+        * @Exception
+        * @Date        2019-04-26 16:18
+        */
+        return bedService.add(bedId,oldPeopleId,employerId);
+    }
 }
