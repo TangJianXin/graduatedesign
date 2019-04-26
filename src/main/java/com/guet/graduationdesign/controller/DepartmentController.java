@@ -3,10 +3,9 @@ package com.guet.graduationdesign.controller;
 import com.guet.graduationdesign.pojo.Department;
 import com.guet.graduationdesign.service.DepartmentService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
 * @Description:    部门管理控制器
@@ -24,7 +23,21 @@ public class DepartmentController {
     @Autowired
     private DepartmentService departmentService;
 
-    @PostMapping(value = "/findDepartmentById")
+    @GetMapping("/findAll")
+    public List<Department> findAll()
+    {
+        /**
+        * @Description: 查询所有部门
+        * @Author:      TJX
+         * @param
+        * @Return      java.util.List<com.guet.graduationdesign.pojo.Department>
+        * @Exception
+        * @Date        2019-04-26 11:36
+        */
+        return departmentService.findAll();
+    }
+
+    @PostMapping(value = "/findById")
     public Department findDepartmentById(@RequestParam("departmentId") String departmentId)
     {
         /**
@@ -36,5 +49,52 @@ public class DepartmentController {
         * @Date        2019-04-25 21:10
         */
         return departmentService.findById(departmentId);
+    }
+
+    @DeleteMapping("/deleteById")
+    public String deleteById(String departmentId)
+    {
+        /**
+        * @Description: 根据部门Id删除部门
+        * @Author:      TJX
+         * @param departmentId
+        * @Return      java.lang.String
+        * @Exception
+        * @Date        2019-04-26 11:38
+        */
+        departmentService.deleteById(departmentId);
+        return "删除成功";
+    }
+
+    @PostMapping("/modifyInformation")
+    public Department modifyDepartmentInformation(@RequestParam("departmentId") String departmentId,
+                                                  @RequestParam("departmentName") String departmentName)
+    {
+        /**
+        * @Description: 修改部门信息
+        * @Author:      TJX
+         * @param departmentId
+         * @param departmentName
+        * @Return      com.guet.graduationdesign.pojo.Department
+        * @Exception
+        * @Date        2019-04-26 11:42
+        */
+        return departmentService.update(departmentId,departmentName);
+    }
+
+    @PostMapping("/add")
+    public Department add(@RequestParam("departmentId") String departmentId,
+                          @RequestParam("departmentName") String departmentName)
+    {
+        /**
+        * @Description: 添加部门信息
+        * @Author:      TJX
+         * @param departmentId
+         * @param departmentName
+        * @Return      com.guet.graduationdesign.pojo.Department
+        * @Exception
+        * @Date        2019-04-26 11:44
+        */
+        return departmentService.add(departmentId,departmentName);
     }
 }

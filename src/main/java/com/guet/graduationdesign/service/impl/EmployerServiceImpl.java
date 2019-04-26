@@ -86,11 +86,12 @@ public class EmployerServiceImpl implements EmployerService {
         * @Exception
         * @Date        2019-04-24 21:28
         */
-        return add(employerId,position,name,telephone,address,idCard,birthday,photo,sex,departmentId);
+        Employer employer =  getEmployer(employerId,position,name,telephone,address,idCard,birthday,photo,sex,departmentId);
+        return employerRepository.save(employer);
     }
 
     @Override
-    public Employer add(Integer employerId, String position, String name, String telephone, String address, String idCard, Date birthday, String photo, String sex, String departmentId) {
+    public Employer add(String position, String name, String telephone, String address, String idCard, Date birthday, String photo, String sex, String departmentId) {
         /**
         * @Description: 添加员工
         * @Author:      TJX
@@ -108,11 +109,45 @@ public class EmployerServiceImpl implements EmployerService {
         * @Exception
         * @Date        2019-04-24 21:28
         */
-        Employer employer = getEmployer(employerId,position,name,telephone,address,idCard,birthday,photo,sex,departmentId);
-        return employerRepository.save(employer);
+        Employer employer = getEmployer(position,name,telephone,address,idCard,birthday,photo,sex,departmentId);
+        employerRepository.save(employer);
+        List<Employer> list = findAll();
+        return list.get(list.size()-1);
     }
 
-    private Employer getEmployer(Integer employerId, String position, String name,
+    private Employer getEmployer(String position, String name,
+                                 String telephone, String address, String idCard,
+                                 Date birthday, String photo, String sex, String departmentId)
+    {
+        /**
+        * @Description: 构造员工对象
+        * @Author:      TJX
+         * @param position
+         * @param name
+         * @param telephone
+         * @param address
+         * @param idCard
+         * @param birthday
+         * @param photo
+         * @param sex
+         * @param departmentId
+        * @Return      com.guet.graduationdesign.pojo.Employer
+        * @Exception
+        * @Date        2019-04-24 21:26
+        */
+        Employer employer = new Employer();
+        employer.setAddress(address);
+        employer.setBirthday(birthday);
+        employer.setName(name);
+        employer.setPhoto(photo);
+        employer.setPosition(position);
+        employer.setSex(sex);
+        employer.setDepartmentByDepartmentId(departmentRepository.getOne(departmentId));
+        employer.setTelephone(telephone);
+        employer.setIdCard(idCard);
+        return employer;
+    }
+    private Employer getEmployer(Integer employerId,String position, String name,
                                  String telephone, String address, String idCard,
                                  Date birthday, String photo, String sex, String departmentId)
     {
@@ -131,7 +166,7 @@ public class EmployerServiceImpl implements EmployerService {
          * @param departmentId
         * @Return      com.guet.graduationdesign.pojo.Employer
         * @Exception
-        * @Date        2019-04-24 21:26
+        * @Date        2019-04-26 10:52
         */
         Employer employer = new Employer();
         employer.setEmployerId(employerId);

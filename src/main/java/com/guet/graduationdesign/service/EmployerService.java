@@ -23,7 +23,7 @@ public interface EmployerService {
                            Date birthday, String photo, String sex, String departmentId);
 
     //添加员工
-    public Employer add(Integer employerId, String position, String name,
+    public Employer add(String position, String name,
                         String telephone, String address, String idCard,
                         Date birthday,String photo,String sex,String departmentId);
 }
