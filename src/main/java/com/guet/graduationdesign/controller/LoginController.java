@@ -6,6 +6,7 @@ import com.guet.graduationdesign.service.LoginService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -25,7 +26,8 @@ public class LoginController {
     private LoginService loginService;
 
     @PostMapping(value = "/admin")
-    public Admin loginByAdmin(String username,String password)
+    public Admin loginByAdmin(@RequestParam("username") String username,
+                              @RequestParam("password") String password)
     {
         /**
         * @Description: 管理员登录
@@ -40,7 +42,8 @@ public class LoginController {
     }
 
     @PostMapping(value = "/user")
-    public User loginByUser(String username,String password)
+    public User loginByUser(@RequestParam("username") String username,
+                            @RequestParam("password") String password)
     {
         /**
         * @Description: 普通员工登录
