@@ -4,6 +4,7 @@ import org.hibernate.annotations.Proxy;
 
 import javax.persistence.*;
 import java.sql.Date;
+import java.util.Collection;
 import java.util.Objects;
 
 @Proxy(lazy = false)
@@ -129,20 +130,5 @@ public class OldPeople {
     @Override
     public int hashCode() {
         return Objects.hash(oldPeopleId, idCard, photo, name, telephone, address, sex, birthday, familyPhone);
-    }
-
-    @Override
-    public String toString() {
-        return "OldPeople{" +
-                "oldPeopleId=" + oldPeopleId +
-                ", idCard='" + idCard + '\'' +
-                ", photo='" + photo + '\'' +
-                ", name='" + name + '\'' +
-                ", telephone='" + telephone + '\'' +
-                ", address='" + address + '\'' +
-                ", sex='" + sex + '\'' +
-                ", birthday=" + birthday +
-                ", familyPhone='" + familyPhone + '\'' +
-                '}';
     }
 }

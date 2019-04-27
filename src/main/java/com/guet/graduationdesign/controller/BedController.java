@@ -2,6 +2,7 @@ package com.guet.graduationdesign.controller;
 
 import com.guet.graduationdesign.pojo.Bed;
 import com.guet.graduationdesign.service.BedService;
+import com.guet.graduationdesign.service.OldPeopleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,6 +24,9 @@ public class BedController {
 
     @Autowired
     private BedService bedService;
+
+    @Autowired
+    private OldPeopleService oldPeopleService;
 
     @GetMapping(value = "/findAll")
     public List<Bed> findAll()
@@ -86,9 +90,7 @@ public class BedController {
     }
 
     @PostMapping(value = "/add")
-    public Bed add(@RequestParam("bedId") String bedId,
-                   @RequestParam("oldPeopleId") Integer oldPeopleId,
-                   @RequestParam("employerId") Integer employerId)
+    public Bed add(@RequestParam("bedId") String bedId)
     {
         /**
         * @Description: 添加床位
@@ -100,6 +102,36 @@ public class BedController {
         * @Exception
         * @Date        2019-04-26 16:18
         */
-        return bedService.add(bedId,oldPeopleId,employerId);
+        return bedService.add(bedId);
+    }
+
+    @PostMapping(value = "/setAdmin")
+    public Bed setAdmin(String bedId,Integer employerId)
+    {
+        /**
+        * @Description: 设置床位管理人员
+        * @Author:      TJX
+         * @param bedId
+         * @param employerId
+        * @Return      com.guet.graduationdesign.pojo.Bed
+        * @Exception
+        * @Date        2019-04-27 21:03
+        */
+        return bedService.setAdminEmployer(bedId,employerId);
+    }
+
+    @PostMapping(value = "/setOldPeople")
+    public Bed setOldPeople(String bedId,Integer oldPeopleId)
+    {
+        /**
+        * @Description: 设置床位使用老人
+        * @Author:      TJX
+         * @param bedId
+         * @param employerId
+        * @Return      com.guet.graduationdesign.pojo.Bed
+        * @Exception
+        * @Date        2019-04-27 21:03
+        */
+        return bedService.setUserOldPeople(bedId,oldPeopleId);
     }
 }

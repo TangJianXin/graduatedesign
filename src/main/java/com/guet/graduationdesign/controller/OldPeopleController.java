@@ -77,7 +77,8 @@ public class OldPeopleController {
                                                 @RequestParam("address") String address,
                                                 @RequestParam("sex") String sex,
                                                 @RequestParam("birthday") Date birthday,
-                                                @RequestParam("familyPhone") String familyPhone)
+                                                @RequestParam("familyPhone") String familyPhone,
+                                                @RequestParam("bedId") String bedId)
     {
         /**
         * @Description: 修改老人信息

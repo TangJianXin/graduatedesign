@@ -1,6 +1,7 @@
 package com.guet.graduationdesign.service.impl;
 
 import com.guet.graduationdesign.pojo.OldPeople;
+import com.guet.graduationdesign.repository.BedRepository;
 import com.guet.graduationdesign.repository.OldPeopleRepository;
 import com.guet.graduationdesign.service.OldPeopleService;
 import com.guet.graduationdesign.util.MultipartFileUtil;
@@ -26,6 +27,9 @@ public class OldPeopleServiceImpl implements OldPeopleService {
 
     @Autowired
     private OldPeopleRepository oldPeopleRepository;
+
+    @Autowired
+    private BedRepository bedRepository;
 
     private String identity = "oldPeople";
 

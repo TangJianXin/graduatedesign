@@ -107,7 +107,7 @@ public class DepartmentServiceImpl implements DepartmentService {
     }
 
     @Override
-    public ArrayList<Employer> findAllEmployer(String departmemtId) {
+    public List<Employer> findAllEmployer(String departmemtId) {
         /**
         * @Description: 查询部门所属员工
         * @Author:      TJX
@@ -117,7 +117,7 @@ public class DepartmentServiceImpl implements DepartmentService {
         * @Date        2019-04-27 16:34
         */
         List<Employer> list = employerRepository.findAll();
-        ArrayList<Employer> arrayList = new ArrayList<Employer>();
+        List<Employer> arrayList = new ArrayList<>();
         for(Employer employer:list)
         {
             if(employer.getDepartmentByDepartmentId().getDepartmentId().equals(departmemtId))
@@ -129,7 +129,7 @@ public class DepartmentServiceImpl implements DepartmentService {
     }
 
     @Override
-    public ArrayList<Equipment> findAllEquipment(String departmentId) {
+    public List<Equipment> findAllEquipment(String departmentId) {
         /**
         * @Description: 查询部门所有设备
         * @Author:      TJX
@@ -139,7 +139,7 @@ public class DepartmentServiceImpl implements DepartmentService {
         * @Date        2019-04-27 16:42
         */
         List<Equipment> list = equipmentRepository.findAll();
-        ArrayList<Equipment> arrayList = new ArrayList<Equipment>();
+        List<Equipment> arrayList = new ArrayList<>();
         for(Equipment equipment:list)
         {
             if(equipment.getDepartmentByDepartmentId().getDepartmentId().equals(departmentId))

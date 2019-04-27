@@ -1,6 +1,7 @@
 package com.guet.graduationdesign.service.impl;
 
 import com.guet.graduationdesign.pojo.Bed;
+import com.guet.graduationdesign.pojo.OldPeople;
 import com.guet.graduationdesign.repository.BedRepository;
 import com.guet.graduationdesign.repository.EmployerRepository;
 import com.guet.graduationdesign.repository.OldPeopleRepository;
@@ -85,12 +86,13 @@ public class BedServiceImpl implements BedService {
         * @Exception
         * @Date        2019-04-24 21:10
         */
-        return add(bedId,oldPeopleId,employerId);
+        Bed bed = getBed(bedId,oldPeopleId,employerId);
+        return bedRepository.save(bed);
     }
 
     @Transactional
     @Override
-    public Bed add(String bedId, Integer oldPeopleId, Integer employerId) {
+    public Bed add(String bedId) {
         /**
         * @Description: 添加床位
         * @Author:      TJX
@@ -101,10 +103,61 @@ public class BedServiceImpl implements BedService {
         * @Exception
         * @Date        2019-04-24 21:09
         */
-        Bed bed = getBed(bedId,oldPeopleId,employerId);
+        Bed bed = getBed(bedId);
         return bedRepository.save(bed);
     }
 
+    @Transactional
+    @Override
+    public Bed setAdminEmployer(String bedId, Integer employerId) {
+        /**
+        * @Description: 设置床位管理人员
+        * @Author:      TJX
+         * @param bedId
+         * @param employerId
+        * @Return      com.guet.graduationdesign.pojo.Bed
+        * @Exception
+        * @Date        2019-04-27 20:52
+        */
+        Bed bed = findById(bedId);
+        bed.setEmployerByEmployerId(employerRepository.getOne(employerId));
+        bedRepository.save(bed);
+        return bed;
+    }
+
+    @Transactional
+    @Override
+    public Bed setUserOldPeople(String bedId, Integer oldPeopleId) {
+        /**
+        * @Description: 设置床位使用老人
+        * @Author:      TJX
+         * @param bedId
+         * @param oldPeopleId
+        * @Return      com.guet.graduationdesign.pojo.Bed
+        * @Exception
+        * @Date        2019-04-27 20:52
+        */
+        Bed bed = findById(bedId);
+        OldPeople oldPeople = oldPeopleRepository.getOne(oldPeopleId);
+        bed.setOldPeopleByOldPeopleId(oldPeople);
+        bedRepository.save(bed);
+        return bed;
+    }
+
+    private Bed getBed(String bedId)
+    {
+        /**
+        * @Description: 构造床位对象
+        * @Author:      TJX
+         * @param bedId
+        * @Return      com.guet.graduationdesign.pojo.Bed
+        * @Exception
+        * @Date        2019-04-27 20:49
+        */
+        Bed bed = new Bed();
+        bed.setBedId(bedId);
+        return bed;
+    }
     private Bed getBed(String bedId,Integer oldPeopleId,Integer employerId)
     {
         /**

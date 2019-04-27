@@ -17,5 +17,12 @@ public interface BedService {
     public Bed update(String bedId,Integer oldPeopleId,Integer employerId);
 
     //添加床位
-    public Bed add(String bedId,Integer oldPeopleId,Integer employerId);
+    public Bed add(String bedId);
+
+    //设置床位的管理人员
+    public Bed setAdminEmployer(String bedId,Integer employerId);
+
+    //设置床位的使用老人
+    public Bed setUserOldPeople(String bedId,Integer oldPeopleId);
+
 }

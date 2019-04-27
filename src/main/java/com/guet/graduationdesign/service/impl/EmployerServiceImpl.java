@@ -1,10 +1,8 @@
 package com.guet.graduationdesign.service.impl;
 
+import com.guet.graduationdesign.pojo.Bed;
 import com.guet.graduationdesign.pojo.Employer;
-import com.guet.graduationdesign.repository.AdminRepository;
-import com.guet.graduationdesign.repository.DepartmentRepository;
-import com.guet.graduationdesign.repository.EmployerRepository;
-import com.guet.graduationdesign.repository.UserRepository;
+import com.guet.graduationdesign.repository.*;
 import com.guet.graduationdesign.service.EmployerService;
 import com.guet.graduationdesign.util.MultipartFileUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -31,6 +30,9 @@ public class EmployerServiceImpl implements EmployerService {
 
     @Autowired
     private DepartmentRepository departmentRepository;
+
+    @Autowired
+    private BedRepository bedRepository;
 
     private String identity = "employer";
 
@@ -132,6 +134,28 @@ public class EmployerServiceImpl implements EmployerService {
             return list.get(list.size()-1);
         }
         return null;
+    }
+
+    @Override
+    public List<Bed> findAllBedById(Integer employerId) {
+        /**
+        * @Description: 根据员工Id查询所有管理的床位
+        * @Author:      TJX
+         * @param employerId
+        * @Return      java.util.List<com.guet.graduationdesign.pojo.Bed>
+        * @Exception
+        * @Date        2019-04-27 20:22
+        */
+        List<Bed> list = bedRepository.findAll();
+        List<Bed> arrayList = new ArrayList<>();
+        for(Bed bed:list)
+        {
+            if(bed.getEmployerByEmployerId().getEmployerId()==employerId)
+            {
+                arrayList.add(bed);
+            }
+        }
+        return arrayList;
     }
 
     private Employer getEmployer(String position, String name,

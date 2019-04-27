@@ -6,8 +6,6 @@ import com.guet.graduationdesign.pojo.Equipment;
 import com.guet.graduationdesign.service.DepartmentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -102,7 +100,7 @@ public class DepartmentController {
     }
 
     @PostMapping(value = "/findAllEmployer")
-    public ArrayList<Employer> findAllEmployerById(@RequestParam("departmentId") String departmentId)
+    public List<Employer> findAllEmployerById(@RequestParam("departmentId") String departmentId)
     {
         /**
         * @Description: 查询部门所有员工
@@ -116,7 +114,7 @@ public class DepartmentController {
     }
 
     @PostMapping(value = "/findAllEquipment")
-    public ArrayList<Equipment> findAllEquipmentById(@RequestParam("departmentId") String departmentId)
+    public List<Equipment> findAllEquipmentById(@RequestParam("departmentId") String departmentId)
     {
         /**
         * @Description: 查询部门所有设备

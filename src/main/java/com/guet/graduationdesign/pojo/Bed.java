@@ -3,6 +3,7 @@ package com.guet.graduationdesign.pojo;
 import org.hibernate.annotations.Proxy;
 
 import javax.persistence.*;
+import java.util.Collection;
 import java.util.Objects;
 
 @Proxy(lazy = false)
@@ -36,7 +37,7 @@ public class Bed {
     }
 
     @ManyToOne
-    @JoinColumn(name = "employer_id", referencedColumnName = "employer_Id", nullable = false)
+    @JoinColumn(name = "employer_id", referencedColumnName = "employer_Id")
     public Employer getEmployerByEmployerId() {
         return employerByEmployerId;
     }
@@ -46,7 +47,7 @@ public class Bed {
     }
 
     @ManyToOne
-    @JoinColumn(name = "old_people_id", referencedColumnName = "old_people_id", nullable = false)
+    @JoinColumn(name = "old_people_id", referencedColumnName = "old_people_id")
     public OldPeople getOldPeopleByOldPeopleId() {
         return oldPeopleByOldPeopleId;
     }
@@ -55,12 +56,4 @@ public class Bed {
         this.oldPeopleByOldPeopleId = oldPeopleByOldPeopleId;
     }
 
-    @Override
-    public String toString() {
-        return "Bed{" +
-                "bedId='" + bedId + '\'' +
-                ", employerByEmployerId=" + employerByEmployerId +
-                ", oldPeopleByOldPeopleId=" + oldPeopleByOldPeopleId +
-                '}';
-    }
 }

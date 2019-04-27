@@ -28,4 +28,5 @@ public interface OldPeopleService {
                          String name, String telephone, String address,
                          String sex, Date birthday,String familyPhone);
 
+
 }

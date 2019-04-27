@@ -3,8 +3,6 @@ package com.guet.graduationdesign.service;
 import com.guet.graduationdesign.pojo.Department;
 import com.guet.graduationdesign.pojo.Employer;
 import com.guet.graduationdesign.pojo.Equipment;
-
-import java.util.ArrayList;
 import java.util.List;
 
 
@@ -26,8 +24,8 @@ public interface DepartmentService {
     public Department add(String departmentId,String departmentName);
 
     //查询部门所有员工
-    public ArrayList<Employer> findAllEmployer(String departmentId);
+    public List<Employer> findAllEmployer(String departmentId);
 
     //查询部门所有设备
-    public ArrayList<Equipment> findAllEquipment(String departmentId);
+    public List<Equipment> findAllEquipment(String departmentId);
 }

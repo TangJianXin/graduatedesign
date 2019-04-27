@@ -1,5 +1,6 @@
 package com.guet.graduationdesign.controller;
 
+import com.guet.graduationdesign.pojo.Bed;
 import com.guet.graduationdesign.pojo.Employer;
 import com.guet.graduationdesign.service.EmployerService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -130,6 +131,19 @@ public class EmployerController {
         * @Date        2019-04-26 10:00
         */
         return employerService.add(position,name,telephone,address,idCard,birthday,photo,sex,departmentId);
+    }
 
+    @PostMapping(value = "/findAllBedById")
+    public List<Bed> findAllBedByEmployerId(@RequestParam("employerId") Integer employerId)
+    {
+        /**
+        * @Description: 根据员工Id查询管理的所有床位
+        * @Author:      TJX
+         * @param employerId
+        * @Return      java.util.List<com.guet.graduationdesign.pojo.Bed>
+        * @Exception
+        * @Date        2019-04-27 20:33
+        */
+        return employerService.findAllBedById(employerId);
     }
 }
