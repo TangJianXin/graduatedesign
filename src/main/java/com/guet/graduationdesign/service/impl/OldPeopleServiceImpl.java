@@ -3,8 +3,10 @@ package com.guet.graduationdesign.service.impl;
 import com.guet.graduationdesign.pojo.OldPeople;
 import com.guet.graduationdesign.repository.OldPeopleRepository;
 import com.guet.graduationdesign.service.OldPeopleService;
+import com.guet.graduationdesign.util.MultipartFileUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.sql.Date;
 import java.util.List;
@@ -23,6 +25,8 @@ public class OldPeopleServiceImpl implements OldPeopleService {
 
     @Autowired
     private OldPeopleRepository oldPeopleRepository;
+
+    private String identity = "oldPeople";
 
     @Override
     public OldPeople findById(Integer oldPeopleId) {
@@ -64,7 +68,7 @@ public class OldPeopleServiceImpl implements OldPeopleService {
     }
 
     @Override
-    public OldPeople update(Integer oldPeopleId, String idCard, String photo, String name, String telephone, String address, String sex, Date birthday, String familyPhone) {
+    public OldPeople update(Integer oldPeopleId, String idCard, MultipartFile photo, String name, String telephone, String address, String sex, Date birthday, String familyPhone) {
         /**
         * @Description: 修改老人信息
         * @Author:      TJX
@@ -81,12 +85,17 @@ public class OldPeopleServiceImpl implements OldPeopleService {
         * @Exception
         * @Date        2019-04-24 21:56
         */
-        OldPeople oldPeople = getOldPeople(oldPeopleId,idCard,photo,name,telephone,address,sex,birthday,familyPhone);
-        return oldPeopleRepository.save(oldPeople);
+        String photoPath = MultipartFileUtil.saveFile(photo,identity);
+        if(MultipartFileUtil.isSuccess(photoPath))
+        {
+            OldPeople oldPeople = getOldPeople(oldPeopleId,idCard,photoPath,name,telephone,address,sex,birthday,familyPhone);
+            return oldPeopleRepository.save(oldPeople);
+        }
+        return null;
     }
 
     @Override
-    public OldPeople add(String idCard, String photo, String name, String telephone, String address, String sex, Date birthday, String familyPhone) {
+    public OldPeople add(String idCard, MultipartFile photo, String name, String telephone, String address, String sex, Date birthday, String familyPhone) {
         /**
         * @Description: 添加老人
         * @Author:      TJX
@@ -103,10 +112,15 @@ public class OldPeopleServiceImpl implements OldPeopleService {
         * @Exception
         * @Date        2019-04-24 21:55
         */
-        OldPeople oldPeople = getOldPeople(idCard,photo,name,telephone,address,sex,birthday,familyPhone);
-        oldPeopleRepository.save(oldPeople);
-        List<OldPeople> list = findAll();
-        return list.get(list.size()-1);
+        String photoPath = MultipartFileUtil.saveFile(photo,identity);
+        if(MultipartFileUtil.isSuccess(photoPath))
+        {
+            OldPeople oldPeople = getOldPeople(idCard,photoPath,name,telephone,address,sex,birthday,familyPhone);
+            oldPeopleRepository.save(oldPeople);
+            List<OldPeople> list = findAll();
+            return list.get(list.size()-1);
+        }
+        return null;
     }
 
     private OldPeople getOldPeople(Integer oldPeopleId, String idCard, String photo,

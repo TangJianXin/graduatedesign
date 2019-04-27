@@ -4,9 +4,10 @@ import com.guet.graduationdesign.pojo.Employer;
 import com.guet.graduationdesign.repository.DepartmentRepository;
 import com.guet.graduationdesign.repository.EmployerRepository;
 import com.guet.graduationdesign.service.EmployerService;
+import com.guet.graduationdesign.util.MultipartFileUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
+import org.springframework.web.multipart.MultipartFile;
 import java.sql.Date;
 import java.util.List;
 
@@ -27,6 +28,8 @@ public class EmployerServiceImpl implements EmployerService {
 
     @Autowired
     private DepartmentRepository departmentRepository;
+
+    private String identity = "employer";
 
     @Override
     public Employer findById(Integer employerId) {
@@ -68,7 +71,7 @@ public class EmployerServiceImpl implements EmployerService {
     }
 
     @Override
-    public Employer update(Integer employerId, String position, String name, String telephone, String address, String idCard, Date birthday, String photo, String sex, String departmentId) {
+    public Employer update(Integer employerId, String position, String name, String telephone, String address, String idCard, Date birthday, MultipartFile photo, String sex, String departmentId) {
         /**
         * @Description: 修改员工信息
         * @Author:      TJX
@@ -86,12 +89,17 @@ public class EmployerServiceImpl implements EmployerService {
         * @Exception
         * @Date        2019-04-24 21:28
         */
-        Employer employer =  getEmployer(employerId,position,name,telephone,address,idCard,birthday,photo,sex,departmentId);
-        return employerRepository.save(employer);
+        String photoPath = MultipartFileUtil.saveFile(photo,identity);
+        if(MultipartFileUtil.isSuccess(photoPath))
+        {
+            Employer employer =  getEmployer(employerId,position,name,telephone,address,idCard,birthday,photoPath,sex,departmentId);
+            return employerRepository.save(employer);
+        }
+        return null;
     }
 
     @Override
-    public Employer add(String position, String name, String telephone, String address, String idCard, Date birthday, String photo, String sex, String departmentId) {
+    public Employer add(String position, String name, String telephone, String address, String idCard, Date birthday, MultipartFile photo, String sex, String departmentId) {
         /**
         * @Description: 添加员工
         * @Author:      TJX
@@ -109,10 +117,15 @@ public class EmployerServiceImpl implements EmployerService {
         * @Exception
         * @Date        2019-04-24 21:28
         */
-        Employer employer = getEmployer(position,name,telephone,address,idCard,birthday,photo,sex,departmentId);
-        employerRepository.save(employer);
-        List<Employer> list = findAll();
-        return list.get(list.size()-1);
+        String photoPath = MultipartFileUtil.saveFile(photo,identity);
+        if(MultipartFileUtil.isSuccess(photoPath))
+        {
+            Employer employer = getEmployer(position,name,telephone,address,idCard,birthday,photoPath,sex,departmentId);
+            employerRepository.save(employer);
+            List<Employer> list = findAll();
+            return list.get(list.size()-1);
+        }
+        return null;
     }
 
     private Employer getEmployer(String position, String name,

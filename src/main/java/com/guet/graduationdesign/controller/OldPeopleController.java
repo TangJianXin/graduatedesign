@@ -4,6 +4,7 @@ import com.guet.graduationdesign.pojo.OldPeople;
 import com.guet.graduationdesign.service.OldPeopleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.sql.Date;
 import java.util.List;
@@ -70,7 +71,7 @@ public class OldPeopleController {
     @PostMapping(value = "/modifyInformation")
     public OldPeople modifyOldPeopleInformation(@RequestParam("oldPeopleId") Integer oldPeopleId,
                                                 @RequestParam("idCard") String idCard,
-                                                @RequestParam("photo") String photo,
+                                                @RequestParam("photo") MultipartFile photo,
                                                 @RequestParam("name") String name,
                                                 @RequestParam("telephone") String telephone,
                                                 @RequestParam("address") String address,
@@ -99,7 +100,7 @@ public class OldPeopleController {
 
     @PostMapping(value = "/add")
     public OldPeople add(@RequestParam("idCard") String idCard,
-                         @RequestParam("photo") String photo,
+                         @RequestParam("photo")MultipartFile photo,
                          @RequestParam("name") String name,
                          @RequestParam("telephone") String telephone,
                          @RequestParam("address") String address,

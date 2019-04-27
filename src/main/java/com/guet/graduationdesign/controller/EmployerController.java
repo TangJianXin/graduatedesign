@@ -4,6 +4,7 @@ import com.guet.graduationdesign.pojo.Employer;
 import com.guet.graduationdesign.service.EmployerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.sql.Date;
 import java.util.List;
@@ -76,7 +77,7 @@ public class EmployerController {
                                               @RequestParam("address") String address,
                                               @RequestParam("idCard") String idCard,
                                               @RequestParam("birthday") Date birthday,
-                                              @RequestParam("photo") String photo,
+                                              @RequestParam("photo") MultipartFile photo,
                                               @RequestParam("sex") String sex,
                                               @RequestParam("departmentId") String departmentId)
     {
@@ -107,7 +108,7 @@ public class EmployerController {
                         @RequestParam("address") String address,
                         @RequestParam("idCard") String idCard,
                         @RequestParam("birthday") Date birthday,
-                        @RequestParam("photo") String photo,
+                        @RequestParam("photo") MultipartFile photo,
                         @RequestParam("sex") String sex,
                         @RequestParam("departmentId") String departmentId)
     {
