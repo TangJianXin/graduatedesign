@@ -20,4 +20,7 @@ public interface AdminService {
 
     //注册
     public Admin add(String username,String password,Integer employerId);
+
+    //根据员工Id查询管理员账号密码
+    public Admin findByEmployerId(Integer employerId);
 }

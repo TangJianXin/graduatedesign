@@ -6,6 +6,7 @@ import com.guet.graduationdesign.service.OldPeopleService;
 import com.guet.graduationdesign.util.MultipartFileUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.sql.Date;
@@ -54,6 +55,7 @@ public class OldPeopleServiceImpl implements OldPeopleService {
         return oldPeopleRepository.findAll();
     }
 
+    @Transactional
     @Override
     public void delete(Integer oldPeopleId) {
         /**
@@ -67,6 +69,7 @@ public class OldPeopleServiceImpl implements OldPeopleService {
         oldPeopleRepository.deleteById(oldPeopleId);
     }
 
+    @Transactional
     @Override
     public OldPeople update(Integer oldPeopleId, String idCard, MultipartFile photo, String name, String telephone, String address, String sex, Date birthday, String familyPhone) {
         /**
@@ -94,6 +97,7 @@ public class OldPeopleServiceImpl implements OldPeopleService {
         return null;
     }
 
+    @Transactional
     @Override
     public OldPeople add(String idCard, MultipartFile photo, String name, String telephone, String address, String sex, Date birthday, String familyPhone) {
         /**

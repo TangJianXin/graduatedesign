@@ -6,6 +6,7 @@ import com.guet.graduationdesign.repository.EquipmentRepository;
 import com.guet.graduationdesign.service.EquipmentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.Date;
 import java.util.List;
@@ -54,6 +55,7 @@ public class EquipmentServiceImpl implements EquipmentService {
         return equipmentRepository.findAll();
     }
 
+    @Transactional
     @Override
     public void deleteById(String equipmentId) {
         /**
@@ -67,6 +69,7 @@ public class EquipmentServiceImpl implements EquipmentService {
         equipmentRepository.deleteById(equipmentId);
     }
 
+    @Transactional
     @Override
     public Equipment update(String equipmentId, String equipmentName,
                             Date purchaseDate,Date productionDate,String departmentId) {
@@ -85,6 +88,7 @@ public class EquipmentServiceImpl implements EquipmentService {
         return add(equipmentId,equipmentName,purchaseDate,productionDate,departmentId);
     }
 
+    @Transactional
     @Override
     public Equipment add(String equipmentId, String equipmentName,
                          Date purchaseDate,Date productionDate,String departmentId) {

@@ -54,6 +54,7 @@ public class AdminServiceImpl implements AdminService {
         return adminRepository.getOne(username);
     }
 
+    @Transactional
     @Override
     public void deleteByUsername(String username) {
         /**
@@ -67,6 +68,7 @@ public class AdminServiceImpl implements AdminService {
         adminRepository.deleteById(username);
     }
 
+    @Transactional
     @Override
     public Admin update(String username,String password,Integer employerId) {
         /**
@@ -82,6 +84,7 @@ public class AdminServiceImpl implements AdminService {
         return add(username,password,employerId);
     }
 
+    @Transactional
     @Override
     public Admin add(String username, String password, Integer employerId) {
         /**
@@ -96,6 +99,27 @@ public class AdminServiceImpl implements AdminService {
         */
         Admin admin = getAdmin(username,password,employerId);
         return adminRepository.save(admin);
+    }
+
+    @Override
+    public Admin findByEmployerId(Integer employerId) {
+        /**
+        * @Description: 根据员工Id查询管理员账号密码
+        * @Author:      TJX
+         * @param employerId
+        * @Return      com.guet.graduationdesign.pojo.Admin
+        * @Exception
+        * @Date        2019-04-27 17:15
+        */
+        List<Admin> list = findAll();
+        for(Admin admin:list)
+        {
+            if(admin.getEmployerByEmployerId().getEmployerId()==employerId)
+            {
+                return admin;
+            }
+        }
+        return null;
     }
 
     private Admin getAdmin(String username,String password,Integer employerId)

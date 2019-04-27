@@ -102,4 +102,18 @@ public class UserController {
         */
         return userService.add(username,password,employerId);
     }
+
+    @PostMapping(value = "/findByEmployerId")
+    public User findUserByEmployerId(@RequestParam("employerId") Integer employerId)
+    {
+        /**
+        * @Description: 根据员工Id查询普通员工账号密码
+        * @Author:      TJX
+         * @param employerId
+        * @Return      com.guet.graduationdesign.pojo.User
+        * @Exception
+        * @Date        2019-04-27 17:23
+        */
+        return userService.findByEmployerId(employerId);
+    }
 }

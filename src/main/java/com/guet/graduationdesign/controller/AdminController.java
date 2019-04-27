@@ -103,4 +103,18 @@ public class AdminController {
          */
         return adminService.add(username,password,employerId);
     }
+
+    @PostMapping(value = "/findByEmployerId")
+    public Admin findAdminByEmployerId(@RequestParam("employerId") Integer employerId)
+    {
+        /**
+        * @Description: 根据员工Id查询管理员账号密码
+        * @Author:      TJX
+         * @param employerId
+        * @Return      com.guet.graduationdesign.pojo.Admin
+        * @Exception
+        * @Date        2019-04-27 17:16
+        */
+        return adminService.findByEmployerId(employerId);
+    }
 }

@@ -1,12 +1,15 @@
 package com.guet.graduationdesign.service.impl;
 
 import com.guet.graduationdesign.pojo.Employer;
+import com.guet.graduationdesign.repository.AdminRepository;
 import com.guet.graduationdesign.repository.DepartmentRepository;
 import com.guet.graduationdesign.repository.EmployerRepository;
+import com.guet.graduationdesign.repository.UserRepository;
 import com.guet.graduationdesign.service.EmployerService;
 import com.guet.graduationdesign.util.MultipartFileUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 import java.sql.Date;
 import java.util.List;
@@ -57,6 +60,7 @@ public class EmployerServiceImpl implements EmployerService {
         return employerRepository.findAll();
     }
 
+    @Transactional
     @Override
     public void deleteById(Integer employerId) {
         /**
@@ -70,6 +74,7 @@ public class EmployerServiceImpl implements EmployerService {
         employerRepository.deleteById(employerId);
     }
 
+    @Transactional
     @Override
     public Employer update(Integer employerId, String position, String name, String telephone, String address, String idCard, Date birthday, MultipartFile photo, String sex, String departmentId) {
         /**
@@ -98,6 +103,7 @@ public class EmployerServiceImpl implements EmployerService {
         return null;
     }
 
+    @Transactional
     @Override
     public Employer add(String position, String name, String telephone, String address, String idCard, Date birthday, MultipartFile photo, String sex, String departmentId) {
         /**

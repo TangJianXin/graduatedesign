@@ -7,6 +7,8 @@ import com.guet.graduationdesign.repository.UserRepository;
 import com.guet.graduationdesign.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import java.util.List;
 
 @Service
@@ -43,6 +45,7 @@ public class UserServiceImpl implements UserService {
         return userRepository.getOne(username);
     }
 
+    @Transactional
     @Override
     public void deleteByUsername(String username) {
         /**
@@ -56,6 +59,7 @@ public class UserServiceImpl implements UserService {
         userRepository.deleteById(username);
     }
 
+    @Transactional
     @Override
     public User update(String username, String password, Integer employerId) {
         /**
@@ -71,6 +75,7 @@ public class UserServiceImpl implements UserService {
         return add(username,password,employerId);
     }
 
+    @Transactional
     @Override
     public User add(String username, String password, Integer employerId)
     {
@@ -87,7 +92,28 @@ public class UserServiceImpl implements UserService {
         User user = getUser(username,password,employerId);
         return userRepository.save(user);
     }
-    
+
+    @Override
+    public User findByEmployerId(Integer employerId) {
+        /**
+        * @Description: 根据员工Id查询普通员工账号密码
+        * @Author:      TJX
+         * @param employerId
+        * @Return      com.guet.graduationdesign.pojo.User
+        * @Exception
+        * @Date        2019-04-27 17:21
+        */
+        List<User> list = findAll();
+        for(User user:list)
+        {
+            if(user.getEmployerByEmployerId().getEmployerId()==employerId)
+            {
+                return user;
+            }
+        }
+        return null;
+    }
+
     private User getUser(String username,String password,Integer employerId)
     {
         /**

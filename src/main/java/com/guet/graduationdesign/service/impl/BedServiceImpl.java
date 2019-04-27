@@ -8,6 +8,7 @@ import com.guet.graduationdesign.service.BedService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 
 /**
@@ -57,6 +58,7 @@ public class BedServiceImpl implements BedService {
         return bedRepository.findAll();
     }
 
+    @Transactional
     @Override
     public void deleteById(String bedId) {
         /**
@@ -70,6 +72,7 @@ public class BedServiceImpl implements BedService {
         bedRepository.deleteById(bedId);
     }
 
+    @Transactional
     @Override
     public Bed update(String bedId, Integer oldPeopleId, Integer employerId) {
         /**
@@ -85,6 +88,7 @@ public class BedServiceImpl implements BedService {
         return add(bedId,oldPeopleId,employerId);
     }
 
+    @Transactional
     @Override
     public Bed add(String bedId, Integer oldPeopleId, Integer employerId) {
         /**

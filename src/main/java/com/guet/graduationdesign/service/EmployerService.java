@@ -2,7 +2,6 @@ package com.guet.graduationdesign.service;
 
 import com.guet.graduationdesign.pojo.Employer;
 import org.springframework.web.multipart.MultipartFile;
-
 import java.sql.Date;
 import java.util.List;
 
@@ -27,4 +26,5 @@ public interface EmployerService {
     public Employer add(String position, String name,
                         String telephone, String address, String idCard,
                         Date birthday,MultipartFile photo,String sex,String departmentId);
+
 }

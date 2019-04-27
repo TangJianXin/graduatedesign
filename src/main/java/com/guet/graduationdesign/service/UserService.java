@@ -21,4 +21,7 @@ public interface UserService {
 
     //注册
     public User add(String username,String password,Integer employerId);
+
+    //根据员工Id查询普通员工账号密码
+    public User findByEmployerId(Integer employerId);
 }
