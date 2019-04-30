@@ -2,8 +2,6 @@ package com.guet.graduationdesign.service;
 
 import com.guet.graduationdesign.pojo.Bed;
 import com.guet.graduationdesign.pojo.Employer;
-import org.springframework.web.multipart.MultipartFile;
-import java.sql.Date;
 import java.util.List;
 
 
@@ -21,12 +19,13 @@ public interface EmployerService {
     //更新员工
     public Employer update(Integer employerId, String position, String name,
                            String telephone, String address, String idCard,
-                           Date birthday, MultipartFile photo, String sex, String departmentId);
+                           String birthday, String photo, String sex, String departmentId);
 
     //添加员工
     public Employer add(String position, String name,
                         String telephone, String address, String idCard,
-                        Date birthday,MultipartFile photo,String sex,String departmentId);
+                        String birthday, String photo, String sex, String departmentId,
+                        String entryDate);
 
     //根据员工Id查询员工管理的床位
     public List<Bed> findAllBedById(Integer employerId);

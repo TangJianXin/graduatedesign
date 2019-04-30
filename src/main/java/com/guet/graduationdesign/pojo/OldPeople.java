@@ -1,10 +1,8 @@
 package com.guet.graduationdesign.pojo;
 
 import org.hibernate.annotations.Proxy;
-
 import javax.persistence.*;
-import java.sql.Date;
-import java.util.Collection;
+import java.util.Date;
 import java.util.Objects;
 
 @Proxy(lazy = false)
@@ -20,6 +18,8 @@ public class OldPeople {
     private String sex;
     private Date birthday;
     private String familyPhone;
+    private Date entryDate;
+    private Date leaveDate;
 
     @Id
     @Column(name = "old_people_id")
@@ -111,6 +111,26 @@ public class OldPeople {
         this.familyPhone = familyPhone;
     }
 
+    @Basic
+    @Column(name = "entry_date")
+    public Date getEntryDate() {
+        return entryDate;
+    }
+
+    public void setEntryDate(Date entryDate) {
+        this.entryDate = entryDate;
+    }
+
+    @Basic
+    @Column(name = "leave_date")
+    public Date getLeaveDate() {
+        return leaveDate;
+    }
+
+    public void setLeaveDate(Date leaveDate) {
+        this.leaveDate = leaveDate;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -124,11 +144,14 @@ public class OldPeople {
                 Objects.equals(address, oldPeople.address) &&
                 Objects.equals(sex, oldPeople.sex) &&
                 Objects.equals(birthday, oldPeople.birthday) &&
-                Objects.equals(familyPhone, oldPeople.familyPhone);
+                Objects.equals(familyPhone, oldPeople.familyPhone) &&
+                Objects.equals(entryDate, oldPeople.entryDate) &&
+                Objects.equals(leaveDate, oldPeople.leaveDate);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(oldPeopleId, idCard, photo, name, telephone, address, sex, birthday, familyPhone);
+        return Objects.hash(oldPeopleId, idCard, photo, name, telephone, address, sex, birthday, familyPhone, entryDate, leaveDate);
     }
+
 }

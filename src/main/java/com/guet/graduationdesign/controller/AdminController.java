@@ -37,7 +37,7 @@ public class AdminController {
         return adminService.findAll();
     }
 
-    @PostMapping(value = "/findByUsername")
+    @GetMapping(value = "/findByUsername")
     public Admin findByUsername(@RequestParam("username") String username)
     {
         /**
@@ -68,7 +68,7 @@ public class AdminController {
         return "删除成功";
     }
 
-    @PostMapping("/modifyPassword")
+    @PutMapping("/modifyPassword")
     public Admin modifyPassword(@RequestParam("username") String username,
                                 @RequestParam("password") String password,
                                 @RequestParam("employerId") Integer employerId)
@@ -104,7 +104,7 @@ public class AdminController {
         return adminService.add(username,password,employerId);
     }
 
-    @PostMapping(value = "/findByEmployerId")
+    @GetMapping(value = "/findByEmployerId")
     public Admin findAdminByEmployerId(@RequestParam("employerId") Integer employerId)
     {
         /**

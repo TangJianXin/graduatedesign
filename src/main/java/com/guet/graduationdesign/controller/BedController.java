@@ -2,10 +2,8 @@ package com.guet.graduationdesign.controller;
 
 import com.guet.graduationdesign.pojo.Bed;
 import com.guet.graduationdesign.service.BedService;
-import com.guet.graduationdesign.service.OldPeopleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
 
@@ -25,9 +23,6 @@ public class BedController {
     @Autowired
     private BedService bedService;
 
-    @Autowired
-    private OldPeopleService oldPeopleService;
-
     @GetMapping(value = "/findAll")
     public List<Bed> findAll()
     {
@@ -42,7 +37,7 @@ public class BedController {
         return bedService.findAll();
     }
 
-    @PostMapping(value = "/findById")
+    @GetMapping(value = "/findById")
     public Bed findBedById(@RequestParam("bedId") String bedId)
     {
         /**
@@ -71,7 +66,7 @@ public class BedController {
         return "删除成功";
     }
 
-    @PostMapping(value = "/modifyInformation")
+    @PutMapping(value = "/modifyInformation")
     public Bed modifyBedInformation(@RequestParam("bedId") String bedId,
                                     @RequestParam("oldPeopleId") Integer oldPeopleId,
                                     @RequestParam("employerId") Integer employerId)

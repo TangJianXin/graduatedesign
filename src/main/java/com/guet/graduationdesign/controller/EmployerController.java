@@ -5,9 +5,6 @@ import com.guet.graduationdesign.pojo.Employer;
 import com.guet.graduationdesign.service.EmployerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
-
-import java.sql.Date;
 import java.util.List;
 
 /**
@@ -40,7 +37,7 @@ public class EmployerController {
         return employerService.findAll();
     }
 
-    @PostMapping("/findById")
+    @GetMapping("/findById")
     public Employer findByEmployerId(@RequestParam("employerId") Integer employerId)
     {
         /**
@@ -70,15 +67,15 @@ public class EmployerController {
     }
 
 
-    @PostMapping("/modifyInformation")
+    @PutMapping("/modifyInformation")
     public Employer modifyEmployerInformation(@RequestParam("employerId") Integer employerId,
                                               @RequestParam("position") String position,
                                               @RequestParam("name") String name,
                                               @RequestParam("telephone") String telephone,
                                               @RequestParam("address") String address,
                                               @RequestParam("idCard") String idCard,
-                                              @RequestParam("birthday") Date birthday,
-                                              @RequestParam("photo") MultipartFile photo,
+                                              @RequestParam("birthday") String birthday,
+                                              @RequestParam("photo") String photo,
                                               @RequestParam("sex") String sex,
                                               @RequestParam("departmentId") String departmentId)
     {
@@ -103,15 +100,16 @@ public class EmployerController {
     }
 
     @PostMapping(value = "/add")
-    public Employer add(@RequestParam("position") String position,
+    public Employer add(@RequestParam("photo") String photo,
+                        @RequestParam("position") String position,
                         @RequestParam("name") String name,
                         @RequestParam("telephone") String telephone,
                         @RequestParam("address") String address,
                         @RequestParam("idCard") String idCard,
-                        @RequestParam("birthday") Date birthday,
-                        @RequestParam("photo") MultipartFile photo,
+                        @RequestParam("birthday") String birthday,
                         @RequestParam("sex") String sex,
-                        @RequestParam("departmentId") String departmentId)
+                        @RequestParam("departmentId") String departmentId,
+                        @RequestParam("entryDate") String entryDate)
     {
         /**
         * @Description: 添加员工信息
@@ -130,10 +128,10 @@ public class EmployerController {
         * @Exception
         * @Date        2019-04-26 10:00
         */
-        return employerService.add(position,name,telephone,address,idCard,birthday,photo,sex,departmentId);
+        return employerService.add(position,name,telephone,address,idCard,birthday,photo,sex,departmentId,entryDate);
     }
 
-    @PostMapping(value = "/findAllBedById")
+    @GetMapping(value = "/findAllBedById")
     public List<Bed> findAllBedByEmployerId(@RequestParam("employerId") Integer employerId)
     {
         /**
@@ -146,4 +144,5 @@ public class EmployerController {
         */
         return employerService.findAllBedById(employerId);
     }
+
 }

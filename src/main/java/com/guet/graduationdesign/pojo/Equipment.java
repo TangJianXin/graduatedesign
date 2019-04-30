@@ -1,9 +1,8 @@
 package com.guet.graduationdesign.pojo;
 
 import org.hibernate.annotations.Proxy;
-
 import javax.persistence.*;
-import java.sql.Date;
+import java.util.Date;
 import java.util.Objects;
 
 @Proxy(lazy = false)

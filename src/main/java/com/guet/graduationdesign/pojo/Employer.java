@@ -1,11 +1,10 @@
 package com.guet.graduationdesign.pojo;
 
 import org.hibernate.annotations.Proxy;
-
 import javax.persistence.*;
-import java.sql.Date;
-import java.util.Collection;
+import java.util.Date;
 import java.util.Objects;
+
 
 @Proxy(lazy = false)
 @Entity
@@ -19,6 +18,8 @@ public class Employer {
     private Date birthday;
     private String photo;
     private String sex;
+    private Date entryDate;
+    private Date resignDate;
     private Department departmentByDepartmentId;
 
     @Id
@@ -111,6 +112,26 @@ public class Employer {
         this.sex = sex;
     }
 
+    @Basic
+    @Column(name = "entry_date")
+    public Date getEntryDate() {
+        return entryDate;
+    }
+
+    public void setEntryDate(Date entryDate) {
+        this.entryDate = entryDate;
+    }
+
+    @Basic
+    @Column(name = "resign_date")
+    public Date getResignDate() {
+        return resignDate;
+    }
+
+    public void setResignDate(Date resignDate) {
+        this.resignDate = resignDate;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -124,12 +145,14 @@ public class Employer {
                 Objects.equals(idCard, employer.idCard) &&
                 Objects.equals(birthday, employer.birthday) &&
                 Objects.equals(photo, employer.photo) &&
-                Objects.equals(sex, employer.sex);
+                Objects.equals(sex, employer.sex) &&
+                Objects.equals(entryDate, employer.entryDate) &&
+                Objects.equals(resignDate, employer.resignDate);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(employerId, position, name, telephone, address, idCard, birthday, photo, sex);
+        return Objects.hash(employerId, position, name, telephone, address, idCard, birthday, photo, sex, entryDate, resignDate);
     }
 
     @ManyToOne
@@ -140,21 +163,5 @@ public class Employer {
 
     public void setDepartmentByDepartmentId(Department departmentByDepartmentId) {
         this.departmentByDepartmentId = departmentByDepartmentId;
-    }
-
-    @Override
-    public String toString() {
-        return "Employer{" +
-                "employerId=" + employerId +
-                ", position='" + position + '\'' +
-                ", name='" + name + '\'' +
-                ", telephone='" + telephone + '\'' +
-                ", address='" + address + '\'' +
-                ", idCard='" + idCard + '\'' +
-                ", birthday=" + birthday +
-                ", photo='" + photo + '\'' +
-                ", sex='" + sex + '\'' +
-                ", departmentByDepartmentId=" + departmentByDepartmentId +
-                '}';
     }
 }

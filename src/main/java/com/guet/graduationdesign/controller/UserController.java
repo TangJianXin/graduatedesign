@@ -4,7 +4,6 @@ import com.guet.graduationdesign.pojo.User;
 import com.guet.graduationdesign.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
 
@@ -38,7 +37,7 @@ public class UserController {
         return userService.findAll();
     }
 
-    @PostMapping(value = "/findByUsername")
+    @GetMapping(value = "/findByUsername")
     public User findByUsername(@RequestParam("username") String username)
     {
         /**
@@ -67,7 +66,7 @@ public class UserController {
         return "删除成功";
     }
 
-    @PostMapping("/modifyPassword")
+    @PutMapping("/modifyPassword")
     public User modifyPassword(@RequestParam("username") String username,
                                @RequestParam("password") String password,
                                @RequestParam("employerId") Integer employerId)
@@ -103,7 +102,7 @@ public class UserController {
         return userService.add(username,password,employerId);
     }
 
-    @PostMapping(value = "/findByEmployerId")
+    @GetMapping(value = "/findByEmployerId")
     public User findUserByEmployerId(@RequestParam("employerId") Integer employerId)
     {
         /**

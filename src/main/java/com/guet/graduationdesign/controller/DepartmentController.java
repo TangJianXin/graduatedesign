@@ -38,7 +38,7 @@ public class DepartmentController {
         return departmentService.findAll();
     }
 
-    @PostMapping(value = "/findById")
+    @GetMapping(value = "/findById")
     public Department findDepartmentById(@RequestParam("departmentId") String departmentId)
     {
         /**
@@ -67,7 +67,7 @@ public class DepartmentController {
         return "删除成功";
     }
 
-    @PostMapping("/modifyInformation")
+    @PutMapping("/modifyInformation")
     public Department modifyDepartmentInformation(@RequestParam("departmentId") String departmentId,
                                                   @RequestParam("departmentName") String departmentName)
     {
@@ -99,7 +99,7 @@ public class DepartmentController {
         return departmentService.add(departmentId,departmentName);
     }
 
-    @PostMapping(value = "/findAllEmployer")
+    @GetMapping(value = "/findAllEmployer")
     public List<Employer> findAllEmployerById(@RequestParam("departmentId") String departmentId)
     {
         /**
@@ -113,7 +113,7 @@ public class DepartmentController {
         return departmentService.findAllEmployer(departmentId);
     }
 
-    @PostMapping(value = "/findAllEquipment")
+    @GetMapping(value = "/findAllEquipment")
     public List<Equipment> findAllEquipmentById(@RequestParam("departmentId") String departmentId)
     {
         /**

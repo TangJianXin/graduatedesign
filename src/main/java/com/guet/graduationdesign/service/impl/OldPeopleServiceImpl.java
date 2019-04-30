@@ -4,13 +4,12 @@ import com.guet.graduationdesign.pojo.OldPeople;
 import com.guet.graduationdesign.repository.BedRepository;
 import com.guet.graduationdesign.repository.OldPeopleRepository;
 import com.guet.graduationdesign.service.OldPeopleService;
-import com.guet.graduationdesign.util.MultipartFileUtil;
+import com.guet.graduationdesign.util.DateUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.multipart.MultipartFile;
 
-import java.sql.Date;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -27,11 +26,6 @@ public class OldPeopleServiceImpl implements OldPeopleService {
 
     @Autowired
     private OldPeopleRepository oldPeopleRepository;
-
-    @Autowired
-    private BedRepository bedRepository;
-
-    private String identity = "oldPeople";
 
     @Override
     public OldPeople findById(Integer oldPeopleId) {
@@ -75,7 +69,7 @@ public class OldPeopleServiceImpl implements OldPeopleService {
 
     @Transactional
     @Override
-    public OldPeople update(Integer oldPeopleId, String idCard, MultipartFile photo, String name, String telephone, String address, String sex, Date birthday, String familyPhone) {
+    public OldPeople update(Integer oldPeopleId, String idCard, String photo, String name, String telephone, String address, String sex, String birthday, String familyPhone) {
         /**
         * @Description: 修改老人信息
         * @Author:      TJX
@@ -92,18 +86,13 @@ public class OldPeopleServiceImpl implements OldPeopleService {
         * @Exception
         * @Date        2019-04-24 21:56
         */
-        String photoPath = MultipartFileUtil.saveFile(photo,identity);
-        if(MultipartFileUtil.isSuccess(photoPath))
-        {
-            OldPeople oldPeople = getOldPeople(oldPeopleId,idCard,photoPath,name,telephone,address,sex,birthday,familyPhone);
-            return oldPeopleRepository.save(oldPeople);
-        }
-        return null;
+        OldPeople oldPeople = getOldPeople(oldPeopleId,idCard,photo,name,telephone,address,sex,DateUtil.getDate(birthday),familyPhone);
+        return oldPeopleRepository.save(oldPeople);
     }
 
     @Transactional
     @Override
-    public OldPeople add(String idCard, MultipartFile photo, String name, String telephone, String address, String sex, Date birthday, String familyPhone) {
+    public OldPeople add(String idCard, String photo, String name, String telephone, String address, String sex, String birthday, String familyPhone,String entryDate) {
         /**
         * @Description: 添加老人
         * @Author:      TJX
@@ -120,15 +109,10 @@ public class OldPeopleServiceImpl implements OldPeopleService {
         * @Exception
         * @Date        2019-04-24 21:55
         */
-        String photoPath = MultipartFileUtil.saveFile(photo,identity);
-        if(MultipartFileUtil.isSuccess(photoPath))
-        {
-            OldPeople oldPeople = getOldPeople(idCard,photoPath,name,telephone,address,sex,birthday,familyPhone);
-            oldPeopleRepository.save(oldPeople);
-            List<OldPeople> list = findAll();
-            return list.get(list.size()-1);
-        }
-        return null;
+        OldPeople oldPeople = getOldPeople(idCard,photo,name,telephone,address,sex, DateUtil.getDate(birthday),familyPhone,DateUtil.getDate(entryDate));
+        oldPeopleRepository.save(oldPeople);
+        List<OldPeople> list = findAll();
+        return list.get(list.size()-1);
     }
 
     private OldPeople getOldPeople(Integer oldPeopleId, String idCard, String photo,
@@ -166,7 +150,8 @@ public class OldPeopleServiceImpl implements OldPeopleService {
 
     private OldPeople getOldPeople(String idCard, String photo,
                                    String name, String telephone, String address,
-                                   String sex, Date birthday,String familyPhone)
+                                   String sex, Date birthday, String familyPhone,
+                                   Date entryDate)
     {
         /**
         * @Description: 构造老人对象
@@ -192,6 +177,7 @@ public class OldPeopleServiceImpl implements OldPeopleService {
         oldPeople.setSex(sex);
         oldPeople.setBirthday(birthday);
         oldPeople.setFamilyPhone(familyPhone);
+        oldPeople.setEntryDate(entryDate);
         return oldPeople;
     }
 }

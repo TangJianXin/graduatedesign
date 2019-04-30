@@ -4,13 +4,12 @@ import com.guet.graduationdesign.pojo.Bed;
 import com.guet.graduationdesign.pojo.Employer;
 import com.guet.graduationdesign.repository.*;
 import com.guet.graduationdesign.service.EmployerService;
-import com.guet.graduationdesign.util.MultipartFileUtil;
+import com.guet.graduationdesign.util.DateUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.multipart.MultipartFile;
-import java.sql.Date;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -34,7 +33,6 @@ public class EmployerServiceImpl implements EmployerService {
     @Autowired
     private BedRepository bedRepository;
 
-    private String identity = "employer";
 
     @Override
     public Employer findById(Integer employerId) {
@@ -78,7 +76,7 @@ public class EmployerServiceImpl implements EmployerService {
 
     @Transactional
     @Override
-    public Employer update(Integer employerId, String position, String name, String telephone, String address, String idCard, Date birthday, MultipartFile photo, String sex, String departmentId) {
+    public Employer update(Integer employerId, String position, String name, String telephone, String address, String idCard, String birthday, String photo, String sex, String departmentId) {
         /**
         * @Description: 修改员工信息
         * @Author:      TJX
@@ -96,18 +94,13 @@ public class EmployerServiceImpl implements EmployerService {
         * @Exception
         * @Date        2019-04-24 21:28
         */
-        String photoPath = MultipartFileUtil.saveFile(photo,identity);
-        if(MultipartFileUtil.isSuccess(photoPath))
-        {
-            Employer employer =  getEmployer(employerId,position,name,telephone,address,idCard,birthday,photoPath,sex,departmentId);
-            return employerRepository.save(employer);
-        }
-        return null;
+        Employer employer =  getEmployer(employerId,position,name,telephone,address,idCard, DateUtil.getDate(birthday),photo,sex,departmentId);
+        return employerRepository.save(employer);
     }
 
     @Transactional
     @Override
-    public Employer add(String position, String name, String telephone, String address, String idCard, Date birthday, MultipartFile photo, String sex, String departmentId) {
+    public Employer add(String position, String name, String telephone, String address, String idCard, String birthday, String photo, String sex, String departmentId,String entryDate) {
         /**
         * @Description: 添加员工
         * @Author:      TJX
@@ -125,15 +118,11 @@ public class EmployerServiceImpl implements EmployerService {
         * @Exception
         * @Date        2019-04-24 21:28
         */
-        String photoPath = MultipartFileUtil.saveFile(photo,identity);
-        if(MultipartFileUtil.isSuccess(photoPath))
-        {
-            Employer employer = getEmployer(position,name,telephone,address,idCard,birthday,photoPath,sex,departmentId);
-            employerRepository.save(employer);
-            List<Employer> list = findAll();
-            return list.get(list.size()-1);
-        }
-        return null;
+
+        Employer employer = getEmployer(position,name,telephone,address,idCard,DateUtil.getDate(birthday),photo,sex,departmentId,DateUtil.getDate(entryDate));
+        employerRepository.save(employer);
+        List<Employer> list = findAll();
+        return list.get(list.size()-1);
     }
 
     @Override
@@ -160,7 +149,7 @@ public class EmployerServiceImpl implements EmployerService {
 
     private Employer getEmployer(String position, String name,
                                  String telephone, String address, String idCard,
-                                 Date birthday, String photo, String sex, String departmentId)
+                                 Date birthday, String photo, String sex, String departmentId,Date entryDate)
     {
         /**
         * @Description: 构造员工对象
@@ -188,6 +177,7 @@ public class EmployerServiceImpl implements EmployerService {
         employer.setDepartmentByDepartmentId(departmentRepository.getOne(departmentId));
         employer.setTelephone(telephone);
         employer.setIdCard(idCard);
+        employer.setEntryDate(entryDate);
         return employer;
     }
     private Employer getEmployer(Integer employerId,String position, String name,

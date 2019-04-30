@@ -1,6 +1,10 @@
 spring:
   profiles:
     active: dev
+  servlet:
+    multipart:
+      max-file-size: 20MB
+      max-request-size: 20MB
   datasource:
     url: jdbc:mysql://127.0.0.1:3306/IntelligentNursingHomeManagementSystem?useSSL=false&serverTimezone=GMT%2b8
     username: root

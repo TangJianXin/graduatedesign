@@ -3,7 +3,6 @@ package com.guet.graduationdesign.pojo;
 import org.hibernate.annotations.Proxy;
 
 import javax.persistence.*;
-import java.util.Collection;
 import java.util.Objects;
 
 @Proxy(lazy = false)

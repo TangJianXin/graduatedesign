@@ -4,11 +4,12 @@ import com.guet.graduationdesign.pojo.Equipment;
 import com.guet.graduationdesign.repository.DepartmentRepository;
 import com.guet.graduationdesign.repository.EquipmentRepository;
 import com.guet.graduationdesign.service.EquipmentService;
+import com.guet.graduationdesign.util.DateUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.sql.Date;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -72,7 +73,7 @@ public class EquipmentServiceImpl implements EquipmentService {
     @Transactional
     @Override
     public Equipment update(String equipmentId, String equipmentName,
-                            Date purchaseDate,Date productionDate,String departmentId) {
+                            String purchaseDate,String productionDate,String departmentId) {
         /**
         * @Description: 修改设备信息
         * @Author:      TJX
@@ -91,7 +92,7 @@ public class EquipmentServiceImpl implements EquipmentService {
     @Transactional
     @Override
     public Equipment add(String equipmentId, String equipmentName,
-                         Date purchaseDate,Date productionDate,String departmentId) {
+                         String purchaseDate,String productionDate,String departmentId) {
         /**
         * @Description: 添加设备
         * @Author:      TJX
@@ -104,12 +105,12 @@ public class EquipmentServiceImpl implements EquipmentService {
         * @Exception
         * @Date        2019-04-24 21:40
         */
-        Equipment equipment = getEquipment(equipmentId,equipmentName,purchaseDate,productionDate,departmentId);
+        Equipment equipment = getEquipment(equipmentId,equipmentName, DateUtil.getDate(purchaseDate),DateUtil.getDate(productionDate),departmentId);
         return equipmentRepository.save(equipment);
     }
 
     private Equipment getEquipment(String equipmentId, String equipmentName,
-                                   Date purchaseDate,Date productionDate,String departmentId)
+                                   Date purchaseDate, Date productionDate, String departmentId)
     {
         /**
         * @Description: 构造设备对象

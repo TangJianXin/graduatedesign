@@ -2,7 +2,6 @@ package com.guet.graduationdesign.service;
 
 import com.guet.graduationdesign.pojo.Equipment;
 
-import java.sql.Date;
 import java.util.List;
 
 
@@ -19,9 +18,9 @@ public interface EquipmentService {
 
     //更新设备
     public Equipment update(String equipmentId, String equipmentName,
-                            Date purchaseDate,Date productionDate,String departmentId);
+                            String purchaseDate,String productionDate,String departmentId);
 
     //添加设备
     public Equipment add(String equipmentId, String equipmentName,
-                         Date purchaseDate,Date productionDate,String departmentId);
+                         String purchaseDate,String productionDate,String departmentId);
 }

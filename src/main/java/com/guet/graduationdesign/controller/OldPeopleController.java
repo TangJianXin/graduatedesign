@@ -4,9 +4,6 @@ import com.guet.graduationdesign.pojo.OldPeople;
 import com.guet.graduationdesign.service.OldPeopleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
-
-import java.sql.Date;
 import java.util.List;
 
 /**
@@ -39,7 +36,7 @@ public class OldPeopleController {
         return oldPeopleService.findAll();
     }
 
-    @PostMapping(value = "/findById")
+    @GetMapping(value = "/findById")
     public OldPeople findOldPeopleById(@RequestParam("oldPeopleId") Integer oldPeopleId)
     {
         /**
@@ -68,17 +65,17 @@ public class OldPeopleController {
         return "删除成功";
     }
 
-    @PostMapping(value = "/modifyInformation")
+    @PutMapping(value = "/modifyInformation")
     public OldPeople modifyOldPeopleInformation(@RequestParam("oldPeopleId") Integer oldPeopleId,
                                                 @RequestParam("idCard") String idCard,
-                                                @RequestParam("photo") MultipartFile photo,
+                                                @RequestParam("photo") String photo,
                                                 @RequestParam("name") String name,
                                                 @RequestParam("telephone") String telephone,
                                                 @RequestParam("address") String address,
                                                 @RequestParam("sex") String sex,
-                                                @RequestParam("birthday") Date birthday,
-                                                @RequestParam("familyPhone") String familyPhone,
-                                                @RequestParam("bedId") String bedId)
+                                                @RequestParam("birthday") String birthday,
+                                                @RequestParam("familyPhone") String familyPhone
+                                                )
     {
         /**
         * @Description: 修改老人信息
@@ -101,13 +98,14 @@ public class OldPeopleController {
 
     @PostMapping(value = "/add")
     public OldPeople add(@RequestParam("idCard") String idCard,
-                         @RequestParam("photo")MultipartFile photo,
+                         @RequestParam("photo")String photo,
                          @RequestParam("name") String name,
                          @RequestParam("telephone") String telephone,
                          @RequestParam("address") String address,
                          @RequestParam("sex") String sex,
-                         @RequestParam("birthday") Date birthday,
-                         @RequestParam("familyPhone") String familyPhone)
+                         @RequestParam("birthday") String birthday,
+                         @RequestParam("familyPhone") String familyPhone,
+                         @RequestParam("entryDate") String entryDate)
     {
         /**
         * @Description: 添加老人信息
@@ -124,6 +122,6 @@ public class OldPeopleController {
         * @Exception
         * @Date        2019-04-26 17:07
         */
-        return oldPeopleService.add(idCard,photo,name,telephone,address,sex,birthday,familyPhone);
+        return oldPeopleService.add(idCard,photo,name,telephone,address,sex,birthday,familyPhone,entryDate);
     }
 }

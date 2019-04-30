@@ -4,8 +4,6 @@ import com.guet.graduationdesign.pojo.Equipment;
 import com.guet.graduationdesign.service.EquipmentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
-import java.sql.Date;
 import java.util.List;
 
 /**
@@ -38,7 +36,7 @@ public class EquipmentController {
         return equipmentService.findAll();
     }
 
-    @PostMapping(value = "/findById")
+    @GetMapping(value = "/findById")
     public Equipment findEquipmentById(@RequestParam("equipmentId") String equipmentId)
     {
         /**
@@ -67,11 +65,11 @@ public class EquipmentController {
         return "删除成功";
     }
 
-    @PostMapping(value = "/modifyInformation")
+    @PutMapping(value = "/modifyInformation")
     public Equipment modifyEquipmentInformation(@RequestParam("equipmentId") String equipmentId,
                                                 @RequestParam("equipmentName") String equipmentName,
-                                                @RequestParam("purchaseDate") Date purchaseDate,
-                                                @RequestParam("productionDate") Date productionDate,
+                                                @RequestParam("purchaseDate") String purchaseDate,
+                                                @RequestParam("productionDate") String productionDate,
                                                 @RequestParam("departmentId") String departmentId)
     {
         /**
@@ -92,8 +90,8 @@ public class EquipmentController {
     @PostMapping(value = "/add")
     public Equipment add(@RequestParam("equipmentId") String equipmentId,
                          @RequestParam("equipmentName") String equipmentName,
-                         @RequestParam("purchaseDate") Date purchaseDate,
-                         @RequestParam("productionDate") Date productionDate,
+                         @RequestParam("purchaseDate") String purchaseDate,
+                         @RequestParam("productionDate") String productionDate,
                          @RequestParam("departmentId") String departmentId)
     {
         /**
