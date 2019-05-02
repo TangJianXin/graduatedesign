@@ -115,8 +115,8 @@ public class EmployerServiceImpl implements EmployerService {
         * @Exception
         * @Date        2019-05-02 21:41
         */
-        Employer employer =  getEmployer(employerId,position,name,telephone,address,idCard, DateUtil.getDate(birthday),photo,sex,departmentId);
         try{
+            Employer employer =  getEmployer(employerId,position,name,telephone,address,idCard, DateUtil.getDate(birthday),photo,sex,departmentId);
             return ResultUtil.success(ResultEnum.UPDATE_SUCCESS,employerRepository.save(employer));
         }catch (Exception e)
         {
@@ -146,8 +146,8 @@ public class EmployerServiceImpl implements EmployerService {
         * @Exception
         * @Date        2019-05-02 21:41
         */
-        Employer employer = getEmployer(position,name,telephone,address,idCard,DateUtil.getDate(birthday),photo,sex,departmentId,DateUtil.getDate(entryDate));
         try{
+            Employer employer = getEmployer(position,name,telephone,address,idCard,DateUtil.getDate(birthday),photo,sex,departmentId,DateUtil.getDate(entryDate));
             employerRepository.save(employer);
             List<Employer> list = employerRepository.findAll();
             return ResultUtil.success(ResultEnum.ADD_SUCCESS,list.get(list.size()-1));

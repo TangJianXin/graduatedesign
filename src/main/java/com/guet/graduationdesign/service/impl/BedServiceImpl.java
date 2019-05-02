@@ -104,8 +104,8 @@ public class BedServiceImpl implements BedService {
         * @Exception
         * @Date        2019-05-02 21:37
         */
-        Bed bed = getBed(bedId,oldPeopleId,employerId);
         try{
+            Bed bed = getBed(bedId,oldPeopleId,employerId);
             return ResultUtil.success(ResultEnum.UPDATE_SUCCESS,bedRepository.save(bed));
         }catch (Exception e)
         {

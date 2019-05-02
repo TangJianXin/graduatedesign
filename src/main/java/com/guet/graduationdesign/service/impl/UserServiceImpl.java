@@ -93,8 +93,8 @@ public class UserServiceImpl implements UserService {
         * @Exception
         * @Date        2019-05-02 21:46
         */
-        User user = getUser(username,password,employerId);
         try{
+            User user = getUser(username,password,employerId);
             return ResultUtil.success(ResultEnum.UPLOAD_SUCCESS,userRepository.save(user));
         }catch (Exception e)
         {
@@ -116,8 +116,8 @@ public class UserServiceImpl implements UserService {
         * @Exception
         * @Date        2019-05-02 21:46
         */
-        User user = getUser(username,password,employerId);
         try{
+            User user = getUser(username,password,employerId);
             return ResultUtil.success(ResultEnum.ADD_SUCCESS,userRepository.save(user));
         }catch (Exception e)
         {

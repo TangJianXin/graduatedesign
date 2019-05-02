@@ -100,8 +100,8 @@ public class AdminServiceImpl implements AdminService {
         * @Exception
         * @Date        2019-05-02 21:34
         */
-        Admin admin = getAdmin(username,password,employerId);
         try{
+            Admin admin = getAdmin(username,password,employerId);
             return ResultUtil.success(ResultEnum.UPDATE_SUCCESS,adminRepository.save(admin));
         }catch (Exception e)
         {
@@ -122,8 +122,8 @@ public class AdminServiceImpl implements AdminService {
         * @Exception
         * @Date        2019-05-02 21:34
         */
-        Admin admin = getAdmin(username,password,employerId);
         try{
+            Admin admin = getAdmin(username,password,employerId);
             return ResultUtil.success(ResultEnum.REGISTER_SUCCESS,adminRepository.save(admin));
         }catch (Exception e)
         {

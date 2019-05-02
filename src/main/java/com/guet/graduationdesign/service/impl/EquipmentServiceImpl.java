@@ -105,8 +105,8 @@ public class EquipmentServiceImpl implements EquipmentService {
         * @Exception
         * @Date        2019-05-02 21:42
         */
-        Equipment equipment = getEquipment(equipmentId,equipmentName, DateUtil.getDate(purchaseDate),DateUtil.getDate(productionDate),departmentId);
         try{
+            Equipment equipment = getEquipment(equipmentId,equipmentName, DateUtil.getDate(purchaseDate),DateUtil.getDate(productionDate),departmentId);
             return ResultUtil.success(ResultEnum.UPDATE_SUCCESS,equipmentRepository.save(equipment));
         }catch (Exception e)
         {
@@ -131,8 +131,8 @@ public class EquipmentServiceImpl implements EquipmentService {
         * @Exception
         * @Date        2019-05-02 21:42
         */
-        Equipment equipment = getEquipment(equipmentId,equipmentName, DateUtil.getDate(purchaseDate),DateUtil.getDate(productionDate),departmentId);
         try{
+            Equipment equipment = getEquipment(equipmentId,equipmentName, DateUtil.getDate(purchaseDate),DateUtil.getDate(productionDate),departmentId);
             return ResultUtil.success(ResultEnum.ADD_SUCCESS,equipmentRepository.save(equipment));
         }catch (Exception e)
         {
