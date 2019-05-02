@@ -1,11 +1,9 @@
 package com.guet.graduationdesign.controller;
 
-import com.guet.graduationdesign.pojo.Bed;
-import com.guet.graduationdesign.pojo.Employer;
+import com.guet.graduationdesign.result.Result;
 import com.guet.graduationdesign.service.EmployerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import java.util.List;
 
 /**
 * @Description:    员工管理控制器
@@ -24,13 +22,13 @@ public class EmployerController {
     private EmployerService employerService;
 
     @GetMapping(value = "/findAll")
-    public List<Employer> findAll()
+    public Result findAll()
     {
         /**
         * @Description: 查询所有员工信息
         * @Author:      TJX
          * @param
-        * @Return      java.util.List<com.guet.graduationdesign.pojo.Employer>
+        * @Return      com.guet.graduationdesign.result.Result
         * @Exception
         * @Date        2019-04-25 21:16
         */
@@ -38,13 +36,13 @@ public class EmployerController {
     }
 
     @GetMapping("/findById")
-    public Employer findByEmployerId(@RequestParam("employerId") Integer employerId)
+    public Result findByEmployerId(@RequestParam("employerId") Integer employerId)
     {
         /**
         * @Description: 根据工号查询员工信息
         * @Author:      TJX
          * @param employerId
-        * @Return      com.guet.graduationdesign.pojo.Employer
+        * @Return      com.guet.graduationdesign.result.Result
         * @Exception
         * @Date        2019-04-26 09:51
         */
@@ -52,23 +50,22 @@ public class EmployerController {
     }
 
     @DeleteMapping(value = "deleteById")
-    public String deleteByEmployerId(@RequestParam("employerId") Integer employerId)
+    public Result deleteByEmployerId(@RequestParam("employerId") Integer employerId)
     {
         /**
-        * @Description: 根据工号删除员工信息
+        * @Description: 根据Id删除员工信息
         * @Author:      TJX
          * @param employerId
-        * @Return      java.lang.String
+        * @Return      com.guet.graduationdesign.result.Result
         * @Exception
-        * @Date        2019-04-26 09:52
+        * @Date        2019-05-02 21:54
         */
-        employerService.deleteById(employerId);
-        return "删除成功";
+        return employerService.deleteById(employerId);
     }
 
 
     @PutMapping("/modifyInformation")
-    public Employer modifyEmployerInformation(@RequestParam("employerId") Integer employerId,
+    public Result modifyEmployerInformation(@RequestParam("employerId") Integer employerId,
                                               @RequestParam("position") String position,
                                               @RequestParam("name") String name,
                                               @RequestParam("telephone") String telephone,
@@ -92,7 +89,7 @@ public class EmployerController {
          * @param photo
          * @param sex
          * @param departmentId
-        * @Return      com.guet.graduationdesign.pojo.Employer
+        * @Return      com.guet.graduationdesign.result.Result
         * @Exception
         * @Date        2019-04-26 09:59
         */
@@ -100,7 +97,7 @@ public class EmployerController {
     }
 
     @PostMapping(value = "/add")
-    public Employer add(@RequestParam("photo") String photo,
+    public Result add(@RequestParam("photo") String photo,
                         @RequestParam("position") String position,
                         @RequestParam("name") String name,
                         @RequestParam("telephone") String telephone,
@@ -124,7 +121,7 @@ public class EmployerController {
          * @param photo
          * @param sex
          * @param departmentId
-        * @Return      com.guet.graduationdesign.pojo.Employer
+        * @Return      com.guet.graduationdesign.result.Result
         * @Exception
         * @Date        2019-04-26 10:00
         */
@@ -132,13 +129,13 @@ public class EmployerController {
     }
 
     @GetMapping(value = "/findAllBedById")
-    public List<Bed> findAllBedByEmployerId(@RequestParam("employerId") Integer employerId)
+    public Result findAllBedByEmployerId(@RequestParam("employerId") Integer employerId)
     {
         /**
         * @Description: 根据员工Id查询管理的所有床位
         * @Author:      TJX
          * @param employerId
-        * @Return      java.util.List<com.guet.graduationdesign.pojo.Bed>
+        * @Return      com.guet.graduationdesign.result.Result
         * @Exception
         * @Date        2019-04-27 20:33
         */

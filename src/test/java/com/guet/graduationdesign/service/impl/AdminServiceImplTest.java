@@ -1,6 +1,7 @@
 package com.guet.graduationdesign.service.impl;
 
 import com.guet.graduationdesign.pojo.Admin;
+import com.guet.graduationdesign.result.Result;
 import com.guet.graduationdesign.service.AdminService;
 import org.junit.Assert;
 import org.junit.Test;
@@ -17,7 +18,8 @@ public class AdminServiceImplTest {
     private AdminService adminService;
     @Test
     public void findByUsername() {
-        Admin admin = adminService.findByUsername("admin");
+        Result result = adminService.findByUsername("admin");
+        Admin admin = (Admin) result.getData();
         Assert.assertEquals("123456",admin.getPassword());
     }
 }

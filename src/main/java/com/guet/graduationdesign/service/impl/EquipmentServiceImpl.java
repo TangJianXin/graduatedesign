@@ -1,16 +1,18 @@
 package com.guet.graduationdesign.service.impl;
 
+import com.guet.graduationdesign.enums.ResultEnum;
+import com.guet.graduationdesign.exception.MyException;
 import com.guet.graduationdesign.pojo.Equipment;
 import com.guet.graduationdesign.repository.DepartmentRepository;
 import com.guet.graduationdesign.repository.EquipmentRepository;
+import com.guet.graduationdesign.result.Result;
 import com.guet.graduationdesign.service.EquipmentService;
 import com.guet.graduationdesign.util.DateUtil;
+import com.guet.graduationdesign.util.ResultUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import java.util.Date;
-import java.util.List;
 
 /**
 * @Description:    设备管理service
@@ -31,49 +33,66 @@ public class EquipmentServiceImpl implements EquipmentService {
     private DepartmentRepository departmentRepository;
 
     @Override
-    public Equipment findById(String equipmentId) {
+    public Result findById(String equipmentId) throws MyException {
         /**
-        * @Description: 根据Id查询设备信息
+        * @Description: 根据Id查询设备
         * @Author:      TJX
          * @param equipmentId
-        * @Return      com.guet.graduationdesign.pojo.Equipment
+        * @Return      com.guet.graduationdesign.result.Result
         * @Exception
-        * @Date        2019-04-24 19:45
+        * @Date        2019-05-02 21:41
         */
-        return equipmentRepository.getOne(equipmentId);
+        try{
+            return ResultUtil.success(ResultEnum.SELECT_SUCCESS,equipmentRepository.getOne(equipmentId));
+        }catch (Exception e)
+        {
+            throw new MyException(ResultEnum.SELETCT_FAIL);
+        }
     }
 
     @Override
-    public List<Equipment> findAll() {
+    public Result findAll()throws MyException {
         /**
-        * @Description: 查询所有设备信息
+        * @Description: 查询所有设备
         * @Author:      TJX
          * @param
-        * @Return      java.util.List<com.guet.graduationdesign.pojo.Equipment>
+        * @Return      com.guet.graduationdesign.result.Result
         * @Exception
-        * @Date        2019-04-24 19:46
+        * @Date        2019-05-02 21:42
         */
-        return equipmentRepository.findAll();
+        try{
+            return ResultUtil.success(ResultEnum.SELECT_SUCCESS,equipmentRepository.findAll());
+        }catch (Exception e)
+        {
+          throw new MyException(ResultEnum.SELETCT_FAIL);
+        }
     }
 
     @Transactional
     @Override
-    public void deleteById(String equipmentId) {
+    public Result deleteById(String equipmentId) {
         /**
-        * @Description: 根据Id删除设备
+        * @Description: 查询所有设备
         * @Author:      TJX
          * @param equipmentId
-        * @Return      void
+        * @Return      com.guet.graduationdesign.result.Result
         * @Exception
-        * @Date        2019-04-24 19:46
+        * @Date        2019-05-02 21:42
         */
-        equipmentRepository.deleteById(equipmentId);
+        try {
+            equipmentRepository.deleteById(equipmentId);
+            return ResultUtil.success(ResultEnum.DELETE_SUCCESS);
+        }catch (Exception e)
+        {
+            throw new MyException(ResultEnum.DELETE_FAIL);
+        }
     }
 
     @Transactional
     @Override
-    public Equipment update(String equipmentId, String equipmentName,
-                            String purchaseDate,String productionDate,String departmentId) {
+    public Result update(String equipmentId, String equipmentName,
+                            String purchaseDate,String productionDate,
+                            String departmentId)throws MyException {
         /**
         * @Description: 修改设备信息
         * @Author:      TJX
@@ -82,17 +101,24 @@ public class EquipmentServiceImpl implements EquipmentService {
          * @param purchaseDate
          * @param productionDate
          * @param departmentId
-        * @Return      com.guet.graduationdesign.pojo.Equipment
+        * @Return      com.guet.graduationdesign.result.Result
         * @Exception
-        * @Date        2019-04-24 21:40
+        * @Date        2019-05-02 21:42
         */
-        return add(equipmentId,equipmentName,purchaseDate,productionDate,departmentId);
+        Equipment equipment = getEquipment(equipmentId,equipmentName, DateUtil.getDate(purchaseDate),DateUtil.getDate(productionDate),departmentId);
+        try{
+            return ResultUtil.success(ResultEnum.UPDATE_SUCCESS,equipmentRepository.save(equipment));
+        }catch (Exception e)
+        {
+            throw new MyException(ResultEnum.UPDATE_FAIL);
+        }
     }
 
     @Transactional
     @Override
-    public Equipment add(String equipmentId, String equipmentName,
-                         String purchaseDate,String productionDate,String departmentId) {
+    public Result add(String equipmentId, String equipmentName,
+                         String purchaseDate,String productionDate,
+                      String departmentId)throws MyException {
         /**
         * @Description: 添加设备
         * @Author:      TJX
@@ -101,12 +127,17 @@ public class EquipmentServiceImpl implements EquipmentService {
          * @param purchaseDate
          * @param productionDate
          * @param departmentId
-        * @Return      com.guet.graduationdesign.pojo.Equipment
+        * @Return      com.guet.graduationdesign.result.Result
         * @Exception
-        * @Date        2019-04-24 21:40
+        * @Date        2019-05-02 21:42
         */
         Equipment equipment = getEquipment(equipmentId,equipmentName, DateUtil.getDate(purchaseDate),DateUtil.getDate(productionDate),departmentId);
-        return equipmentRepository.save(equipment);
+        try{
+            return ResultUtil.success(ResultEnum.ADD_SUCCESS,equipmentRepository.save(equipment));
+        }catch (Exception e)
+        {
+            throw new MyException(ResultEnum.ADD_FAIL);
+        }
     }
 
     private Equipment getEquipment(String equipmentId, String equipmentName,

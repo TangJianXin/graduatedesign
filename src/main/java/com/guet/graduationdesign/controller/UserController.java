@@ -1,11 +1,9 @@
 package com.guet.graduationdesign.controller;
 
-import com.guet.graduationdesign.pojo.User;
+import com.guet.graduationdesign.result.Result;
 import com.guet.graduationdesign.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import java.util.List;
-
 
 /**
 * @Description:    普通员工账号管理控制器
@@ -24,13 +22,13 @@ public class UserController {
     private UserService userService;
 
     @GetMapping(value = "/findAll")
-    public List<User> findAll()
+    public Result findAll()
     {
         /**
         * @Description: 查询所有普通员工账号信息
         * @Author:      TJX
          * @param
-        * @Return      java.util.List<com.guet.graduationdesign.pojo.User>
+        * @Return      com.guet.graduationdesign.result.Result
         * @Exception
         * @Date        2019-04-26 09:34
         */
@@ -38,13 +36,13 @@ public class UserController {
     }
 
     @GetMapping(value = "/findByUsername")
-    public User findByUsername(@RequestParam("username") String username)
+    public Result findByUsername(@RequestParam("username") String username)
     {
         /**
         * @Description: 通过用户名查询普通员工账号信息
         * @Author:      TJX
          * @param user
-        * @Return      com.guet.graduationdesign.pojo.User
+        * @Return      com.guet.graduationdesign.result.Result
         * @Exception
         * @Date        2019-04-26 09:36
         */
@@ -52,22 +50,21 @@ public class UserController {
     }
 
     @DeleteMapping("/deleteByUsername")
-    public String deleteByUsername(@RequestParam("username") String username)
+    public Result deleteByUsername(@RequestParam("username") String username)
     {
         /**
         * @Description: 根据用户名删除普通员工账号
         * @Author:      TJX
          * @param username
-        * @Return      java.lang.String
+        * @Return      com.guet.graduationdesign.result.Result
         * @Exception
-        * @Date        2019-04-26 09:38
+        * @Date        2019-05-02 21:59
         */
-        userService.deleteByUsername(username);
-        return "删除成功";
+        return userService.deleteByUsername(username);
     }
 
     @PutMapping("/modifyPassword")
-    public User modifyPassword(@RequestParam("username") String username,
+    public Result modifyPassword(@RequestParam("username") String username,
                                @RequestParam("password") String password,
                                @RequestParam("employerId") Integer employerId)
     {
@@ -77,7 +74,7 @@ public class UserController {
          * @param username
          * @param password
          * @param employerId
-        * @Return      com.guet.graduationdesign.pojo.User
+        * @Return      com.guet.graduationdesign.result.Result
         * @Exception
         * @Date        2019-04-26 09:41
         */
@@ -85,7 +82,7 @@ public class UserController {
     }
 
     @PostMapping("/register")
-    public User register(@RequestParam("username") String username,
+    public Result register(@RequestParam("username") String username,
                          @RequestParam("password") String password,
                          @RequestParam("employerId") Integer employerId)
     {
@@ -95,7 +92,7 @@ public class UserController {
          * @param username
          * @param password
          * @param employerId
-        * @Return      com.guet.graduationdesign.pojo.User
+        * @Return      com.guet.graduationdesign.result.Result
         * @Exception
         * @Date        2019-04-26 09:43
         */
@@ -103,13 +100,13 @@ public class UserController {
     }
 
     @GetMapping(value = "/findByEmployerId")
-    public User findUserByEmployerId(@RequestParam("employerId") Integer employerId)
+    public Result findUserByEmployerId(@RequestParam("employerId") Integer employerId)
     {
         /**
         * @Description: 根据员工Id查询普通员工账号密码
         * @Author:      TJX
          * @param employerId
-        * @Return      com.guet.graduationdesign.pojo.User
+        * @Return      com.guet.graduationdesign.result.Result
         * @Exception
         * @Date        2019-04-27 17:23
         */

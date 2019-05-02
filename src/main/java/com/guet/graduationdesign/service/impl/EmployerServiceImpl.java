@@ -1,10 +1,14 @@
 package com.guet.graduationdesign.service.impl;
 
+import com.guet.graduationdesign.enums.ResultEnum;
+import com.guet.graduationdesign.exception.MyException;
 import com.guet.graduationdesign.pojo.Bed;
 import com.guet.graduationdesign.pojo.Employer;
 import com.guet.graduationdesign.repository.*;
+import com.guet.graduationdesign.result.Result;
 import com.guet.graduationdesign.service.EmployerService;
 import com.guet.graduationdesign.util.DateUtil;
+import com.guet.graduationdesign.util.ResultUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -35,48 +39,65 @@ public class EmployerServiceImpl implements EmployerService {
 
 
     @Override
-    public Employer findById(Integer employerId) {
+    public Result findById(Integer employerId) throws MyException {
         /**
-        * @Description: 根据Id查询员工信息
+        * @Description: 根据Id查询员工
         * @Author:      TJX
          * @param employerId
-        * @Return      com.guet.graduationdesign.pojo.Employer
+        * @Return      com.guet.graduationdesign.result.Result
         * @Exception
-        * @Date        2019-04-24 19:40
+        * @Date        2019-05-02 21:40
         */
-        return employerRepository.getOne(employerId);
+        try{
+            return ResultUtil.success(ResultEnum.SELECT_SUCCESS,employerRepository.getOne(employerId));
+        }catch (Exception e)
+        {
+            throw new MyException(ResultEnum.SELETCT_FAIL);
+        }
     }
 
     @Override
-    public List<Employer> findAll() {
+    public Result findAll()throws MyException {
         /**
         * @Description: 查询所有员工
         * @Author:      TJX
          * @param
-        * @Return      java.util.List<com.guet.graduationdesign.pojo.Employer>
+        * @Return      com.guet.graduationdesign.result.Result
         * @Exception
-        * @Date        2019-04-24 19:41
+        * @Date        2019-05-02 21:40
         */
-        return employerRepository.findAll();
+        try{
+            return ResultUtil.success(ResultEnum.SELECT_SUCCESS,employerRepository.findAll());
+        }catch (Exception e)
+        {
+            throw new MyException(ResultEnum.SELETCT_FAIL);
+        }
     }
 
     @Transactional
     @Override
-    public void deleteById(Integer employerId) {
+    public Result deleteById(Integer employerId)throws MyException {
         /**
-        * @Description: 根据Id删除员工信息
+        * @Description: 根据Id删除员工
         * @Author:      TJX
          * @param employerId
-        * @Return      void
+        * @Return      com.guet.graduationdesign.result.Result
         * @Exception
-        * @Date        2019-04-24 19:42
+        * @Date        2019-05-02 21:40
         */
-        employerRepository.deleteById(employerId);
+        try{
+            employerRepository.deleteById(employerId);
+            return ResultUtil.success(ResultEnum.DELETE_SUCCESS);
+        }catch (Exception e)
+        {
+            throw new MyException(ResultEnum.DELETE_FAIL);
+        }
     }
 
     @Transactional
     @Override
-    public Employer update(Integer employerId, String position, String name, String telephone, String address, String idCard, String birthday, String photo, String sex, String departmentId) {
+    public Result update(Integer employerId, String position, String name, String telephone, String address,
+                         String idCard, String birthday, String photo, String sex, String departmentId) throws MyException{
         /**
         * @Description: 修改员工信息
         * @Author:      TJX
@@ -90,22 +111,28 @@ public class EmployerServiceImpl implements EmployerService {
          * @param photo
          * @param sex
          * @param departmentId
-        * @Return      com.guet.graduationdesign.pojo.Employer
+        * @Return      com.guet.graduationdesign.result.Result
         * @Exception
-        * @Date        2019-04-24 21:28
+        * @Date        2019-05-02 21:41
         */
         Employer employer =  getEmployer(employerId,position,name,telephone,address,idCard, DateUtil.getDate(birthday),photo,sex,departmentId);
-        return employerRepository.save(employer);
+        try{
+            return ResultUtil.success(ResultEnum.UPDATE_SUCCESS,employerRepository.save(employer));
+        }catch (Exception e)
+        {
+            throw new MyException(ResultEnum.UPDATE_FAIL);
+        }
     }
 
     @Transactional
     @Override
-    public Employer add(String position, String name, String telephone, String address, String idCard, String birthday, String photo, String sex, String departmentId,String entryDate) {
+    public Result add(String position, String name, String telephone,
+                      String address, String idCard, String birthday,
+                      String photo, String sex, String departmentId,String entryDate) throws MyException{
         /**
         * @Description: 添加员工
         * @Author:      TJX
-         * @param employerId
-         * @param position
+         * @param position
          * @param name
          * @param telephone
          * @param address
@@ -114,37 +141,47 @@ public class EmployerServiceImpl implements EmployerService {
          * @param photo
          * @param sex
          * @param departmentId
-        * @Return      com.guet.graduationdesign.pojo.Employer
+         * @param entryDate
+        * @Return      com.guet.graduationdesign.result.Result
         * @Exception
-        * @Date        2019-04-24 21:28
+        * @Date        2019-05-02 21:41
         */
-
         Employer employer = getEmployer(position,name,telephone,address,idCard,DateUtil.getDate(birthday),photo,sex,departmentId,DateUtil.getDate(entryDate));
-        employerRepository.save(employer);
-        List<Employer> list = findAll();
-        return list.get(list.size()-1);
+        try{
+            employerRepository.save(employer);
+            List<Employer> list = employerRepository.findAll();
+            return ResultUtil.success(ResultEnum.ADD_SUCCESS,list.get(list.size()-1));
+        }catch (Exception e)
+        {
+            throw new MyException(ResultEnum.ADD_FAIL);
+        }
     }
 
     @Override
-    public List<Bed> findAllBedById(Integer employerId) {
+    public Result findAllBedById(Integer employerId) throws MyException{
         /**
-        * @Description: 根据员工Id查询所有管理的床位
+        * @Description: 根据Id查找员工管理的床位
         * @Author:      TJX
          * @param employerId
-        * @Return      java.util.List<com.guet.graduationdesign.pojo.Bed>
+        * @Return      com.guet.graduationdesign.result.Result
         * @Exception
-        * @Date        2019-04-27 20:22
+        * @Date        2019-05-02 21:41
         */
-        List<Bed> list = bedRepository.findAll();
-        List<Bed> arrayList = new ArrayList<>();
-        for(Bed bed:list)
-        {
-            if(bed.getEmployerByEmployerId().getEmployerId()==employerId)
+        try{
+            List<Bed> list = bedRepository.findAll();
+            List<Bed> arrayList = new ArrayList<>();
+            for(Bed bed:list)
             {
-                arrayList.add(bed);
+                if(bed.getEmployerByEmployerId().getEmployerId()==employerId)
+                {
+                    arrayList.add(bed);
+                }
             }
+            return ResultUtil.success(ResultEnum.SELECT_SUCCESS,arrayList);
+        }catch (Exception e)
+        {
+            throw new MyException(ResultEnum.SELETCT_FAIL);
         }
-        return arrayList;
     }
 
     private Employer getEmployer(String position, String name,

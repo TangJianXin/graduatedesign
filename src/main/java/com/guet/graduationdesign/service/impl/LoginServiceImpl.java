@@ -1,10 +1,14 @@
 package com.guet.graduationdesign.service.impl;
 
+import com.guet.graduationdesign.enums.ResultEnum;
+import com.guet.graduationdesign.exception.MyException;
 import com.guet.graduationdesign.pojo.Admin;
 import com.guet.graduationdesign.pojo.User;
 import com.guet.graduationdesign.repository.AdminRepository;
 import com.guet.graduationdesign.repository.UserRepository;
+import com.guet.graduationdesign.result.Result;
 import com.guet.graduationdesign.service.LoginService;
+import com.guet.graduationdesign.util.ResultUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -26,61 +30,69 @@ public class LoginServiceImpl implements LoginService {
     private UserRepository userRepository;
 
     @Override
-    public Admin loginByAdmin(String username, String password) {
+    public Result loginByAdmin(String username, String password)throws MyException {
        /**
        * @Description: 管理员登录
        * @Author:      TJX
         * @param username
         * @param password
-        * @param employerId
-       * @Return      com.guet.graduationdesign.pojo.Admin
+       * @Return      com.guet.graduationdesign.result.Result
        * @Exception
-       * @Date        2019-04-24 21:02
+       * @Date        2019-05-02 21:43
        */
         Admin admin;
-        if(adminRepository.existsById(username))
+        try{
+            if(adminRepository.existsById(username))
+            {
+                admin = adminRepository.getOne(username);
+                if(admin.getPassword().equals(password))
+                {
+                    return ResultUtil.success(ResultEnum.LOGIN_SUCCESS,admin);
+                }
+                else
+                {
+                    throw new MyException(ResultEnum.LOGIN_FAIL);
+                }
+            }
+            else {
+                throw new MyException(ResultEnum.LOGIN_FAIL);
+            }
+        }catch (Exception e)
         {
-            admin = adminRepository.getOne(username);
-            if(admin.getPassword().equals(password))
-            {
-                return admin;
-            }
-            else
-            {
-                return null;
-            }
-        }
-        else {
-            return null;
+            throw new MyException(ResultEnum.LOGIN_FAIL);
         }
     }
 
     @Override
-    public User loginByUser(String username, String password) {
+    public Result loginByUser(String username, String password)throws MyException {
         /**
         * @Description: 普通员工登录
         * @Author:      TJX
          * @param username
          * @param password
-         * @param employerId
-        * @Return      com.guet.graduationdesign.pojo.User
+        * @Return      com.guet.graduationdesign.result.Result
         * @Exception
-        * @Date        2019-04-24 21:02
+        * @Date        2019-05-02 21:43
         */
         User user;
-        if(userRepository.existsById(username))
-        {
-            user = userRepository.getOne(username);
-            if(user.getPassword().equals(password))
+        try{
+            if(userRepository.existsById(username))
             {
-                return user;
+                user = userRepository.getOne(username);
+                if(user.getPassword().equals(password))
+                {
+                    return ResultUtil.success(ResultEnum.LOGIN_SUCCESS,user);
+                }
+                else{
+                    throw new MyException(ResultEnum.LOGIN_FAIL);
+                }
             }
             else{
-                return null;
+                throw new MyException(ResultEnum.LOGIN_FAIL);
             }
-        }
-        else{
-            return null;
+        }catch (Exception e)
+        {
+            throw new MyException(ResultEnum.LOGIN_FAIL);
         }
     }
 }

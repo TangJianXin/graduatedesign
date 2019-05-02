@@ -1,14 +1,16 @@
 package com.guet.graduationdesign.service.impl;
 
+import com.guet.graduationdesign.enums.ResultEnum;
+import com.guet.graduationdesign.exception.MyException;
 import com.guet.graduationdesign.pojo.OldPeople;
-import com.guet.graduationdesign.repository.BedRepository;
 import com.guet.graduationdesign.repository.OldPeopleRepository;
+import com.guet.graduationdesign.result.Result;
 import com.guet.graduationdesign.service.OldPeopleService;
 import com.guet.graduationdesign.util.DateUtil;
+import com.guet.graduationdesign.util.ResultUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import java.util.Date;
 import java.util.List;
 
@@ -28,48 +30,66 @@ public class OldPeopleServiceImpl implements OldPeopleService {
     private OldPeopleRepository oldPeopleRepository;
 
     @Override
-    public OldPeople findById(Integer oldPeopleId) {
+    public Result findById(Integer oldPeopleId)throws MyException {
         /**
         * @Description: 根据Id查询老人信息
         * @Author:      TJX
          * @param oldPeopleId
-        * @Return      com.guet.graduationdesign.pojo.OldPeople
+        * @Return      com.guet.graduationdesign.result.Result
         * @Exception
-        * @Date        2019-04-24 19:58
+        * @Date        2019-05-02 21:43
         */
-        return oldPeopleRepository.getOne(oldPeopleId);
+        try{
+            return ResultUtil.success(ResultEnum.SELECT_SUCCESS,oldPeopleRepository.getOne(oldPeopleId));
+        }catch (Exception e)
+        {
+            throw new MyException(ResultEnum.SELETCT_FAIL);
+        }
     }
 
     @Override
-    public List<OldPeople> findAll() {
+    public Result findAll()throws MyException {
         /**
         * @Description: 查询所有老人
         * @Author:      TJX
          * @param
-        * @Return      java.util.List<com.guet.graduationdesign.pojo.OldPeople>
+        * @Return      com.guet.graduationdesign.result.Result
         * @Exception
-        * @Date        2019-04-24 19:59
+        * @Date        2019-05-02 21:43
         */
-        return oldPeopleRepository.findAll();
+        try{
+            return ResultUtil.success(ResultEnum.SELECT_SUCCESS,oldPeopleRepository.findAll());
+        }catch (Exception e)
+        {
+            throw new MyException(ResultEnum.SELETCT_FAIL);
+        }
     }
 
     @Transactional
     @Override
-    public void delete(Integer oldPeopleId) {
+    public Result delete(Integer oldPeopleId)throws MyException {
         /**
         * @Description: 根据Id删除老人信息
         * @Author:      TJX
          * @param oldPeopleId
-        * @Return      void
+        * @Return      com.guet.graduationdesign.result.Result
         * @Exception
-        * @Date        2019-04-24 19:59
+        * @Date        2019-05-02 21:43
         */
-        oldPeopleRepository.deleteById(oldPeopleId);
+        try{
+            oldPeopleRepository.deleteById(oldPeopleId);
+            return ResultUtil.success(ResultEnum.DELETE_SUCCESS);
+        }catch (Exception e)
+        {
+            throw new MyException(ResultEnum.DELETE_FAIL);
+        }
     }
 
     @Transactional
     @Override
-    public OldPeople update(Integer oldPeopleId, String idCard, String photo, String name, String telephone, String address, String sex, String birthday, String familyPhone) {
+    public Result update(Integer oldPeopleId, String idCard, String photo,
+                         String name, String telephone, String address,
+                         String sex, String birthday, String familyPhone)throws MyException {
         /**
         * @Description: 修改老人信息
         * @Author:      TJX
@@ -82,22 +102,28 @@ public class OldPeopleServiceImpl implements OldPeopleService {
          * @param sex
          * @param birthday
          * @param familyPhone
-        * @Return      com.guet.graduationdesign.pojo.OldPeople
+        * @Return      com.guet.graduationdesign.result.Result
         * @Exception
-        * @Date        2019-04-24 21:56
+        * @Date        2019-05-02 21:44
         */
         OldPeople oldPeople = getOldPeople(oldPeopleId,idCard,photo,name,telephone,address,sex,DateUtil.getDate(birthday),familyPhone);
-        return oldPeopleRepository.save(oldPeople);
+        try{
+            return ResultUtil.success(ResultEnum.UPDATE_SUCCESS,oldPeopleRepository.save(oldPeople));
+        }catch (Exception e)
+        {
+            throw new MyException(ResultEnum.UPDATE_FAIL);
+        }
     }
 
     @Transactional
     @Override
-    public OldPeople add(String idCard, String photo, String name, String telephone, String address, String sex, String birthday, String familyPhone,String entryDate) {
+    public Result add(String idCard, String photo, String name,
+                      String telephone, String address, String sex,
+                      String birthday, String familyPhone,String entryDate)throws MyException {
         /**
-        * @Description: 添加老人
+        * @Description: 添加老人信息
         * @Author:      TJX
-         * @param oldPeopleId
-         * @param idCard
+         * @param idCard
          * @param photo
          * @param name
          * @param telephone
@@ -105,14 +131,20 @@ public class OldPeopleServiceImpl implements OldPeopleService {
          * @param sex
          * @param birthday
          * @param familyPhone
-        * @Return      com.guet.graduationdesign.pojo.OldPeople
+         * @param entryDate
+        * @Return      com.guet.graduationdesign.result.Result
         * @Exception
-        * @Date        2019-04-24 21:55
+        * @Date        2019-05-02 21:44
         */
         OldPeople oldPeople = getOldPeople(idCard,photo,name,telephone,address,sex, DateUtil.getDate(birthday),familyPhone,DateUtil.getDate(entryDate));
-        oldPeopleRepository.save(oldPeople);
-        List<OldPeople> list = findAll();
-        return list.get(list.size()-1);
+        try{
+            oldPeopleRepository.save(oldPeople);
+            List<OldPeople> list = oldPeopleRepository.findAll();
+            return ResultUtil.success(ResultEnum.ADD_SUCCESS,list.get(list.size()-1));
+        }catch (Exception e)
+        {
+            throw new MyException(ResultEnum.ADD_FAIL);
+        }
     }
 
     private OldPeople getOldPeople(Integer oldPeopleId, String idCard, String photo,

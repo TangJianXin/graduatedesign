@@ -1,10 +1,9 @@
 package com.guet.graduationdesign.controller;
 
-import com.guet.graduationdesign.pojo.OldPeople;
+import com.guet.graduationdesign.result.Result;
 import com.guet.graduationdesign.service.OldPeopleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import java.util.List;
 
 /**
 * @Description:    老人管理控制器
@@ -23,13 +22,13 @@ public class OldPeopleController {
     private OldPeopleService oldPeopleService;
 
     @GetMapping(value = "/findAll")
-    public List<OldPeople> findAll()
+    public Result findAll()
     {
         /**
         * @Description: 查询所有老人信息
         * @Author:      TJX
          * @param
-        * @Return      java.util.List<com.guet.graduationdesign.pojo.OldPeople>
+        * @Return      com.guet.graduationdesign.result.Result
         * @Exception
         * @Date        2019-04-26 16:52
         */
@@ -37,13 +36,13 @@ public class OldPeopleController {
     }
 
     @GetMapping(value = "/findById")
-    public OldPeople findOldPeopleById(@RequestParam("oldPeopleId") Integer oldPeopleId)
+    public Result findOldPeopleById(@RequestParam("oldPeopleId") Integer oldPeopleId)
     {
         /**
         * @Description: 根据老人Id查询老人信息
         * @Author:      TJX
          * @param oldPeopleId
-        * @Return      com.guet.graduationdesign.pojo.OldPeople
+        * @Return      com.guet.graduationdesign.result.Result
         * @Exception
         * @Date        2019-04-26 16:57
         */
@@ -51,22 +50,21 @@ public class OldPeopleController {
     }
 
     @DeleteMapping(value = "/deleteById")
-    public String deleteOldPeopleById(@RequestParam("oldPeopleId") Integer oldPeopleId)
+    public Result deleteOldPeopleById(@RequestParam("oldPeopleId") Integer oldPeopleId)
     {
         /**
-        * @Description: 根据老人Id删除老人信息
+        * @Description: 根据Id删除老人信息
         * @Author:      TJX
          * @param oldPeopleId
-        * @Return      java.lang.String
+        * @Return      com.guet.graduationdesign.result.Result
         * @Exception
-        * @Date        2019-04-26 17:00
+        * @Date        2019-05-02 21:57
         */
-        oldPeopleService.delete(oldPeopleId);
-        return "删除成功";
+        return oldPeopleService.delete(oldPeopleId);
     }
 
     @PutMapping(value = "/modifyInformation")
-    public OldPeople modifyOldPeopleInformation(@RequestParam("oldPeopleId") Integer oldPeopleId,
+    public Result modifyOldPeopleInformation(@RequestParam("oldPeopleId") Integer oldPeopleId,
                                                 @RequestParam("idCard") String idCard,
                                                 @RequestParam("photo") String photo,
                                                 @RequestParam("name") String name,
@@ -89,7 +87,7 @@ public class OldPeopleController {
          * @param sex
          * @param birthday
          * @param familyPhone
-        * @Return      com.guet.graduationdesign.pojo.OldPeople
+        * @Return      com.guet.graduationdesign.result.Result
         * @Exception
         * @Date        2019-04-26 17:07
         */
@@ -97,7 +95,7 @@ public class OldPeopleController {
     }
 
     @PostMapping(value = "/add")
-    public OldPeople add(@RequestParam("idCard") String idCard,
+    public Result add(@RequestParam("idCard") String idCard,
                          @RequestParam("photo")String photo,
                          @RequestParam("name") String name,
                          @RequestParam("telephone") String telephone,
@@ -118,7 +116,7 @@ public class OldPeopleController {
          * @param sex
          * @param birthday
          * @param familyPhone
-        * @Return      com.guet.graduationdesign.pojo.OldPeople
+        * @Return      com.guet.graduationdesign.result.Result
         * @Exception
         * @Date        2019-04-26 17:07
         */

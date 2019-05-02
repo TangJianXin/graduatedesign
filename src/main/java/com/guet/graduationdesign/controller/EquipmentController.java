@@ -1,10 +1,9 @@
 package com.guet.graduationdesign.controller;
 
-import com.guet.graduationdesign.pojo.Equipment;
+import com.guet.graduationdesign.result.Result;
 import com.guet.graduationdesign.service.EquipmentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import java.util.List;
 
 /**
 * @Description:    设备管理控制器
@@ -23,13 +22,13 @@ public class EquipmentController {
     private EquipmentService equipmentService;
 
     @GetMapping(value = "/findAll")
-    public List<Equipment> findAll()
+    public Result findAll()
     {
         /**
         * @Description: 查询所有设备
         * @Author:      TJX
          * @param
-        * @Return      java.util.List<com.guet.graduationdesign.pojo.Equipment>
+        * @Return      com.guet.graduationdesign.result.Result
         * @Exception
         * @Date        2019-04-26 16:32
         */
@@ -37,13 +36,13 @@ public class EquipmentController {
     }
 
     @GetMapping(value = "/findById")
-    public Equipment findEquipmentById(@RequestParam("equipmentId") String equipmentId)
+    public Result findEquipmentById(@RequestParam("equipmentId") String equipmentId)
     {
         /**
         * @Description: 根据设备编号查询所有设备
         * @Author:      TJX
          * @param equipmentId
-        * @Return      com.guet.graduationdesign.pojo.Equipment
+        * @Return      com.guet.graduationdesign.result.Result
         * @Exception
         * @Date        2019-04-26 16:33
         */
@@ -51,22 +50,21 @@ public class EquipmentController {
     }
 
     @DeleteMapping(value = "/deleteById")
-    public String deleteEquipmentById(@RequestParam("equipmentId") String equipmentId)
+    public Result deleteEquipmentById(@RequestParam("equipmentId") String equipmentId)
     {
         /**
-        * @Description: 根据设备Id删除设备
+        * @Description: 根据Id删除设备
         * @Author:      TJX
          * @param equipmentId
-        * @Return      java.lang.String
+        * @Return      com.guet.graduationdesign.result.Result
         * @Exception
-        * @Date        2019-04-26 16:34
+        * @Date        2019-05-02 21:56
         */
-        equipmentService.deleteById(equipmentId);
-        return "删除成功";
+        return equipmentService.deleteById(equipmentId);
     }
 
     @PutMapping(value = "/modifyInformation")
-    public Equipment modifyEquipmentInformation(@RequestParam("equipmentId") String equipmentId,
+    public Result modifyEquipmentInformation(@RequestParam("equipmentId") String equipmentId,
                                                 @RequestParam("equipmentName") String equipmentName,
                                                 @RequestParam("purchaseDate") String purchaseDate,
                                                 @RequestParam("productionDate") String productionDate,
@@ -80,7 +78,7 @@ public class EquipmentController {
          * @param purchaseDate
          * @param productionDate
          * @param departmentId
-        * @Return      com.guet.graduationdesign.pojo.Equipment
+        * @Return      com.guet.graduationdesign.result.Result
         * @Exception
         * @Date        2019-04-26 16:40
         */
@@ -88,7 +86,7 @@ public class EquipmentController {
     }
 
     @PostMapping(value = "/add")
-    public Equipment add(@RequestParam("equipmentId") String equipmentId,
+    public Result add(@RequestParam("equipmentId") String equipmentId,
                          @RequestParam("equipmentName") String equipmentName,
                          @RequestParam("purchaseDate") String purchaseDate,
                          @RequestParam("productionDate") String productionDate,
@@ -102,7 +100,7 @@ public class EquipmentController {
          * @param purchaseDate
          * @param productionDate
          * @param departmentId
-        * @Return      com.guet.graduationdesign.pojo.Equipment
+        * @Return      com.guet.graduationdesign.result.Result
         * @Exception
         * @Date        2019-04-26 16:39
         */

@@ -1,5 +1,6 @@
 package com.guet.graduationdesign.controller;
 
+import com.guet.graduationdesign.result.Result;
 import com.guet.graduationdesign.service.UploadService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -25,13 +26,13 @@ public class UploadConroller {
     private UploadService uploadService;
 
     @PostMapping(value = "/photo/employer")
-    public String uploadOfEmployer(@RequestParam("photo") MultipartFile multipartFile)
+    public Result uploadOfEmployer(@RequestParam("photo") MultipartFile multipartFile)
     {
         /**
         * @Description: 上传员工照片
         * @Author:      TJX
          * @param multipartFile
-        * @Return      java.lang.String
+        * @Return      com.guet.graduationdesign.result.Result
         * @Exception
         * @Date        2019-04-30 17:57
         */
@@ -39,13 +40,13 @@ public class UploadConroller {
     }
 
     @PostMapping(value = "/photo/oldPeople")
-    public String uploadOfOldpeople(@RequestParam("photo") MultipartFile multipartFile)
+    public Result uploadOfOldpeople(@RequestParam("photo") MultipartFile multipartFile)
     {
         /**
         * @Description: 上传老人照片
         * @Author:      TJX
          * @param multipartFile
-        * @Return      java.lang.String
+        * @Return      com.guet.graduationdesign.result.Result
         * @Exception
         * @Date        2019-04-30 17:59
         */

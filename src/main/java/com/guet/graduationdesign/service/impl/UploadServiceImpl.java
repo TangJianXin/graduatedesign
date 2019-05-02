@@ -1,7 +1,11 @@
 package com.guet.graduationdesign.service.impl;
 
+import com.guet.graduationdesign.enums.ResultEnum;
+import com.guet.graduationdesign.exception.MyException;
+import com.guet.graduationdesign.result.Result;
 import com.guet.graduationdesign.service.UploadService;
 import com.guet.graduationdesign.util.MultipartFileUtil;
+import com.guet.graduationdesign.util.ResultUtil;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -17,28 +21,38 @@ import org.springframework.web.multipart.MultipartFile;
 @Service
 public class UploadServiceImpl implements UploadService {
     @Override
-    public String uploadOfEmployer(MultipartFile multipartFile) {
+    public Result uploadOfEmployer(MultipartFile multipartFile) throws MyException {
         /**
         * @Description: 员工文件上传
         * @Author:      TJX
          * @param multipartFile
-        * @Return      java.lang.String
+        * @Return      com.guet.graduationdesign.result.Result
         * @Exception
-        * @Date        2019-04-30 17:54
+        * @Date        2019-05-02 21:44
         */
-        return MultipartFileUtil.saveFile(multipartFile,"employer");
+        try{
+            return ResultUtil.success(ResultEnum.UPLOAD_SUCCESS,MultipartFileUtil.saveFile(multipartFile,"employer"));
+        } catch (Exception e)
+        {
+            throw new MyException(ResultEnum.UPLOAD_FAIL);
+        }
     }
 
     @Override
-    public String uploadOfOldpeople(MultipartFile multipartFile) {
+    public Result uploadOfOldpeople(MultipartFile multipartFile) {
         /**
         * @Description: 老人文件上传
         * @Author:      TJX
          * @param multipartFile
-        * @Return      java.lang.String
+        * @Return      com.guet.graduationdesign.result.Result
         * @Exception
-        * @Date        2019-04-30 17:54
+        * @Date        2019-05-02 21:44
         */
-        return MultipartFileUtil.saveFile(multipartFile,"oldPeople");
+        try{
+            return ResultUtil.success(ResultEnum.UPLOAD_SUCCESS,MultipartFileUtil.saveFile(multipartFile,"oldPeople"));
+        } catch (Exception e)
+        {
+            throw new MyException(ResultEnum.UPLOAD_FAIL);
+        }
     }
 }

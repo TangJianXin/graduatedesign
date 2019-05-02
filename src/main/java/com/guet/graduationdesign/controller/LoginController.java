@@ -1,7 +1,6 @@
 package com.guet.graduationdesign.controller;
 
-import com.guet.graduationdesign.pojo.Admin;
-import com.guet.graduationdesign.pojo.User;
+import com.guet.graduationdesign.result.Result;
 import com.guet.graduationdesign.service.LoginService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -26,15 +25,15 @@ public class LoginController {
     private LoginService loginService;
 
     @PostMapping(value = "/admin")
-    public Admin loginByAdmin(@RequestParam("username") String username,
-                              @RequestParam("password") String password)
+    public Result loginByAdmin(@RequestParam("username") String username,
+                               @RequestParam("password") String password)
     {
         /**
         * @Description: 管理员登录
         * @Author:      TJX
          * @param username
          * @param password
-        * @Return      com.guet.graduationdesign.pojo.Admin
+        * @Return      com.guet.graduationdesign.result.Result
         * @Exception
         * @Date        2019-04-26 17:23
         */
@@ -42,7 +41,7 @@ public class LoginController {
     }
 
     @PostMapping(value = "/user")
-    public User loginByUser(@RequestParam("username") String username,
+    public Result loginByUser(@RequestParam("username") String username,
                             @RequestParam("password") String password)
     {
         /**
@@ -50,7 +49,7 @@ public class LoginController {
         * @Author:      TJX
          * @param username
          * @param password
-        * @Return      com.guet.graduationdesign.pojo.User
+        * @Return      com.guet.graduationdesign.result.Result
         * @Exception
         * @Date        2019-04-26 17:25
         */

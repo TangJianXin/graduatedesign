@@ -1,12 +1,14 @@
 package com.guet.graduationdesign.service.impl;
 
+import com.guet.graduationdesign.enums.ResultEnum;
+import com.guet.graduationdesign.exception.MyException;
 import com.guet.graduationdesign.pojo.Bed;
-import com.guet.graduationdesign.pojo.OldPeople;
 import com.guet.graduationdesign.repository.BedRepository;
 import com.guet.graduationdesign.repository.EmployerRepository;
 import com.guet.graduationdesign.repository.OldPeopleRepository;
+import com.guet.graduationdesign.result.Result;
 import com.guet.graduationdesign.service.BedService;
-import java.util.List;
+import com.guet.graduationdesign.util.ResultUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -34,114 +36,145 @@ public class BedServiceImpl implements BedService {
     private EmployerRepository employerRepository;
 
     @Override
-    public Bed findById(String bedId) {
+    public Result findById(String bedId)throws MyException {
         /**
         * @Description: 根据Id查询床位
         * @Author:      TJX
          * @param bedId
-        * @Return      com.guet.graduationdesign.pojo.Bed
+        * @Return      com.guet.graduationdesign.result.Result
         * @Exception
-        * @Date        2019-04-24 19:18
+        * @Date        2019-05-02 21:36
         */
-        return bedRepository.getOne(bedId);
+        try{
+            return ResultUtil.success(ResultEnum.SELECT_SUCCESS,bedRepository.getOne(bedId));
+        }catch (Exception e)
+        {
+            throw new MyException(ResultEnum.SELETCT_FAIL);
+        }
     }
 
     @Override
-    public List<Bed> findAll() {
+    public Result findAll()throws MyException {
         /**
         * @Description: 查询所有床位
         * @Author:      TJX
          * @param
-        * @Return      java.util.List<com.guet.graduationdesign.pojo.Bed>
+        * @Return      com.guet.graduationdesign.result.Result
         * @Exception
-        * @Date        2019-04-24 19:19
+        * @Date        2019-05-02 21:36
         */
-        return bedRepository.findAll();
+        try{
+            return ResultUtil.success(ResultEnum.SELECT_SUCCESS,bedRepository.findAll());
+        }catch (Exception e)
+        {
+            throw new MyException(ResultEnum.SELETCT_FAIL);
+        }
     }
 
     @Transactional
     @Override
-    public void deleteById(String bedId) {
+    public Result deleteById(String bedId)throws MyException {
         /**
         * @Description: 根据Id删除床位
         * @Author:      TJX
          * @param bedId
-        * @Return      void
+        * @Return      com.guet.graduationdesign.result.Result
         * @Exception
-        * @Date        2019-04-24 19:19
+        * @Date        2019-05-02 21:36
         */
-        bedRepository.deleteById(bedId);
+        try{
+            bedRepository.deleteById(bedId);
+            return ResultUtil.success(ResultEnum.DELETE_SUCCESS);
+        }catch (Exception e)
+        {
+            throw new MyException(ResultEnum.DELETE_FAIL);
+        }
     }
 
     @Transactional
     @Override
-    public Bed update(String bedId, Integer oldPeopleId, Integer employerId) {
+    public Result update(String bedId, Integer oldPeopleId, Integer employerId)throws MyException {
         /**
-        * @Description:  修改床位信息
+        * @Description: 修改床位信息
         * @Author:      TJX
          * @param bedId
          * @param oldPeopleId
          * @param employerId
-        * @Return      com.guet.graduationdesign.pojo.Bed
+        * @Return      com.guet.graduationdesign.result.Result
         * @Exception
-        * @Date        2019-04-24 21:10
+        * @Date        2019-05-02 21:37
         */
         Bed bed = getBed(bedId,oldPeopleId,employerId);
-        return bedRepository.save(bed);
+        try{
+            return ResultUtil.success(ResultEnum.UPDATE_SUCCESS,bedRepository.save(bed));
+        }catch (Exception e)
+        {
+            throw new MyException(ResultEnum.UPDATE_FAIL);
+        }
     }
 
     @Transactional
     @Override
-    public Bed add(String bedId) {
+    public Result add(String bedId) throws MyException{
         /**
         * @Description: 添加床位
         * @Author:      TJX
          * @param bedId
-         * @param oldPeopleId
-         * @param employerId
-        * @Return      com.guet.graduationdesign.pojo.Bed
+        * @Return      com.guet.graduationdesign.result.Result
         * @Exception
-        * @Date        2019-04-24 21:09
+        * @Date        2019-05-02 21:37
         */
         Bed bed = getBed(bedId);
-        return bedRepository.save(bed);
+        try{
+            return ResultUtil.success(ResultEnum.ADD_SUCCESS,bedRepository.save(bed));
+        }catch (Exception e)
+        {
+            throw new MyException(ResultEnum.ADD_FAIL);
+        }
     }
 
     @Transactional
     @Override
-    public Bed setAdminEmployer(String bedId, Integer employerId) {
+    public Result setAdminEmployer(String bedId, Integer employerId)throws MyException {
         /**
-        * @Description: 设置床位管理人员
+        * @Description: 设置床位管理员
         * @Author:      TJX
          * @param bedId
          * @param employerId
-        * @Return      com.guet.graduationdesign.pojo.Bed
+        * @Return      com.guet.graduationdesign.result.Result
         * @Exception
-        * @Date        2019-04-27 20:52
+        * @Date        2019-05-02 21:37
         */
-        Bed bed = findById(bedId);
-        bed.setEmployerByEmployerId(employerRepository.getOne(employerId));
-        bedRepository.save(bed);
-        return bed;
+        try{
+            Bed bed = bedRepository.getOne(bedId);
+            bed.setEmployerByEmployerId(employerRepository.getOne(employerId));
+            return ResultUtil.success(ResultEnum.UPDATE_SUCCESS,bedRepository.save(bed));
+        }catch (Exception e)
+        {
+            throw new MyException(ResultEnum.UPDATE_FAIL);
+        }
     }
 
     @Transactional
     @Override
-    public Bed setUserOldPeople(String bedId, Integer oldPeopleId) {
+    public Result setUserOldPeople(String bedId, Integer oldPeopleId)throws MyException {
         /**
         * @Description: 设置床位使用老人
         * @Author:      TJX
          * @param bedId
          * @param oldPeopleId
-        * @Return      com.guet.graduationdesign.pojo.Bed
+        * @Return      com.guet.graduationdesign.result.Result
         * @Exception
-        * @Date        2019-04-27 20:52
+        * @Date        2019-05-02 21:37
         */
-        Bed bed = findById(bedId);
-        OldPeople oldPeople = oldPeopleRepository.getOne(oldPeopleId);
-        bed.setOldPeopleByOldPeopleId(oldPeople);
-        bedRepository.save(bed);
-        return bed;
+        try{
+            Bed bed = bedRepository.getOne(bedId);
+            bed.setOldPeopleByOldPeopleId(oldPeopleRepository.getOne(oldPeopleId));
+            return ResultUtil.success(ResultEnum.UPDATE_SUCCESS,bedRepository.save(bed));
+        }catch (Exception e)
+        {
+            throw new MyException(ResultEnum.UPDATE_FAIL);
+        }
     }
 
     private Bed getBed(String bedId)

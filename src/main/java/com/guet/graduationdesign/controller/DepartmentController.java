@@ -1,12 +1,9 @@
 package com.guet.graduationdesign.controller;
 
-import com.guet.graduationdesign.pojo.Department;
-import com.guet.graduationdesign.pojo.Employer;
-import com.guet.graduationdesign.pojo.Equipment;
+import com.guet.graduationdesign.result.Result;
 import com.guet.graduationdesign.service.DepartmentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import java.util.List;
 
 /**
 * @Description:    部门管理控制器
@@ -25,13 +22,13 @@ public class DepartmentController {
     private DepartmentService departmentService;
 
     @GetMapping("/findAll")
-    public List<Department> findAll()
+    public Result findAll()
     {
         /**
         * @Description: 查询所有部门
         * @Author:      TJX
          * @param
-        * @Return      java.util.List<com.guet.graduationdesign.pojo.Department>
+        * @Return      com.guet.graduationdesign.result.Result
         * @Exception
         * @Date        2019-04-26 11:36
         */
@@ -39,13 +36,13 @@ public class DepartmentController {
     }
 
     @GetMapping(value = "/findById")
-    public Department findDepartmentById(@RequestParam("departmentId") String departmentId)
+    public Result findDepartmentById(@RequestParam("departmentId") String departmentId)
     {
         /**
         * @Description: 根据部门Id查询部门信息
         * @Author:      TJX
          * @param departmentId
-        * @Return      com.guet.graduationdesign.pojo.Department
+        * @Return      com.guet.graduationdesign.result.Result
         * @Exception
         * @Date        2019-04-25 21:10
         */
@@ -53,22 +50,21 @@ public class DepartmentController {
     }
 
     @DeleteMapping("/deleteById")
-    public String deleteDepartmentById(String departmentId)
+    public Result deleteDepartmentById(String departmentId)
     {
         /**
-        * @Description: 根据部门Id删除部门
+        * @Description: 根据Id删除部门
         * @Author:      TJX
          * @param departmentId
-        * @Return      java.lang.String
+        * @Return      com.guet.graduationdesign.result.Result
         * @Exception
-        * @Date        2019-04-26 11:38
+        * @Date        2019-05-02 21:52
         */
-        departmentService.deleteById(departmentId);
-        return "删除成功";
+        return departmentService.deleteById(departmentId);
     }
 
     @PutMapping("/modifyInformation")
-    public Department modifyDepartmentInformation(@RequestParam("departmentId") String departmentId,
+    public Result modifyDepartmentInformation(@RequestParam("departmentId") String departmentId,
                                                   @RequestParam("departmentName") String departmentName)
     {
         /**
@@ -76,7 +72,7 @@ public class DepartmentController {
         * @Author:      TJX
          * @param departmentId
          * @param departmentName
-        * @Return      com.guet.graduationdesign.pojo.Department
+        * @Return      com.guet.graduationdesign.result.Result
         * @Exception
         * @Date        2019-04-26 11:42
         */
@@ -84,7 +80,7 @@ public class DepartmentController {
     }
 
     @PostMapping("/add")
-    public Department add(@RequestParam("departmentId") String departmentId,
+    public Result add(@RequestParam("departmentId") String departmentId,
                           @RequestParam("departmentName") String departmentName)
     {
         /**
@@ -92,7 +88,7 @@ public class DepartmentController {
         * @Author:      TJX
          * @param departmentId
          * @param departmentName
-        * @Return      com.guet.graduationdesign.pojo.Department
+        * @Return      com.guet.graduationdesign.result.Result
         * @Exception
         * @Date        2019-04-26 11:44
         */
@@ -100,13 +96,13 @@ public class DepartmentController {
     }
 
     @GetMapping(value = "/findAllEmployer")
-    public List<Employer> findAllEmployerById(@RequestParam("departmentId") String departmentId)
+    public Result findAllEmployerById(@RequestParam("departmentId") String departmentId)
     {
         /**
         * @Description: 查询部门所有员工
         * @Author:      TJX
          * @param departmentId
-        * @Return      java.util.ArrayList<com.guet.graduationdesign.pojo.Employer>
+        * @Return      com.guet.graduationdesign.result.Result
         * @Exception
         * @Date        2019-04-27 16:46
         */
@@ -114,13 +110,13 @@ public class DepartmentController {
     }
 
     @GetMapping(value = "/findAllEquipment")
-    public List<Equipment> findAllEquipmentById(@RequestParam("departmentId") String departmentId)
+    public Result findAllEquipmentById(@RequestParam("departmentId") String departmentId)
     {
         /**
         * @Description: 查询部门所有设备
         * @Author:      TJX
          * @param departmetId
-        * @Return      java.util.ArrayList<com.guet.graduationdesign.pojo.Equipment>
+        * @Return      com.guet.graduationdesign.result.Result
         * @Exception
         * @Date        2019-04-27 16:49
         */

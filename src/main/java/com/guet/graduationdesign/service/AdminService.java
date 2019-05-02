@@ -1,26 +1,24 @@
 package com.guet.graduationdesign.service;
 
-import com.guet.graduationdesign.pojo.Admin;
-
-import java.util.List;
+import com.guet.graduationdesign.result.Result;
 
 public interface AdminService {
 
     //查询所有管理员账号信息
-    public List<Admin> findAll();
+    public Result findAll();
 
     //通过用户名查询管理员账号信息
-    public Admin findByUsername(String username);
+    public Result findByUsername(String username);
 
     //根据用户名删除管理员账号
-    public void deleteByUsername(String username);
+    public Result deleteByUsername(String username);
 
     //修改密码
-    public Admin update(String username,String password,Integer employerId);
+    public Result update(String username,String password,Integer employerId);
 
     //注册
-    public Admin add(String username,String password,Integer employerId);
+    public Result add(String username,String password,Integer employerId);
 
     //根据员工Id查询管理员账号密码
-    public Admin findByEmployerId(Integer employerId);
+    public Result findByEmployerId(Integer employerId);
 }
