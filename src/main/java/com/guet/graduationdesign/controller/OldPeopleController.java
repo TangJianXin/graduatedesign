@@ -1,5 +1,6 @@
 package com.guet.graduationdesign.controller;
 
+import com.guet.graduationdesign.pojo.OldPeople;
 import com.guet.graduationdesign.result.Result;
 import com.guet.graduationdesign.service.OldPeopleService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,7 +51,7 @@ public class OldPeopleController {
     }
 
     @DeleteMapping(value = "/deleteById")
-    public Result deleteOldPeopleById(@RequestParam("oldPeopleId") Integer oldPeopleId)
+    public Result deleteOldPeopleById(@RequestBody OldPeople oldPeople)
     {
         /**
         * @Description: 根据Id删除老人信息
@@ -60,26 +61,27 @@ public class OldPeopleController {
         * @Exception
         * @Date        2019-05-02 21:57
         */
-        return oldPeopleService.delete(oldPeopleId);
+        return oldPeopleService.delete(oldPeople.getOldPeopleId());
     }
 
     @PutMapping(value = "/modifyInformation")
-    public Result modifyOldPeopleInformation(@RequestParam("oldPeopleId") Integer oldPeopleId,
-                                                @RequestParam("idCard") String idCard,
+    public Result modifyOldPeopleInformation(@RequestParam("idCard") String idCard,
+                                             @RequestParam("oldPeopleId") Integer oldPeopleId,
                                                 @RequestParam("photo") String photo,
                                                 @RequestParam("name") String name,
                                                 @RequestParam("telephone") String telephone,
                                                 @RequestParam("address") String address,
                                                 @RequestParam("sex") String sex,
                                                 @RequestParam("birthday") String birthday,
-                                                @RequestParam("familyPhone") String familyPhone
+                                                @RequestParam("familyPhone") String familyPhone,
+                                                @RequestParam("entryDate") String entryDate
                                                 )
     {
         /**
         * @Description: 修改老人信息
         * @Author:      TJX
-         * @param oldPeopleId
-         * @param idCard
+         * @param idCard
+         * @param oldPeopleId
          * @param photo
          * @param name
          * @param telephone
@@ -87,11 +89,12 @@ public class OldPeopleController {
          * @param sex
          * @param birthday
          * @param familyPhone
+         * @param entryDate
         * @Return      com.guet.graduationdesign.result.Result
         * @Exception
-        * @Date        2019-04-26 17:07
+        * @Date        2019-05-06 00:32
         */
-        return oldPeopleService.update(oldPeopleId,idCard,photo,name,telephone,address,sex,birthday,familyPhone);
+        return oldPeopleService.update(oldPeopleId,idCard,photo,name,telephone,address,sex,birthday,familyPhone,entryDate);
     }
 
     @PostMapping(value = "/add")

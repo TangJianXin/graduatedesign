@@ -2,7 +2,8 @@ package com.guet.graduationdesign.util;
 
 
 import org.springframework.web.multipart.MultipartFile;
-
+import sun.misc.BASE64Decoder;
+import sun.misc.BASE64Encoder;
 import java.io.*;
 
 /**
@@ -17,6 +18,7 @@ import java.io.*;
 public class MultipartFileUtil {
 
     private static final String photoSavePath = "/Users/jreen/Documents/photo/";
+
 
     public static String saveFile(MultipartFile multipartFile,String identity){
         /**
@@ -58,20 +60,32 @@ public class MultipartFileUtil {
             return "保存失败";
         }
     }
-    public static boolean isSuccess(String photoPath)
+    public static String getFile(String url)
     {
         /**
-        * @Description:  判断多媒体文件是否保存成功
+        * @Description: 获取照片
         * @Author:      TJX
-         * @param photoPath
-        * @Return      boolean
+         * @param url
+        * @Return      java.lang.String
         * @Exception
-        * @Date        2019-04-27 11:02
+        * @Date        2019-05-05 20:24
         */
-        if(photoPath.equals("保存失败"))
-        {
-            return false;
+        InputStream in = null;
+        byte[] data = null;
+
+        // 读取图片字节数组
+        try {
+            in = new FileInputStream(url);
+
+            data = new byte[in.available()];
+            in.read(data);
+            in.close();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
-        return true;
+        // 对字节数组Base64编码
+        BASE64Encoder encoder = new BASE64Encoder();
+
+        return "data:image/jpg;base64,"+encoder.encode(data);// 返回Base64编码过的字节数组字符串
     }
 }

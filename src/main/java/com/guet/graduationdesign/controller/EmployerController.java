@@ -74,7 +74,8 @@ public class EmployerController {
                                               @RequestParam("birthday") String birthday,
                                               @RequestParam("photo") String photo,
                                               @RequestParam("sex") String sex,
-                                              @RequestParam("departmentId") String departmentId)
+                                              @RequestParam("departmentId") String departmentId,
+                                              @RequestParam("entryDate") String entryDate)
     {
         /**
         * @Description: 修改员工信息
@@ -89,11 +90,12 @@ public class EmployerController {
          * @param photo
          * @param sex
          * @param departmentId
+         * @param entryDate
         * @Return      com.guet.graduationdesign.result.Result
         * @Exception
-        * @Date        2019-04-26 09:59
+        * @Date        2019-05-06 00:28
         */
-        return employerService.update(employerId,position,name,telephone,address,idCard,birthday,photo,sex,departmentId);
+        return employerService.update(employerId,position,name,telephone,address,idCard,birthday,photo,sex,departmentId,entryDate);
     }
 
     @PostMapping(value = "/add")

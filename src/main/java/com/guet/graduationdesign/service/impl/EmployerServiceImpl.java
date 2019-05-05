@@ -5,9 +5,11 @@ import com.guet.graduationdesign.exception.MyException;
 import com.guet.graduationdesign.pojo.Bed;
 import com.guet.graduationdesign.pojo.Employer;
 import com.guet.graduationdesign.repository.*;
+import com.guet.graduationdesign.result.EmployerResult;
 import com.guet.graduationdesign.result.Result;
 import com.guet.graduationdesign.service.EmployerService;
 import com.guet.graduationdesign.util.DateUtil;
+import com.guet.graduationdesign.util.MultipartFileUtil;
 import com.guet.graduationdesign.util.ResultUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -49,7 +51,11 @@ public class EmployerServiceImpl implements EmployerService {
         * @Date        2019-05-02 21:40
         */
         try{
-            return ResultUtil.success(ResultEnum.SELECT_SUCCESS,employerRepository.getOne(employerId));
+            Employer employer = employerRepository.getOne(employerId);
+            EmployerResult employerResult = new EmployerResult();
+            employerResult.setEmployer(employer);
+            employerResult.setUrl(MultipartFileUtil.getFile(employer.getPhoto()));
+            return ResultUtil.success(ResultEnum.SELECT_SUCCESS,employerResult);
         }catch (Exception e)
         {
             throw new MyException(ResultEnum.SELETCT_FAIL);
@@ -67,7 +73,16 @@ public class EmployerServiceImpl implements EmployerService {
         * @Date        2019-05-02 21:40
         */
         try{
-            return ResultUtil.success(ResultEnum.SELECT_SUCCESS,employerRepository.findAll());
+            List<Employer> list = employerRepository.findAll();
+            List<EmployerResult> arrayList = new ArrayList<>();
+            for(Employer employer:list)
+            {
+                EmployerResult employerResult = new EmployerResult();
+                employerResult.setEmployer(employer);
+                employerResult.setUrl(MultipartFileUtil.getFile(employer.getPhoto()));
+                arrayList.add(employerResult);
+            }
+            return ResultUtil.success(ResultEnum.SELECT_SUCCESS,arrayList);
         }catch (Exception e)
         {
             throw new MyException(ResultEnum.SELETCT_FAIL);
@@ -97,7 +112,8 @@ public class EmployerServiceImpl implements EmployerService {
     @Transactional
     @Override
     public Result update(Integer employerId, String position, String name, String telephone, String address,
-                         String idCard, String birthday, String photo, String sex, String departmentId) throws MyException{
+                         String idCard, String birthday, String photo, String sex, String departmentId,
+                         String entryDate) throws MyException{
         /**
         * @Description: 修改员工信息
         * @Author:      TJX
@@ -111,12 +127,13 @@ public class EmployerServiceImpl implements EmployerService {
          * @param photo
          * @param sex
          * @param departmentId
+         * @param entryDate
         * @Return      com.guet.graduationdesign.result.Result
         * @Exception
-        * @Date        2019-05-02 21:41
+        * @Date        2019-05-06 00:34
         */
         try{
-            Employer employer =  getEmployer(employerId,position,name,telephone,address,idCard, DateUtil.getDate(birthday),photo,sex,departmentId);
+            Employer employer =  getEmployer(employerId,position,name,telephone,address,idCard, DateUtil.getDate(birthday),photo,sex,departmentId,DateUtil.getDate(entryDate));
             return ResultUtil.success(ResultEnum.UPDATE_SUCCESS,employerRepository.save(employer));
         }catch (Exception e)
         {
@@ -191,7 +208,7 @@ public class EmployerServiceImpl implements EmployerService {
         /**
         * @Description: 构造员工对象
         * @Author:      TJX
-         * @param position
+         * @param position
          * @param name
          * @param telephone
          * @param address
@@ -200,9 +217,10 @@ public class EmployerServiceImpl implements EmployerService {
          * @param photo
          * @param sex
          * @param departmentId
+         * @param entryDate
         * @Return      com.guet.graduationdesign.pojo.Employer
         * @Exception
-        * @Date        2019-04-24 21:26
+        * @Date        2019-05-06 00:34
         */
         Employer employer = new Employer();
         employer.setAddress(address);
@@ -219,7 +237,8 @@ public class EmployerServiceImpl implements EmployerService {
     }
     private Employer getEmployer(Integer employerId,String position, String name,
                                  String telephone, String address, String idCard,
-                                 Date birthday, String photo, String sex, String departmentId)
+                                 Date birthday, String photo, String sex, String departmentId,
+                                 Date entryDate)
     {
         /**
         * @Description: 构造员工对象
@@ -234,9 +253,10 @@ public class EmployerServiceImpl implements EmployerService {
          * @param photo
          * @param sex
          * @param departmentId
+         * @param entryDate
         * @Return      com.guet.graduationdesign.pojo.Employer
         * @Exception
-        * @Date        2019-04-26 10:52
+        * @Date        2019-05-06 00:33
         */
         Employer employer = new Employer();
         employer.setEmployerId(employerId);
@@ -249,6 +269,7 @@ public class EmployerServiceImpl implements EmployerService {
         employer.setDepartmentByDepartmentId(departmentRepository.getOne(departmentId));
         employer.setTelephone(telephone);
         employer.setIdCard(idCard);
+        employer.setEntryDate(entryDate);
         return employer;
     }
 }

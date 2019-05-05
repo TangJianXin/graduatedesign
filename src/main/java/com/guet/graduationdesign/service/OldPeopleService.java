@@ -16,7 +16,7 @@ public interface OldPeopleService {
     //更新老人
     public Result update(Integer oldPeopleId, String idCard, String photo,
                             String name, String telephone, String address,
-                            String sex, String birthday,String familyPhone);
+                            String sex, String birthday,String familyPhone,String entryDate);
 
     //添加老人
     public Result add(String idCard, String photo,

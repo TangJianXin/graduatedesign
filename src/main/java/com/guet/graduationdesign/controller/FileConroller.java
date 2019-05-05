@@ -1,12 +1,9 @@
 package com.guet.graduationdesign.controller;
 
 import com.guet.graduationdesign.result.Result;
-import com.guet.graduationdesign.service.UploadService;
+import com.guet.graduationdesign.service.FileService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 /**
@@ -19,11 +16,11 @@ import org.springframework.web.multipart.MultipartFile;
 * @Version:        1.0
 */
 @RestController
-@RequestMapping(value = "/upload")
-public class UploadConroller {
+@RequestMapping(value = "file")
+public class FileConroller {
 
     @Autowired
-    private UploadService uploadService;
+    private FileService fileService;
 
     @PostMapping(value = "/photo/employer")
     public Result uploadOfEmployer(@RequestParam("photo") MultipartFile multipartFile)
@@ -36,7 +33,7 @@ public class UploadConroller {
         * @Exception
         * @Date        2019-04-30 17:57
         */
-        return uploadService.uploadOfEmployer(multipartFile);
+        return fileService.uploadOfEmployer(multipartFile);
     }
 
     @PostMapping(value = "/photo/oldPeople")
@@ -50,6 +47,20 @@ public class UploadConroller {
         * @Exception
         * @Date        2019-04-30 17:59
         */
-        return uploadService.uploadOfOldpeople(multipartFile);
+        return fileService.uploadOfOldpeople(multipartFile);
+    }
+
+    @GetMapping(value = "/getPhoto")
+    public Result getPhoto(@RequestParam("url") String url)
+    {
+        /**
+        * @Description: 将图片编码后发送
+        * @Author:      TJX
+         * @param url
+        * @Return      com.guet.graduationdesign.result.Result
+        * @Exception
+        * @Date        2019-05-05 20:33
+        */
+        return fileService.getPhoto(url);
     }
 }

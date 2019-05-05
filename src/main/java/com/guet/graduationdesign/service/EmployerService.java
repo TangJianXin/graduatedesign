@@ -16,7 +16,8 @@ public interface EmployerService {
     //更新员工
     public Result update(Integer employerId, String position, String name,
                            String telephone, String address, String idCard,
-                           String birthday, String photo, String sex, String departmentId);
+                           String birthday, String photo, String sex, String departmentId,
+                         String entryDate);
 
     //添加员工
     public Result add(String position, String name,

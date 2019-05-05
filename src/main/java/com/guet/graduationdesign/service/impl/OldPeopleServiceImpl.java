@@ -4,13 +4,16 @@ import com.guet.graduationdesign.enums.ResultEnum;
 import com.guet.graduationdesign.exception.MyException;
 import com.guet.graduationdesign.pojo.OldPeople;
 import com.guet.graduationdesign.repository.OldPeopleRepository;
+import com.guet.graduationdesign.result.OldPeopleResult;
 import com.guet.graduationdesign.result.Result;
 import com.guet.graduationdesign.service.OldPeopleService;
 import com.guet.graduationdesign.util.DateUtil;
+import com.guet.graduationdesign.util.MultipartFileUtil;
 import com.guet.graduationdesign.util.ResultUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -40,7 +43,11 @@ public class OldPeopleServiceImpl implements OldPeopleService {
         * @Date        2019-05-02 21:43
         */
         try{
-            return ResultUtil.success(ResultEnum.SELECT_SUCCESS,oldPeopleRepository.getOne(oldPeopleId));
+            OldPeople oldPeople = oldPeopleRepository.getOne(oldPeopleId);
+            OldPeopleResult oldPeopleResult = new OldPeopleResult();
+            oldPeopleResult.setOldPeople(oldPeople);
+            oldPeopleResult.setUrl(MultipartFileUtil.getFile(oldPeople.getPhoto()));
+            return ResultUtil.success(ResultEnum.SELECT_SUCCESS,oldPeopleResult);
         }catch (Exception e)
         {
             throw new MyException(ResultEnum.SELETCT_FAIL);
@@ -58,7 +65,16 @@ public class OldPeopleServiceImpl implements OldPeopleService {
         * @Date        2019-05-02 21:43
         */
         try{
-            return ResultUtil.success(ResultEnum.SELECT_SUCCESS,oldPeopleRepository.findAll());
+            List<OldPeople> list = oldPeopleRepository.findAll();
+            List<OldPeopleResult> arrayList = new ArrayList<>();
+            for(OldPeople oldPeople:list)
+            {
+                OldPeopleResult oldPeopleResult = new OldPeopleResult();
+                oldPeopleResult.setOldPeople(oldPeople);
+                oldPeopleResult.setUrl(MultipartFileUtil.getFile(oldPeople.getPhoto()));
+                arrayList.add(oldPeopleResult);
+            }
+            return ResultUtil.success(ResultEnum.SELECT_SUCCESS,arrayList);
         }catch (Exception e)
         {
             throw new MyException(ResultEnum.SELETCT_FAIL);
@@ -89,9 +105,9 @@ public class OldPeopleServiceImpl implements OldPeopleService {
     @Override
     public Result update(Integer oldPeopleId, String idCard, String photo,
                          String name, String telephone, String address,
-                         String sex, String birthday, String familyPhone)throws MyException {
+                         String sex, String birthday, String familyPhone,String entryDate)throws MyException {
         /**
-        * @Description: 修改老人信息
+        * @Description: 更新老人信息
         * @Author:      TJX
          * @param oldPeopleId
          * @param idCard
@@ -102,13 +118,16 @@ public class OldPeopleServiceImpl implements OldPeopleService {
          * @param sex
          * @param birthday
          * @param familyPhone
+         * @param entryDate
         * @Return      com.guet.graduationdesign.result.Result
         * @Exception
-        * @Date        2019-05-02 21:44
+        * @Date        2019-05-06 00:33
         */
-        OldPeople oldPeople = getOldPeople(oldPeopleId,idCard,photo,name,telephone,address,sex,DateUtil.getDate(birthday),familyPhone);
+        OldPeople oldPeople = getOldPeople(oldPeopleId,idCard,photo,name,telephone,address,sex,DateUtil.getDate(birthday),familyPhone,DateUtil.getDate(entryDate));
         try{
-            return ResultUtil.success(ResultEnum.UPDATE_SUCCESS,oldPeopleRepository.save(oldPeople));
+            oldPeopleRepository.save(oldPeople);
+            oldPeople.setPhoto(MultipartFileUtil.getFile(oldPeople.getPhoto()));
+            return ResultUtil.success(ResultEnum.UPDATE_SUCCESS,oldPeople);
         }catch (Exception e)
         {
             throw new MyException(ResultEnum.UPDATE_FAIL);
@@ -149,7 +168,7 @@ public class OldPeopleServiceImpl implements OldPeopleService {
 
     private OldPeople getOldPeople(Integer oldPeopleId, String idCard, String photo,
                                    String name, String telephone, String address,
-                                   String sex, Date birthday,String familyPhone)
+                                   String sex, Date birthday,String familyPhone,Date entryDate)
     {
         /**
         * @Description: 构造老人对象
@@ -163,9 +182,10 @@ public class OldPeopleServiceImpl implements OldPeopleService {
          * @param sex
          * @param birthday
          * @param familyPhone
+         * @param entryDate
         * @Return      com.guet.graduationdesign.pojo.OldPeople
         * @Exception
-        * @Date        2019-04-24 21:49
+        * @Date        2019-05-06 00:33
         */
         OldPeople oldPeople = new OldPeople();
         oldPeople.setOldPeopleId(oldPeopleId);
@@ -177,6 +197,7 @@ public class OldPeopleServiceImpl implements OldPeopleService {
         oldPeople.setSex(sex);
         oldPeople.setBirthday(birthday);
         oldPeople.setFamilyPhone(familyPhone);
+        oldPeople.setEntryDate(entryDate);
         return oldPeople;
     }
 

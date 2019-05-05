@@ -49,7 +49,7 @@ public class HttpAspect {
         logger.info("method={}", request.getMethod());
         logger.info("class_method={}", joinPoint.getSignature().getDeclaringTypeName() + "." +
                 joinPoint.getSignature().getName());
-        logger.info("args={}", joinPoint.getArgs());
+         //logger.info("args={}", joinPoint.getArgs());
     }
 
     @AfterReturning(returning = "object", pointcut = "log()")
@@ -62,7 +62,7 @@ public class HttpAspect {
         * @Exception
         * @Date        2019-04-04 20:23
         */
-        logger.info("response={}", object.toString());
+        //logger.info("response={}", object.toString());
     }
 
     @After("log()")
