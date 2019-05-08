@@ -33,7 +33,7 @@ public class EquipmentServiceImpl implements EquipmentService {
     private DepartmentRepository departmentRepository;
 
     @Override
-    public Result findById(String equipmentId) throws MyException {
+    public Result findById(Integer equipmentId) throws MyException {
         /**
         * @Description: 根据Id查询设备
         * @Author:      TJX
@@ -70,7 +70,7 @@ public class EquipmentServiceImpl implements EquipmentService {
 
     @Transactional
     @Override
-    public Result deleteById(String equipmentId) {
+    public Result deleteById(Integer equipmentId)throws MyException {
         /**
         * @Description: 查询所有设备
         * @Author:      TJX
@@ -90,7 +90,7 @@ public class EquipmentServiceImpl implements EquipmentService {
 
     @Transactional
     @Override
-    public Result update(String equipmentId, String equipmentName,
+    public Result update(Integer equipmentId, String equipmentName,
                             String purchaseDate,String productionDate,
                             String departmentId)throws MyException {
         /**
@@ -116,7 +116,7 @@ public class EquipmentServiceImpl implements EquipmentService {
 
     @Transactional
     @Override
-    public Result add(String equipmentId, String equipmentName,
+    public Result add(Integer equipmentId, String equipmentName,
                          String purchaseDate,String productionDate,
                       String departmentId)throws MyException {
         /**
@@ -140,7 +140,7 @@ public class EquipmentServiceImpl implements EquipmentService {
         }
     }
 
-    private Equipment getEquipment(String equipmentId, String equipmentName,
+    private Equipment getEquipment(Integer equipmentId, String equipmentName,
                                    Date purchaseDate, Date productionDate, String departmentId)
     {
         /**

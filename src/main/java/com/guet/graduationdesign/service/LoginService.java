@@ -10,4 +10,7 @@ public interface LoginService {
     //普通员工登录
     public Result loginByUser(String username,String password);
 
+    //登录
+    public Result login(String username,String password);
+
 }

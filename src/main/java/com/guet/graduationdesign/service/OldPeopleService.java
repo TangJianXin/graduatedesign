@@ -10,6 +10,9 @@ public interface OldPeopleService {
     //查询所有老人
     public Result findAll();
 
+    //查询所有没有安排床位的老人
+    public Result findAllEmpty();
+
     //根据Id删除老人
     public Result delete(Integer oldPeopleId);
 

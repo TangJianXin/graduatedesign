@@ -55,4 +55,19 @@ public class LoginController {
         */
         return loginService.loginByUser(username,password);
     }
+
+    @PostMapping(value = "/all")
+    public Result loginByAll(String username,String password)
+    {
+        /**
+        * @Description: 统一登录
+        * @Author:      TJX
+         * @param username
+         * @param password
+        * @Return      com.guet.graduationdesign.result.Result
+        * @Exception
+        * @Date        2019-05-08 12:15
+        */
+        return loginService.login(username,password);
+    }
 }

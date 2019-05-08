@@ -65,20 +65,18 @@ public class UserController {
 
     @PutMapping("/modifyPassword")
     public Result modifyPassword(@RequestParam("username") String username,
-                               @RequestParam("password") String password,
-                               @RequestParam("employerId") Integer employerId)
+                               @RequestParam("password") String password)
     {
         /**
         * @Description: 修改普通员工账号密码
         * @Author:      TJX
          * @param username
          * @param password
-         * @param employerId
         * @Return      com.guet.graduationdesign.result.Result
         * @Exception
         * @Date        2019-04-26 09:41
         */
-        return userService.update(username,password,employerId);
+        return userService.update(username,password);
     }
 
     @PostMapping("/register")
@@ -111,5 +109,20 @@ public class UserController {
         * @Date        2019-04-27 17:23
         */
         return userService.findByEmployerId(employerId);
+    }
+
+    @PostMapping(value = "/uploadImage")
+    public Result uploadImage(String username,String image)
+    {
+        /**
+        * @Description: 普通员工头像上传的地址
+        * @Author:      TJX
+         * @param username
+         * @param image
+        * @Return      com.guet.graduationdesign.result.Result
+        * @Exception
+        * @Date        2019-05-08 18:31
+        */
+        return userService.uploadImage(username,image);
     }
 }

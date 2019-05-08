@@ -1,5 +1,6 @@
 package com.guet.graduationdesign.controller;
 
+import com.guet.graduationdesign.pojo.Employer;
 import com.guet.graduationdesign.result.Result;
 import com.guet.graduationdesign.service.EmployerService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,7 +51,7 @@ public class EmployerController {
     }
 
     @DeleteMapping(value = "deleteById")
-    public Result deleteByEmployerId(@RequestParam("employerId") Integer employerId)
+    public Result deleteByEmployerId(@RequestBody Employer employer)
     {
         /**
         * @Description: 根据Id删除员工信息
@@ -60,7 +61,7 @@ public class EmployerController {
         * @Exception
         * @Date        2019-05-02 21:54
         */
-        return employerService.deleteById(employerId);
+        return employerService.deleteById(employer.getEmployerId());
     }
 
 

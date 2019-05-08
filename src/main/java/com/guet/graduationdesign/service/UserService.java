@@ -14,11 +14,14 @@ public interface UserService {
     public Result deleteByUsername(String username);
 
     //修改密码
-    public Result update(String username,String password,Integer employerId);
+    public Result update(String username,String password);
 
     //注册
     public Result add(String username,String password,Integer employerId);
 
     //根据员工Id查询普通员工账号密码
     public Result findByEmployerId(Integer employerId);
+
+    //上传头像地址
+    public Result uploadImage(String username,String image);
 }

@@ -36,6 +36,20 @@ public class OldPeopleController {
         return oldPeopleService.findAll();
     }
 
+    @GetMapping(value = "/findAllEmpty")
+    public Result findAllEmpty()
+    {
+        /**
+        * @Description: 查询所有未安排床位的老人
+        * @Author:      TJX
+         * @param
+        * @Return      com.guet.graduationdesign.result.Result
+        * @Exception
+        * @Date        2019-05-07 17:47
+        */
+        return oldPeopleService.findAllEmpty();
+    }
+
     @GetMapping(value = "/findById")
     public Result findOldPeopleById(@RequestParam("oldPeopleId") Integer oldPeopleId)
     {

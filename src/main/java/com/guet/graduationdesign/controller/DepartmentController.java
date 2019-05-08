@@ -1,5 +1,6 @@
 package com.guet.graduationdesign.controller;
 
+import com.guet.graduationdesign.pojo.Department;
 import com.guet.graduationdesign.result.Result;
 import com.guet.graduationdesign.service.DepartmentService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,7 +51,7 @@ public class DepartmentController {
     }
 
     @DeleteMapping("/deleteById")
-    public Result deleteDepartmentById(String departmentId)
+    public Result deleteDepartmentById(@RequestBody Department department)
     {
         /**
         * @Description: 根据Id删除部门
@@ -60,7 +61,7 @@ public class DepartmentController {
         * @Exception
         * @Date        2019-05-02 21:52
         */
-        return departmentService.deleteById(departmentId);
+        return departmentService.deleteById(department.getDepartmentId());
     }
 
     @PutMapping("/modifyInformation")

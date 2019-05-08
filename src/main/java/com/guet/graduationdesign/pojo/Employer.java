@@ -88,6 +88,10 @@ public class Employer {
         return birthday;
     }
 
+    public void setBirthday(java.sql.Date birthday) {
+        this.birthday = birthday;
+    }
+
     public void setBirthday(Date birthday) {
         this.birthday = birthday;
     }
@@ -118,6 +122,10 @@ public class Employer {
         return entryDate;
     }
 
+    public void setEntryDate(java.sql.Date entryDate) {
+        this.entryDate = entryDate;
+    }
+
     public void setEntryDate(Date entryDate) {
         this.entryDate = entryDate;
     }
@@ -126,6 +134,10 @@ public class Employer {
     @Column(name = "resign_date")
     public Date getResignDate() {
         return resignDate;
+    }
+
+    public void setResignDate(java.sql.Date resignDate) {
+        this.resignDate = resignDate;
     }
 
     public void setResignDate(Date resignDate) {

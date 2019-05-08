@@ -1,6 +1,7 @@
 package com.guet.graduationdesign.pojo;
 
 import org.hibernate.annotations.Proxy;
+
 import javax.persistence.*;
 import java.util.Date;
 import java.util.Objects;
@@ -8,7 +9,7 @@ import java.util.Objects;
 @Proxy(lazy = false)
 @Entity
 public class Equipment {
-    private String equipmentId;
+    private int equipmentId;
     private String equipmentName;
     private Date purchaseDate;
     private Date productionDate;
@@ -16,11 +17,11 @@ public class Equipment {
 
     @Id
     @Column(name = "equipment_id")
-    public String getEquipmentId() {
+    public int getEquipmentId() {
         return equipmentId;
     }
 
-    public void setEquipmentId(String equipmentId) {
+    public void setEquipmentId(int equipmentId) {
         this.equipmentId = equipmentId;
     }
 
@@ -59,7 +60,7 @@ public class Equipment {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Equipment equipment = (Equipment) o;
-        return Objects.equals(equipmentId, equipment.equipmentId) &&
+        return equipmentId == equipment.equipmentId &&
                 Objects.equals(equipmentName, equipment.equipmentName) &&
                 Objects.equals(purchaseDate, equipment.purchaseDate) &&
                 Objects.equals(productionDate, equipment.productionDate);
@@ -78,16 +79,5 @@ public class Equipment {
 
     public void setDepartmentByDepartmentId(Department departmentByDepartmentId) {
         this.departmentByDepartmentId = departmentByDepartmentId;
-    }
-
-    @Override
-    public String toString() {
-        return "Equipment{" +
-                "equipmentId='" + equipmentId + '\'' +
-                ", equipmentName='" + equipmentName + '\'' +
-                ", purchaseDate=" + purchaseDate +
-                ", productionDate=" + productionDate +
-                ", departmentByDepartmentId=" + departmentByDepartmentId +
-                '}';
     }
 }

@@ -1,7 +1,10 @@
 package com.guet.graduationdesign.pojo;
 
 import org.hibernate.annotations.Proxy;
+
 import javax.persistence.*;
+
+import java.util.Date;
 import java.util.Objects;
 
 @Proxy(lazy = false)
@@ -9,6 +12,8 @@ import java.util.Objects;
 public class Admin {
     private String username;
     private String password;
+    private Date registerDate;
+    private String image;
     private Employer employerByEmployerId;
 
     @Id
@@ -31,18 +36,40 @@ public class Admin {
         this.password = password;
     }
 
+    @Basic
+    @Column(name = "register_Date")
+    public Date getRegisterDate() {
+        return registerDate;
+    }
+
+    public void setRegisterDate(Date registerDate) {
+        this.registerDate = registerDate;
+    }
+
+    @Basic
+    @Column(name = "image")
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Admin admin = (Admin) o;
         return Objects.equals(username, admin.username) &&
-                Objects.equals(password, admin.password);
+                Objects.equals(password, admin.password) &&
+                Objects.equals(registerDate, admin.registerDate) &&
+                Objects.equals(image, admin.image);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(username, password);
+        return Objects.hash(username, password, registerDate, image);
     }
 
     @ManyToOne
@@ -53,14 +80,5 @@ public class Admin {
 
     public void setEmployerByEmployerId(Employer employerByEmployerId) {
         this.employerByEmployerId = employerByEmployerId;
-    }
-
-    @Override
-    public String toString() {
-        return "Admin{" +
-                "username='" + username + '\'' +
-                ", password='" + password + '\'' +
-                ", employerByEmployerId=" + employerByEmployerId +
-                '}';
     }
 }

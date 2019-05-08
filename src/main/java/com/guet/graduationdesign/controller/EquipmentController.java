@@ -1,5 +1,6 @@
 package com.guet.graduationdesign.controller;
 
+import com.guet.graduationdesign.pojo.Equipment;
 import com.guet.graduationdesign.result.Result;
 import com.guet.graduationdesign.service.EquipmentService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,7 +37,7 @@ public class EquipmentController {
     }
 
     @GetMapping(value = "/findById")
-    public Result findEquipmentById(@RequestParam("equipmentId") String equipmentId)
+    public Result findEquipmentById(@RequestParam("equipmentId") Integer equipmentId)
     {
         /**
         * @Description: 根据设备编号查询所有设备
@@ -50,7 +51,7 @@ public class EquipmentController {
     }
 
     @DeleteMapping(value = "/deleteById")
-    public Result deleteEquipmentById(@RequestParam("equipmentId") String equipmentId)
+    public Result deleteEquipmentById(@RequestBody Equipment equipment)
     {
         /**
         * @Description: 根据Id删除设备
@@ -60,11 +61,11 @@ public class EquipmentController {
         * @Exception
         * @Date        2019-05-02 21:56
         */
-        return equipmentService.deleteById(equipmentId);
+        return equipmentService.deleteById(equipment.getEquipmentId());
     }
 
     @PutMapping(value = "/modifyInformation")
-    public Result modifyEquipmentInformation(@RequestParam("equipmentId") String equipmentId,
+    public Result modifyEquipmentInformation(@RequestParam("equipmentId") Integer equipmentId,
                                                 @RequestParam("equipmentName") String equipmentName,
                                                 @RequestParam("purchaseDate") String purchaseDate,
                                                 @RequestParam("productionDate") String productionDate,
@@ -86,7 +87,7 @@ public class EquipmentController {
     }
 
     @PostMapping(value = "/add")
-    public Result add(@RequestParam("equipmentId") String equipmentId,
+    public Result add(@RequestParam("equipmentId") Integer equipmentId,
                          @RequestParam("equipmentName") String equipmentName,
                          @RequestParam("purchaseDate") String purchaseDate,
                          @RequestParam("productionDate") String productionDate,

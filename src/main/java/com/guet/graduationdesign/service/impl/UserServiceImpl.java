@@ -8,10 +8,14 @@ import com.guet.graduationdesign.repository.EmployerRepository;
 import com.guet.graduationdesign.repository.UserRepository;
 import com.guet.graduationdesign.result.Result;
 import com.guet.graduationdesign.service.UserService;
+import com.guet.graduationdesign.util.DateUtil;
 import com.guet.graduationdesign.util.ResultUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -21,6 +25,8 @@ public class UserServiceImpl implements UserService {
     private UserRepository userRepository;
     @Autowired
     private EmployerRepository employerRepository;
+
+    private SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");//设置日期格式
 
     @Override
     public Result findAll() throws MyException {
@@ -82,20 +88,20 @@ public class UserServiceImpl implements UserService {
 
     @Transactional
     @Override
-    public Result update(String username, String password, Integer employerId)throws MyException {
+    public Result update(String username, String password)throws MyException {
         /**
         * @Description: 修改密码
         * @Author:      TJX
          * @param username
          * @param password
-         * @param employerId
         * @Return      com.guet.graduationdesign.result.Result
         * @Exception
         * @Date        2019-05-02 21:46
         */
         try{
-            User user = getUser(username,password,employerId);
-            return ResultUtil.success(ResultEnum.UPLOAD_SUCCESS,userRepository.save(user));
+            User user = userRepository.getOne(username);
+            user.setPassword(password);
+            return ResultUtil.success(ResultEnum.UPDATE_SUCCESS,userRepository.save(user));
         }catch (Exception e)
         {
             throw new MyException(ResultEnum.UPDATE_FAIL);
@@ -151,6 +157,28 @@ public class UserServiceImpl implements UserService {
         }
     }
 
+    @Override
+    public Result uploadImage(String username,String image)throws MyException {
+        /**
+        * @Description: 普通员工上传头像地址
+        * @Author:      TJX
+         * @param username
+         * @param image
+        * @Return      com.guet.graduationdesign.result.Result
+        * @Exception
+        * @Date        2019-05-08 18:18
+        */
+        try{
+            User user = userRepository.getOne(username);
+            user.setImage(image);
+            userRepository.save(user);
+            return ResultUtil.success(ResultEnum.UPLOAD_SUCCESS);
+        }catch (Exception e)
+        {
+            throw new MyException(ResultEnum.UPLOAD_FAIL);
+        }
+    }
+
     private User getUser(String username,String password,Integer employerId)
     {
         /**
@@ -166,6 +194,7 @@ public class UserServiceImpl implements UserService {
         User user = new User();
         user.setUsername(username);
         user.setPassword(password);
+        user.setRegisterDate(DateUtil.getDate(df.format(new Date())));
         Employer employer = employerRepository.getOne(employerId);
         user.setEmployerByEmployerId(employer);
         return user;

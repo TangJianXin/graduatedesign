@@ -8,10 +8,14 @@ import com.guet.graduationdesign.repository.AdminRepository;
 import com.guet.graduationdesign.repository.EmployerRepository;
 import com.guet.graduationdesign.result.Result;
 import com.guet.graduationdesign.service.AdminService;
+import com.guet.graduationdesign.util.DateUtil;
 import com.guet.graduationdesign.util.ResultUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -30,6 +34,8 @@ public class AdminServiceImpl implements AdminService {
     private AdminRepository adminRepository;
     @Autowired
     private EmployerRepository employerRepository;
+
+    private SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");//设置日期格式
 
     @Override
     public Result findAll() throws MyException {
@@ -89,19 +95,19 @@ public class AdminServiceImpl implements AdminService {
 
     @Transactional
     @Override
-    public Result update(String username,String password,Integer employerId) throws MyException{
+    public Result update(String username,String password) throws MyException{
         /**
         * @Description: 修改密码
         * @Author:      TJX
          * @param username
          * @param password
-         * @param employerId
         * @Return      com.guet.graduationdesign.result.Result
         * @Exception
         * @Date        2019-05-02 21:34
         */
         try{
-            Admin admin = getAdmin(username,password,employerId);
+            Admin admin = adminRepository.getOne(username);
+            admin.setPassword(password);
             return ResultUtil.success(ResultEnum.UPDATE_SUCCESS,adminRepository.save(admin));
         }catch (Exception e)
         {
@@ -157,6 +163,29 @@ public class AdminServiceImpl implements AdminService {
         return ResultUtil.success(ResultEnum.SELECT_SUCCESS);
     }
 
+    @Transactional
+    @Override
+    public Result uploadImage(String username,String image)throws MyException {
+        /**
+        * @Description: 管理员上传头像地址
+        * @Author:      TJX
+         * @param username
+         * @param image
+        * @Return      com.guet.graduationdesign.result.Result
+        * @Exception
+        * @Date        2019-05-08 18:14
+        */
+        try{
+            Admin admin = adminRepository.getOne(username);
+            admin.setImage(image);
+            adminRepository.save(admin);
+            return ResultUtil.success(ResultEnum.UPLOAD_SUCCESS,admin);
+        }catch (Exception e)
+        {
+            throw new MyException(ResultEnum.UPLOAD_FAIL);
+        }
+    }
+
     private Admin getAdmin(String username,String password,Integer employerId)
     {
         /**
@@ -172,6 +201,7 @@ public class AdminServiceImpl implements AdminService {
         Admin admin = new Admin();
         admin.setUsername(username);
         admin.setPassword(password);
+        admin.setRegisterDate(DateUtil.getDate(df.format(new Date())));
         Employer employer = employerRepository.getOne(employerId);
         admin.setEmployerByEmployerId(employer);
         return admin;

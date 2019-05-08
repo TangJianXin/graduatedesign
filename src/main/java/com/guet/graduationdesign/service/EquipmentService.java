@@ -5,19 +5,19 @@ import com.guet.graduationdesign.result.Result;
 public interface EquipmentService {
 
     //根据Id查询设备
-    public Result findById(String equipmentId);
+    public Result findById(Integer equipmentId);
 
     //查询所有设备
     public Result findAll();
 
     //根据Id删除设备
-    public Result deleteById(String equipmentId);
+    public Result deleteById(Integer equipmentId);
 
     //更新设备
-    public Result update(String equipmentId, String equipmentName,
+    public Result update(Integer equipmentId, String equipmentName,
                             String purchaseDate,String productionDate,String departmentId);
 
     //添加设备
-    public Result add(String equipmentId, String equipmentName,
+    public Result add(Integer equipmentId, String equipmentName,
                          String purchaseDate,String productionDate,String departmentId);
 }

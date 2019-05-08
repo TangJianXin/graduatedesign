@@ -65,20 +65,19 @@ public class AdminController {
 
     @PutMapping("/modifyPassword")
     public Result modifyPassword(@RequestParam("username") String username,
-                                @RequestParam("password") String password,
-                                @RequestParam("employerId") Integer employerId)
+                                @RequestParam("password") String password
+                                )
     {
         /**
          * @Description: 修改管理员密码
          * @Author:      TJX
          * @param username
          * @param password
-         * @param employerId
          * @Return      com.guet.graduationdesign.result.Result
          * @Exception
          * @Date        2019-04-25 10:22
          */
-        return adminService.update(username,password,employerId);
+        return adminService.update(username,password);
     }
 
     @PostMapping("/register")
@@ -111,5 +110,20 @@ public class AdminController {
         * @Date        2019-04-27 17:16
         */
         return adminService.findByEmployerId(employerId);
+    }
+
+    @PostMapping(value = "/uploadImage")
+    public Result uploadImage(String username,String image)
+    {
+        /**
+        * @Description: 管理员上传头像的地址
+        * @Author:      TJX
+         * @param username
+         * @param image
+        * @Return      com.guet.graduationdesign.result.Result
+        * @Exception
+        * @Date        2019-05-08 18:29
+        */
+        return adminService.uploadImage(username,image);
     }
 }

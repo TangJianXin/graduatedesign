@@ -1,5 +1,6 @@
 package com.guet.graduationdesign.controller;
 
+import com.guet.graduationdesign.pojo.Bed;
 import com.guet.graduationdesign.result.Result;
 import com.guet.graduationdesign.service.BedService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,17 +51,17 @@ public class BedController {
     }
 
     @DeleteMapping(value = "/deleteById")
-    public Result deleteBedById(@RequestParam("bedId") String bedId)
+    public Result deleteBedById(@RequestBody Bed bed)
     {
         /**
         * @Description: 根据Id删除床位
         * @Author:      TJX
-         * @param bedId
+         * @param bed
         * @Return      com.guet.graduationdesign.result.Result
         * @Exception
-        * @Date        2019-05-02 21:50
+        * @Date        2019-05-07 17:48
         */
-        return bedService.deleteById(bedId);
+        return bedService.deleteById(bed.getBedId());
     }
 
     @PutMapping(value = "/modifyInformation")

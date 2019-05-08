@@ -2,7 +2,9 @@ package com.guet.graduationdesign.service.impl;
 
 import com.guet.graduationdesign.enums.ResultEnum;
 import com.guet.graduationdesign.exception.MyException;
+import com.guet.graduationdesign.pojo.Bed;
 import com.guet.graduationdesign.pojo.OldPeople;
+import com.guet.graduationdesign.repository.BedRepository;
 import com.guet.graduationdesign.repository.OldPeopleRepository;
 import com.guet.graduationdesign.result.OldPeopleResult;
 import com.guet.graduationdesign.result.Result;
@@ -31,6 +33,9 @@ public class OldPeopleServiceImpl implements OldPeopleService {
 
     @Autowired
     private OldPeopleRepository oldPeopleRepository;
+
+    @Autowired
+    private BedRepository bedRepository;
 
     @Override
     public Result findById(Integer oldPeopleId)throws MyException {
@@ -75,6 +80,44 @@ public class OldPeopleServiceImpl implements OldPeopleService {
                 arrayList.add(oldPeopleResult);
             }
             return ResultUtil.success(ResultEnum.SELECT_SUCCESS,arrayList);
+        }catch (Exception e)
+        {
+            throw new MyException(ResultEnum.SELETCT_FAIL);
+        }
+    }
+
+    @Override
+    public Result findAllEmpty()throws MyException {
+        /**
+        * @Description: 查询所有未安排床位的老人
+        * @Author:      TJX
+         * @param
+        * @Return      com.guet.graduationdesign.result.Result
+        * @Exception
+        * @Date        2019-05-07 17:40
+        */
+        try{
+            List<Bed> bedList = bedRepository.findAll();
+            List<OldPeople> oldPeopleList = oldPeopleRepository.findAll();
+            List<OldPeople> resultList = new ArrayList<>();
+            boolean flag;
+            for(OldPeople oldPeople :oldPeopleList)
+            {
+                flag = true;
+                for(Bed bed:bedList)
+                {
+                    if(oldPeople.getOldPeopleId()==bed.getOldPeopleByOldPeopleId().getOldPeopleId())
+                    {
+                        flag = false;
+                        break;
+                    }
+                }
+                if(flag)
+                {
+                    resultList.add(oldPeople);
+                }
+            }
+            return ResultUtil.success(ResultEnum.SELECT_SUCCESS,resultList);
         }catch (Exception e)
         {
             throw new MyException(ResultEnum.SELETCT_FAIL);
