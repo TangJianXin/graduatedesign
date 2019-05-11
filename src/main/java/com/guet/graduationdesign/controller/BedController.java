@@ -83,19 +83,18 @@ public class BedController {
     }
 
     @PostMapping(value = "/add")
-    public Result add(@RequestParam("bedId") String bedId)
+    public Result add(@RequestParam("bedId") String bedId,@RequestParam("employerId") Integer employerId)
     {
         /**
         * @Description: 添加床位
         * @Author:      TJX
          * @param bedId
          * @param employerId
-         * @param oldPeopleId
         * @Return      com.guet.graduationdesign.result.Result
         * @Exception
         * @Date        2019-04-26 16:18
         */
-        return bedService.add(bedId);
+        return bedService.add(bedId,employerId);
     }
 
     @PostMapping(value = "/setAdmin")

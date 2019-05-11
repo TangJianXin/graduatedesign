@@ -115,7 +115,7 @@ public class BedServiceImpl implements BedService {
 
     @Transactional
     @Override
-    public Result add(String bedId) throws MyException{
+    public Result add(String bedId,Integer employerId) throws MyException{
         /**
         * @Description: 添加床位
         * @Author:      TJX
@@ -124,7 +124,7 @@ public class BedServiceImpl implements BedService {
         * @Exception
         * @Date        2019-05-02 21:37
         */
-        Bed bed = getBed(bedId);
+        Bed bed = getBed(bedId,employerId);
         try{
             return ResultUtil.success(ResultEnum.ADD_SUCCESS,bedRepository.save(bed));
         }catch (Exception e)
@@ -177,7 +177,7 @@ public class BedServiceImpl implements BedService {
         }
     }
 
-    private Bed getBed(String bedId)
+    private Bed getBed(String bedId,Integer employerId)
     {
         /**
         * @Description: 构造床位对象
@@ -189,6 +189,7 @@ public class BedServiceImpl implements BedService {
         */
         Bed bed = new Bed();
         bed.setBedId(bedId);
+        bed.setEmployerByEmployerId(employerRepository.getOne(employerId));
         return bed;
     }
     private Bed getBed(String bedId,Integer oldPeopleId,Integer employerId)

@@ -106,6 +106,10 @@ public class OldPeopleServiceImpl implements OldPeopleService {
                 flag = true;
                 for(Bed bed:bedList)
                 {
+                    if(bed.getOldPeopleByOldPeopleId()==null)
+                    {
+                        continue;
+                    }
                     if(oldPeople.getOldPeopleId()==bed.getOldPeopleByOldPeopleId().getOldPeopleId())
                     {
                         flag = false;
