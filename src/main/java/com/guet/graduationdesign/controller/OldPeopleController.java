@@ -64,8 +64,8 @@ public class OldPeopleController {
         return oldPeopleService.findById(oldPeopleId);
     }
 
-    @DeleteMapping(value = "/deleteById")
-    public Result deleteOldPeopleById(@RequestBody OldPeople oldPeople)
+    @PostMapping(value = "/deleteById")
+    public Result deleteOldPeopleById(@RequestParam("oldPeopleId") Integer oldPeopleId)
     {
         /**
         * @Description: 根据Id删除老人信息
@@ -73,9 +73,9 @@ public class OldPeopleController {
          * @param oldPeopleId
         * @Return      com.guet.graduationdesign.result.Result
         * @Exception
-        * @Date        2019-05-02 21:57
+        * @Date        2019-05-13 12:22
         */
-        return oldPeopleService.delete(oldPeople.getOldPeopleId());
+        return oldPeopleService.delete(oldPeopleId);
     }
 
     @PutMapping(value = "/modifyInformation")

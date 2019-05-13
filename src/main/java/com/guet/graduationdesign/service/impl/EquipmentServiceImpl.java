@@ -116,7 +116,7 @@ public class EquipmentServiceImpl implements EquipmentService {
 
     @Transactional
     @Override
-    public Result add(Integer equipmentId, String equipmentName,
+    public Result add(String equipmentName,
                          String purchaseDate,String productionDate,
                       String departmentId)throws MyException {
         /**
@@ -132,7 +132,7 @@ public class EquipmentServiceImpl implements EquipmentService {
         * @Date        2019-05-02 21:42
         */
         try{
-            Equipment equipment = getEquipment(equipmentId,equipmentName, DateUtil.getDate(purchaseDate),DateUtil.getDate(productionDate),departmentId);
+            Equipment equipment = getEquipment(equipmentName, DateUtil.getDate(purchaseDate),DateUtil.getDate(productionDate),departmentId);
             return ResultUtil.success(ResultEnum.ADD_SUCCESS,equipmentRepository.save(equipment));
         }catch (Exception e)
         {
@@ -157,6 +157,27 @@ public class EquipmentServiceImpl implements EquipmentService {
         */
         Equipment equipment = new Equipment();
         equipment.setEquipmentId(equipmentId);
+        equipment.setEquipmentName(equipmentName);
+        equipment.setPurchaseDate(purchaseDate);
+        equipment.setProductionDate(productionDate);
+        equipment.setDepartmentByDepartmentId(departmentRepository.getOne(departmentId));
+        return equipment;
+    }
+    private Equipment getEquipment(String equipmentName, Date purchaseDate, Date productionDate,String departmentId)
+    {
+        /**
+        * @Description: 构造设备对象
+        * @Author:      TJX
+         * @param equipmentId
+         * @param equipmentName
+         * @param purchaseDate
+         * @param productionDate
+         * @param departmentId
+        * @Return      com.guet.graduationdesign.pojo.Equipment
+        * @Exception
+        * @Date        2019-05-12 11:43
+        */
+        Equipment equipment = new Equipment();
         equipment.setEquipmentName(equipmentName);
         equipment.setPurchaseDate(purchaseDate);
         equipment.setProductionDate(productionDate);

@@ -18,6 +18,6 @@ public interface EquipmentService {
                             String purchaseDate,String productionDate,String departmentId);
 
     //添加设备
-    public Result add(Integer equipmentId, String equipmentName,
+    public Result add(String equipmentName,
                          String purchaseDate,String productionDate,String departmentId);
 }

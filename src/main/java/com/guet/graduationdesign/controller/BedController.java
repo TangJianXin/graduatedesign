@@ -50,18 +50,18 @@ public class BedController {
         return bedService.findById(bedId);
     }
 
-    @DeleteMapping(value = "/deleteById")
-    public Result deleteBedById(@RequestBody Bed bed)
+    @PostMapping(value = "/deleteById")
+    public Result deleteBedById(@RequestParam("bedId") String bedId)
     {
         /**
         * @Description: 根据Id删除床位
         * @Author:      TJX
-         * @param bed
+         * @param bedId
         * @Return      com.guet.graduationdesign.result.Result
         * @Exception
-        * @Date        2019-05-07 17:48
+        * @Date        2019-05-13 12:05
         */
-        return bedService.deleteById(bed.getBedId());
+        return bedService.deleteById(bedId);
     }
 
     @PutMapping(value = "/modifyInformation")

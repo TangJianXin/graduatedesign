@@ -50,8 +50,8 @@ public class EmployerController {
         return employerService.findById(employerId);
     }
 
-    @DeleteMapping(value = "deleteById")
-    public Result deleteByEmployerId(@RequestBody Employer employer)
+    @PostMapping(value = "deleteById")
+    public Result deleteByEmployerId(@RequestParam("employerId") Integer employerId)
     {
         /**
         * @Description: 根据Id删除员工信息
@@ -59,9 +59,9 @@ public class EmployerController {
          * @param employerId
         * @Return      com.guet.graduationdesign.result.Result
         * @Exception
-        * @Date        2019-05-02 21:54
+        * @Date        2019-05-13 12:23
         */
-        return employerService.deleteById(employer.getEmployerId());
+        return employerService.deleteById(employerId);
     }
 
 

@@ -87,8 +87,7 @@ public class EquipmentController {
     }
 
     @PostMapping(value = "/add")
-    public Result add(@RequestParam("equipmentId") Integer equipmentId,
-                         @RequestParam("equipmentName") String equipmentName,
+    public Result add(@RequestParam("equipmentName") String equipmentName,
                          @RequestParam("purchaseDate") String purchaseDate,
                          @RequestParam("productionDate") String productionDate,
                          @RequestParam("departmentId") String departmentId)
@@ -96,7 +95,6 @@ public class EquipmentController {
         /**
         * @Description: 添加设备
         * @Author:      TJX
-         * @param equipmentId
          * @param equipmentName
          * @param purchaseDate
          * @param productionDate
@@ -105,6 +103,6 @@ public class EquipmentController {
         * @Exception
         * @Date        2019-04-26 16:39
         */
-        return equipmentService.add(equipmentId,equipmentName,purchaseDate,productionDate,departmentId);
+        return equipmentService.add(equipmentName,purchaseDate,productionDate,departmentId);
     }
 }

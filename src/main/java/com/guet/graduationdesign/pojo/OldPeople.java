@@ -97,6 +97,10 @@ public class OldPeople {
         return birthday;
     }
 
+    public void setBirthday(java.sql.Date birthday) {
+        this.birthday = birthday;
+    }
+
     public void setBirthday(Date birthday) {
         this.birthday = birthday;
     }
@@ -117,6 +121,10 @@ public class OldPeople {
         return entryDate;
     }
 
+    public void setEntryDate(java.sql.Date entryDate) {
+        this.entryDate = entryDate;
+    }
+
     public void setEntryDate(Date entryDate) {
         this.entryDate = entryDate;
     }
@@ -125,6 +133,10 @@ public class OldPeople {
     @Column(name = "leave_date")
     public Date getLeaveDate() {
         return leaveDate;
+    }
+
+    public void setLeaveDate(java.sql.Date leaveDate) {
+        this.leaveDate = leaveDate;
     }
 
     public void setLeaveDate(Date leaveDate) {
