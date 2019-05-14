@@ -89,6 +89,36 @@ public class EmployerServiceImpl implements EmployerService {
         }
     }
 
+    @Override
+    public Result findByName(String name)throws MyException {
+        /**
+        * @Description: 根据姓名查询员工
+        * @Author:      TJX
+         * @param
+        * @Return      com.guet.graduationdesign.result.Result
+        * @Exception
+        * @Date        2019-05-14 13:08
+        */
+        try{
+            List<Employer> list = employerRepository.findAll();
+            List<EmployerResult> resultList = new ArrayList<>();
+            for(Employer employer:list)
+            {
+                if(employer.getName().equals(name))
+                {
+                    EmployerResult employerResult = new EmployerResult();
+                    employerResult.setEmployer(employer);
+                    employerResult.setUrl(MultipartFileUtil.getFile(employer.getPhoto()));
+                    resultList.add(employerResult);
+                }
+            }
+            return ResultUtil.success(ResultEnum.SELECT_SUCCESS,resultList);
+        }catch (Exception e)
+        {
+            throw new MyException(ResultEnum.SELETCT_FAIL);
+        }
+    }
+
     @Transactional
     @Override
     public Result deleteById(Integer employerId)throws MyException {

@@ -36,6 +36,19 @@ public class EmployerController {
         return employerService.findAll();
     }
 
+    @GetMapping(value = "/findByName")
+    public Result findByName(@RequestParam("name") String name)
+    {
+        /**
+        * @Description: 根据姓名查询员工
+        * @Author:      TJX
+         * @param name
+        * @Return      com.guet.graduationdesign.result.Result
+        * @Exception
+        * @Date        2019-05-14 13:12
+        */
+        return employerService.findByName(name);
+    }
     @GetMapping("/findById")
     public Result findByEmployerId(@RequestParam("employerId") Integer employerId)
     {

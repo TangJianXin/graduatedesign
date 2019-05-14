@@ -10,6 +10,9 @@ public interface EmployerService {
     //查询所有员工
     public Result findAll();
 
+    //根据姓名查询员工
+    public Result findByName(String name);
+
     //根据Id删除员工
     public Result deleteById(Integer employerId);
 

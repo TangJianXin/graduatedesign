@@ -13,6 +13,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
+import java.util.List;
+
 
 /**
 * @Description:    床位管理service
@@ -46,7 +49,9 @@ public class BedServiceImpl implements BedService {
         * @Date        2019-05-02 21:36
         */
         try{
-            return ResultUtil.success(ResultEnum.SELECT_SUCCESS,bedRepository.getOne(bedId));
+            List<Bed> list = new ArrayList<>();
+            list.add(bedRepository.getOne(bedId));
+            return ResultUtil.success(ResultEnum.SELECT_SUCCESS,list);
         }catch (Exception e)
         {
             throw new MyException(ResultEnum.SELETCT_FAIL);

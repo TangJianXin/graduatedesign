@@ -7,6 +7,9 @@ public interface OldPeopleService {
     //根据Id查询老人
     public Result findById(Integer oldPeopleId);
 
+    //根据姓名查询老人
+    public Result findByName(String name);
+
     //查询所有老人
     public Result findAll();
 
@@ -27,5 +30,6 @@ public interface OldPeopleService {
                          String sex, String birthday,String familyPhone,
                          String entryDate);
 
-
+    //获取老人年龄分布
+    public Result getAge();
 }

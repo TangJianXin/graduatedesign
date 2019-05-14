@@ -36,6 +36,34 @@ public class OldPeopleController {
         return oldPeopleService.findAll();
     }
 
+    @GetMapping(value = "/findByName")
+    public Result findByName(@RequestParam("name") String name)
+    {
+        /**
+        * @Description: 根据老人姓名查询老人
+        * @Author:      TJX
+         * @param name
+        * @Return      com.guet.graduationdesign.result.Result
+        * @Exception
+        * @Date        2019-05-14 10:54
+        */
+        return oldPeopleService.findByName(name);
+    }
+
+    @GetMapping(value = "/getAge")
+    public Result getAge()
+    {
+        /**
+        * @Description: 获取老人年龄分布
+        * @Author:      TJX
+         * @param
+        * @Return      com.guet.graduationdesign.result.Result
+        * @Exception
+        * @Date        2019-05-14 20:44
+        */
+        return oldPeopleService.getAge();
+    }
+
     @GetMapping(value = "/findAllEmpty")
     public Result findAllEmpty()
     {

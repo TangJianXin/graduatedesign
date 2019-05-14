@@ -60,6 +60,36 @@ public class OldPeopleServiceImpl implements OldPeopleService {
     }
 
     @Override
+    public Result findByName(String name)throws MyException {
+        /**
+        * @Description: 根据姓名查询老人
+        * @Author:      TJX
+         * @param name
+        * @Return      com.guet.graduationdesign.result.Result
+        * @Exception
+        * @Date        2019-05-14 10:49
+        */
+        try{
+            List<OldPeople> list = oldPeopleRepository.findAll();
+            List<OldPeopleResult> resultList = new ArrayList<>();
+            for(OldPeople oldPeople:list)
+            {
+                if(oldPeople.getName().equals(name))
+                {
+                    OldPeopleResult oldPeopleResult = new OldPeopleResult();
+                    oldPeopleResult.setOldPeople(oldPeople);
+                    oldPeopleResult.setUrl(MultipartFileUtil.getFile(oldPeople.getPhoto()));
+                    resultList.add(oldPeopleResult);
+                }
+            }
+            return ResultUtil.success(ResultEnum.SELECT_SUCCESS,resultList);
+        }catch (Exception e)
+        {
+            throw new MyException(ResultEnum.SELETCT_FAIL);
+        }
+    }
+
+    @Override
     public Result findAll()throws MyException {
         /**
         * @Description: 查询所有老人
@@ -210,6 +240,61 @@ public class OldPeopleServiceImpl implements OldPeopleService {
         }catch (Exception e)
         {
             throw new MyException(ResultEnum.ADD_FAIL);
+        }
+    }
+
+    @Override
+    public Result getAge()throws MyException {
+        /**
+        * @Description: 获取老人年龄分布
+        * @Author:      TJX
+         * @param
+        * @Return      com.guet.graduationdesign.result.Result
+        * @Exception
+        * @Date        2019-05-14 20:31
+        */
+        try{
+            List<OldPeople> list = oldPeopleRepository.findAll();
+            List<Integer> resultList = new ArrayList<>();
+            int age;
+            int A = 0;
+            int B = 0;
+            int C = 0;
+            int D = 0;
+            int E = 0;
+            for(OldPeople oldPeople:list)
+            {
+                age = 2019-(1900+oldPeople.getBirthday().getYear());
+                if(age>=50&&age<55)
+                {
+                    A++;
+                }
+                else if(age>=55&&age<60)
+                {
+                    B++;
+                }
+                else if(age>=60&&age<65)
+                {
+                    C++;
+                }
+                else if(age>=65&&age<70)
+                {
+                    D++;
+                }
+                else if(age>=70)
+                {
+                    E++;
+                }
+            }
+            resultList.add(A);
+            resultList.add(B);
+            resultList.add(C);
+            resultList.add(D);
+            resultList.add(E);
+            return ResultUtil.success(ResultEnum.SELECT_SUCCESS,resultList);
+        }catch (Exception e)
+        {
+            throw new MyException(ResultEnum.SELETCT_FAIL);
         }
     }
 
