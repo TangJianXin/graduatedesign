@@ -3,7 +3,6 @@ package com.guet.graduationdesign.service.impl;
 import com.guet.graduationdesign.enums.ResultEnum;
 import com.guet.graduationdesign.exception.MyException;
 import com.guet.graduationdesign.pojo.Quota;
-import com.guet.graduationdesign.repository.BedRepository;
 import com.guet.graduationdesign.repository.OldPeopleRepository;
 import com.guet.graduationdesign.repository.QuotaRepository;
 import com.guet.graduationdesign.result.Result;
@@ -30,9 +29,6 @@ public class QuotaServiceImpl implements QuotaService {
 
     @Autowired
     private QuotaRepository quotaRepository;
-
-    @Autowired
-    private BedRepository bedRepository;
 
     @Autowired
     private OldPeopleRepository oldPeopleRepository;
@@ -103,7 +99,7 @@ public class QuotaServiceImpl implements QuotaService {
 
     @Override
     public Result add(Integer heartRate, Integer breatheRate, Float temperature,
-                      Integer oldPeopleId, String bedId)throws MyException {
+                      Integer oldPeopleId)throws MyException {
         /**
         * @Description: 添加一条体征记录
         * @Author:      TJX
@@ -118,7 +114,7 @@ public class QuotaServiceImpl implements QuotaService {
         * @Date        2019-05-13 18:54
         */
         try{
-            Quota quota = getQuota(heartRate,breatheRate,temperature,oldPeopleId,bedId);
+            Quota quota = getQuota(heartRate,breatheRate,temperature,oldPeopleId);
             quota.setDate(new Date());
             return ResultUtil.success(ResultEnum.ADD_SUCCESS,quotaRepository.save(quota));
         }catch (Exception e)
@@ -127,7 +123,7 @@ public class QuotaServiceImpl implements QuotaService {
         }
     }
 
-    public Quota getQuota(Integer heartRate, Integer breatheRate, Float temperature, Integer oldPeopleId, String bedId)
+    public Quota getQuota(Integer heartRate, Integer breatheRate, Float temperature, Integer oldPeopleId)
     {
         /**
         * @Description: 构造体征记录对象
@@ -147,7 +143,6 @@ public class QuotaServiceImpl implements QuotaService {
         quota.setBreatheRate(breatheRate);
         quota.setTemperature(temperature);
         quota.setOldPeopleByOldpeople(oldPeopleRepository.getOne(oldPeopleId));
-        quota.setBedByBed(bedRepository.getOne(bedId));
         return quota;
     }
 }

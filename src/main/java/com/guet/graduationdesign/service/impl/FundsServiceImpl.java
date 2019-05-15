@@ -5,6 +5,7 @@ import com.guet.graduationdesign.exception.MyException;
 import com.guet.graduationdesign.pojo.Funds;
 import com.guet.graduationdesign.repository.EmployerRepository;
 import com.guet.graduationdesign.repository.FundsRepository;
+import com.guet.graduationdesign.result.MoneyResult;
 import com.guet.graduationdesign.result.Result;
 import com.guet.graduationdesign.service.FundsService;
 import com.guet.graduationdesign.util.DateUtil;
@@ -12,7 +13,9 @@ import com.guet.graduationdesign.util.ResultUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -98,6 +101,64 @@ public class FundsServiceImpl implements FundsService {
         }catch (Exception e)
         {
             throw new MyException(ResultEnum.DELETE_FAIL);
+        }
+    }
+
+    @Override
+    public Result getWeekMoney()throws MyException {
+        /**
+        * @Description: 获取一周的资金情况
+        * @Author:      TJX
+         * @param
+        * @Return      com.guet.graduationdesign.result.Result
+        * @Exception
+        * @Date        2019-05-15 09:46
+        */
+        try
+        {
+            List<Funds> list = fundsRepository.findAll();
+            List<MoneyResult> resultList = new ArrayList<>();
+            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+            Calendar c = Calendar.getInstance();
+            //过去七天
+            c.setTime(new Date());
+            c.add(Calendar.DATE, - 6);
+            for(int i=0;i<7;i++)
+            {
+                MoneyResult moneyResult = new MoneyResult();
+                moneyResult.setDate(format.format(c.getTime()));
+                c.add(Calendar.DATE,+1);
+                resultList.add(moneyResult);
+            }
+            float income = 0;
+            float outlay = 0;
+            float profit = 0;
+            for(MoneyResult moneyResult:resultList)
+            {
+                for(Funds funds:list)
+                {
+                    if(moneyResult.getDate().equals(format.format(funds.getDate())))
+                    {
+                        if(funds.getFlag()==1) {
+                            income = income + funds.getAmount();
+                        }
+                        else{
+                            outlay = outlay + funds.getAmount();
+                        }
+                    }
+                }
+                profit = income-outlay;
+                moneyResult.setIncome(income);
+                moneyResult.setOutlay(outlay);
+                moneyResult.setProfit(profit);
+                income = 0;
+                outlay = 0;
+                profit = 0;
+            }
+            return ResultUtil.success(ResultEnum.SELECT_SUCCESS,resultList);
+        }catch (Exception e)
+        {
+            throw new MyException(ResultEnum.SELETCT_FAIL);
         }
     }
 

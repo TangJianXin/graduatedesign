@@ -51,6 +51,20 @@ public class FundsConroller {
         return fundsService.findByDate(begin,end);
     }
 
+    @GetMapping(value = "/getWeekMoney")
+    public Result getWeekMoney()
+    {
+        /**
+        * @Description: 获取一周内的资金
+        * @Author:      TJX
+         * @param
+        * @Return      com.guet.graduationdesign.result.Result
+        * @Exception
+        * @Date        2019-05-15 09:52
+        */
+        return fundsService.getWeekMoney();
+    }
+
     @PostMapping(value = "/deleteById")
     public Result deleteById(Integer fundsId)
     {

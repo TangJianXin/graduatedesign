@@ -2,8 +2,6 @@ package com.guet.graduationdesign.service;
 
 import com.guet.graduationdesign.result.Result;
 
-import java.util.Date;
-
 public interface QuotaService {
 
     //查询所有体征指标记录
@@ -17,5 +15,5 @@ public interface QuotaService {
 
     //添加一条体征指标记录
     public Result add(Integer heartRate, Integer breatheRate, Float temperature,
-                      Integer oldPeopleId, String bedId);
+                      Integer oldPeopleId);
 }

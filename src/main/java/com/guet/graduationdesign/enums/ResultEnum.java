@@ -10,6 +10,8 @@ public enum ResultEnum {
     REGISTER_SUCCESS(1,"注册成功"),
     UPLOAD_SUCCESS(1,"上传成功"),
     GETFILE_SUCCESS(1,"获取成功"),
+    CLOSE_SUCCESS(1,"获取成功"),
+    CLOSE_FAIL(0, "关闭失败"),
     ADD_FAIL(0, "添加失败"),
     UPDATE_FAIL(0, "更新失败"),
     DELETE_FAIL(0,"删除失败"),

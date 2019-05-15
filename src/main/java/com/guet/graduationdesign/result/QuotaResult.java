@@ -38,4 +38,13 @@ public class QuotaResult {
     public void setTemperature(Float temperature) {
         this.temperature = temperature;
     }
+
+    @Override
+    public String toString() {
+        return "QuotaResult{" +
+                "heartRate=" + heartRate +
+                ", breatheRate=" + breatheRate +
+                ", temperature=" + temperature +
+                '}';
+    }
 }

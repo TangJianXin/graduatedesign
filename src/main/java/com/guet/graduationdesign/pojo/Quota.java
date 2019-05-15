@@ -15,7 +15,6 @@ public class Quota {
     private Float temperature;
     private Date date;
     private OldPeople oldPeopleByOldpeople;
-    private Bed bedByBed;
 
     @Id
     @Column(name = "quota_id")
@@ -92,15 +91,5 @@ public class Quota {
 
     public void setOldPeopleByOldpeople(OldPeople oldPeopleByOldpeople) {
         this.oldPeopleByOldpeople = oldPeopleByOldpeople;
-    }
-
-    @ManyToOne
-    @JoinColumn(name = "bed", referencedColumnName = "bed_id", nullable = false)
-    public Bed getBedByBed() {
-        return bedByBed;
-    }
-
-    public void setBedByBed(Bed bedByBed) {
-        this.bedByBed = bedByBed;
     }
 }
