@@ -123,4 +123,18 @@ public class DepartmentController {
         */
         return departmentService.findAllEquipment(departmentId);
     }
+
+    @GetMapping(value = "/getCount")
+    public Result getCount()
+    {
+        /**
+        * @Description: 查询部门人数和设备数量
+        * @Author:      TJX
+         * @param
+        * @Return      com.guet.graduationdesign.result.Result
+        * @Exception
+        * @Date        2019-05-30 18:32
+        */
+        return departmentService.findAllPeopleAndEquipment();
+    }
 }

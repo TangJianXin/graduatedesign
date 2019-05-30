@@ -19,4 +19,6 @@ public interface FundsService {
     //添加一条流水记录
     public Result add(Float amount,Integer employerId,Integer flag,String detail);
 
+    //查询一周内每天的资金类型
+    public Result findFundsType();
 }

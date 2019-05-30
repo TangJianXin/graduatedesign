@@ -5,6 +5,7 @@ import com.guet.graduationdesign.exception.MyException;
 import com.guet.graduationdesign.pojo.Funds;
 import com.guet.graduationdesign.repository.EmployerRepository;
 import com.guet.graduationdesign.repository.FundsRepository;
+import com.guet.graduationdesign.result.FundsTypeResult;
 import com.guet.graduationdesign.result.MoneyResult;
 import com.guet.graduationdesign.result.Result;
 import com.guet.graduationdesign.service.FundsService;
@@ -130,11 +131,14 @@ public class FundsServiceImpl implements FundsService {
                 c.add(Calendar.DATE,+1);
                 resultList.add(moneyResult);
             }
-            float income = 0;
-            float outlay = 0;
-            float profit = 0;
+            float income ;
+            float outlay ;
+            float profit ;
             for(MoneyResult moneyResult:resultList)
             {
+                income = 0;
+                outlay = 0;
+                profit = 0;
                 for(Funds funds:list)
                 {
                     if(moneyResult.getDate().equals(format.format(funds.getDate())))
@@ -151,9 +155,6 @@ public class FundsServiceImpl implements FundsService {
                 moneyResult.setIncome(income);
                 moneyResult.setOutlay(outlay);
                 moneyResult.setProfit(profit);
-                income = 0;
-                outlay = 0;
-                profit = 0;
             }
             return ResultUtil.success(ResultEnum.SELECT_SUCCESS,resultList);
         }catch (Exception e)
@@ -182,6 +183,71 @@ public class FundsServiceImpl implements FundsService {
         }catch (Exception e)
         {
             throw new MyException(ResultEnum.ADD_FAIL);
+        }
+    }
+
+    @Override
+    public Result findFundsType()throws MyException {
+        /**
+        * @Description: 查询每天的资金类型
+        * @Author:      TJX
+         * @param
+        * @Return      com.guet.graduationdesign.result.Result
+        * @Exception
+        * @Date        2019-05-30 20:02
+        */
+        try{
+            List<Funds> list = fundsRepository.findAll();
+            List<FundsTypeResult> resultList = new ArrayList<>();
+            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+            Calendar c = Calendar.getInstance();
+            //过去七天
+            c.setTime(new Date());
+            c.add(Calendar.DATE, - 6);
+            for(int i=0;i<7;i++)
+            {
+                FundsTypeResult fundsTypeResult = new FundsTypeResult();
+                fundsTypeResult.setDate(format.format(c.getTime()));
+                c.add(Calendar.DATE,+1);
+                resultList.add(fundsTypeResult);
+            }
+            float purchase;
+            float pay;
+            float due;
+            float fix;
+            float other;
+            for(FundsTypeResult fundsTypeResult:resultList) {
+                purchase = 0;
+                pay = 0;
+                due = 0;
+                fix = 0;
+                other = 0;
+                for (Funds funds : list) {
+                    if(fundsTypeResult.getDate().equals(format.format(funds.getDate())))
+                    {
+                        if (funds.getDetail().equals("采购")) {
+                            purchase = purchase + funds.getAmount();
+                        } else if (funds.getDetail().equals("工资")) {
+                            pay = pay + funds.getAmount();
+                        } else if (funds.getDetail().equals("月费")) {
+                            due = due + funds.getAmount();
+                        } else if (funds.getDetail().equals("设备维护")) {
+                            fix = fix + funds.getAmount();
+                        } else if (funds.getDetail().equals("其它")) {
+                            other = other + funds.getAmount();
+                        }
+                    }
+                }
+                fundsTypeResult.setPurchase(purchase);
+                fundsTypeResult.setPay(pay);
+                fundsTypeResult.setDue(due);
+                fundsTypeResult.setFix(fix);
+                fundsTypeResult.setOther(other);
+            }
+            return ResultUtil.success(ResultEnum.SELECT_SUCCESS,resultList);
+        }catch (Exception e)
+        {
+            throw new MyException(ResultEnum.SELETCT_FAIL);
         }
     }
 

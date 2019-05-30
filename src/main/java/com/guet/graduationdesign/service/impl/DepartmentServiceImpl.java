@@ -8,6 +8,7 @@ import com.guet.graduationdesign.pojo.Equipment;
 import com.guet.graduationdesign.repository.DepartmentRepository;
 import com.guet.graduationdesign.repository.EmployerRepository;
 import com.guet.graduationdesign.repository.EquipmentRepository;
+import com.guet.graduationdesign.result.DepartmentResult;
 import com.guet.graduationdesign.result.Result;
 import com.guet.graduationdesign.service.DepartmentService;
 import com.guet.graduationdesign.util.ResultUtil;
@@ -184,6 +185,53 @@ public class DepartmentServiceImpl implements DepartmentService {
                 }
             }
             return ResultUtil.success(ResultEnum.SELECT_SUCCESS,arrayList);
+        }catch (Exception e)
+        {
+            throw new MyException(ResultEnum.SELETCT_FAIL);
+        }
+    }
+
+    @Override
+    public Result findAllPeopleAndEquipment() throws MyException {
+        /**
+        * @Description:
+        * @Author:      TJX
+         * @param 
+        * @Return      com.guet.graduationdesign.result.Result
+        * @Exception   
+        * @Date        2019-05-30 18:14
+        */
+        try{
+            List<Department> departmentList = departmentRepository.findAll();
+            List<Employer> employerList = employerRepository.findAll();
+            List<Equipment> equipmentList = equipmentRepository.findAll();
+            List<DepartmentResult> resultList = new ArrayList<>();
+            int peopleCount;
+            int equipmentCount;
+            for(Department department:departmentList)
+            {
+                peopleCount = 0;
+                equipmentCount = 0;
+                for(Employer employer:employerList)
+                {
+                    if(employer.getDepartmentByDepartmentId().getDepartmentId().equals(department.getDepartmentId()))
+                    {
+                        peopleCount++;
+                    }
+                }
+                for(Equipment equipment:equipmentList)
+                {
+                    if(equipment.getDepartmentByDepartmentId().getDepartmentId().equals(department.getDepartmentId()))
+                    {
+                        equipmentCount++;
+                    }
+                }
+                DepartmentResult departmentResult = new DepartmentResult();
+                departmentResult.setPeopleCount(peopleCount);
+                departmentResult.setEquipmentCount(equipmentCount);
+                resultList.add(departmentResult);
+            }
+            return ResultUtil.success(ResultEnum.SELECT_SUCCESS,resultList);
         }catch (Exception e)
         {
             throw new MyException(ResultEnum.SELETCT_FAIL);

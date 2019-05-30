@@ -25,4 +25,7 @@ public interface DepartmentService {
 
     //查询部门所有设备
     public Result findAllEquipment(String departmentId);
+
+    //查询部门的人数和设备数量
+    public Result findAllPeopleAndEquipment();
 }

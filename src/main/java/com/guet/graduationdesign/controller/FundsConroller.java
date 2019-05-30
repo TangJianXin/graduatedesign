@@ -98,4 +98,18 @@ public class FundsConroller {
         */
         return fundsService.add(amount,employerId,flag,detail);
     }
+
+    @GetMapping(value = "/getFundsType")
+    public Result getFundsType()
+    {
+        /**
+        * @Description: 获取一周内每天资金类型
+        * @Author:      TJX
+         * @param
+        * @Return      com.guet.graduationdesign.result.Result
+        * @Exception
+        * @Date        2019-05-30 20:15
+        */
+        return fundsService.findFundsType();
+    }
 }

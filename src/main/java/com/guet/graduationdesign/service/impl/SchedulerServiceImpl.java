@@ -3,7 +3,6 @@ package com.guet.graduationdesign.service.impl;
 import com.guet.graduationdesign.enums.ResultEnum;
 import com.guet.graduationdesign.exception.MyException;
 import com.guet.graduationdesign.result.Result;
-//import com.guet.graduationdesign.runner.Runner;
 import com.guet.graduationdesign.service.QuotaService;
 import com.guet.graduationdesign.service.SchedulerService;
 import com.guet.graduationdesign.util.ResultUtil;
